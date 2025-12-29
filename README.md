@@ -1,75 +1,92 @@
-# NovaCart - Frontend (React + Vite)
+# NovaCart Frontend
 
-NovaCart is a modern e-commerce frontend built with **React + Vite**.
-It consumes a Django REST API backend and implements a complete shopping flow including authentication, cart, wishlist, and online payments.
+[![Languages](https://img.shields.io/badge/languages-JavaScript%2072.5%%20%7C%20CSS%2026.5%%20%7C%20HTML%201%-brightgreen.svg)](https://github.com/arunsabu21/novacart-frontend)
 
-> Status: **Actively in development**
-> UI, payment flow, and UX polish are continuously improving.
+NovaCart is a modern and dynamic e-commerce frontend powered by **React** and **Vite**. This project delivers a seamless shopping experience with real-time cart actions, user authentication, wishlists, and secure Stripe payments. NovaCart consumes a Django REST API backend, providing end-to-end integration from browsing products to checking out.
 
----
-
-## Live Backend API
-https://novacart-backend-bnnb.onrender.com
-
-Frontend deployment coming soon.
+> **Status**: Actively in development.  
+> The UI, payment flow, and overall UX are being continuously improved.
 
 ---
 
-## Tech Stack
-- React (Vite)
-- React Router
-- Axios
-- Stripe (Card Payments)
-- JWT Authentication
-- Cloudinary (Product Images)
-- Custom CSS Components
+##  Live Demo & Backend
+
+- **Live Backend API:** [https://novacart-backend-bnnb.onrender.com](https://novacart-backend-bnnb.onrender.com)
+- **Frontend Deployment:** _Coming soon!_
 
 ---
 
-## Environment Variables
+##  Tech Stack
 
-Create a `.env` file in the project root:
-
-VITE_API_BASE_URL=https://novacart-backend-bnnb.onrender.com/api  
-VITE_STRIPE_PUBLISHABLE_KEY=your_publishable_key_here
-
-> `.env` is already gitignored — do not commit it.
-
----
-
-## Current Features
-- User signup & login (JWT)
-- View all products
-- Product detail page
-- Wishlist system
-- Cart system
-- Checkout page
-- Stripe card checkout
-- Password reset flow
-- Responsive layout
+- **React** (with Vite)
+- **React Router** (routing)
+- **Axios**
+- **Stripe** (secure card payments)
+- **JWT Authentication**
+- **Cloudinary** (product images)
+- **Custom CSS**
 
 ---
 
-## Planned Work
-- Improved UI/UX
-- Order tracking pages
-- Product search and filters
-- Frontend deployment
+##  Environment Setup
+
+1. Install dependencies:
+    ```sh
+    npm install
+    ```
+2. Create a `.env` file in the project root:
+    ```
+    VITE_API_BASE_URL=https://novacart-backend-bnnb.onrender.com/api
+    VITE_STRIPE_PUBLISHABLE_KEY=your_publishable_key_here
+    ```
+   > `.env` is gitignored and should not be committed.
+
+3. Start the development server:
+    ```sh
+    npm run dev
+    ```
 
 ---
 
-## Related Repository
-Backend (Django + DRF):
-https://github.com/arunsabu21/novacart-backend.git
+##  Features
+
+- User Signup & Login (JWT-based auth)
+- Browse All Products
+- Product Detail Pages
+- Wishlists
+- Shopping Cart
+- Secure Stripe Checkout
+- Password Reset Flow
+- Responsive Layout
 
 ---
 
-## Author
+##  Roadmap
+
+- Improved UI/UX polish
+- Order Tracking Pages
+- Product Search & Filters
+- Public Frontend Deployment
+
+---
+
+##  Related Projects
+
+- **Backend (Django + DRF):**  
+  [https://github.com/arunsabu21/novacart-backend](https://github.com/arunsabu21/novacart-backend)
+
+---
+
+## 👨‍💻 Author
+
 **Arun Sabu**  
-Full-Stack Developer (Django + React)
+Full-Stack Developer (Django & React)
 
 ---
 
-## Version
-Frontend – Work in progress  
-Backend – v1 API ready
+## 🏷️ Version
+
+- **Frontend:** Work in Progress
+- **Backend:** v1 API Ready
+
+---
