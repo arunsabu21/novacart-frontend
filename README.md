@@ -1,6 +1,6 @@
 # NovaCart Frontend
 
-[![Languages](https://img.shields.io/badge/languages-JavaScript%2072.5%%20%7C%20CSS%2026.5%%20%7C%20HTML%201%-brightgreen.svg)](https://github.com/arunsabu21/novacart-frontend)
+[![Languages](https://img.shields.io/badge/languages-JavaScript%2072.5%25%20%7C%20CSS%2026.5%25%20%7C%20HTML%201%25-brightgreen.svg)](https://github.com/arunsabu21/novacart-frontend)
 
 NovaCart is a modern and dynamic e-commerce frontend powered by **React** and **Vite**. This project delivers a seamless shopping experience with real-time cart actions, user authentication, wishlists, and secure Stripe payments. NovaCart consumes a Django REST API backend, providing end-to-end integration from browsing products to checking out.
 
@@ -9,14 +9,14 @@ NovaCart is a modern and dynamic e-commerce frontend powered by **React** and **
 
 ---
 
-##  Live Demo & Backend
+## Live Demo & Backend
 
 - **Live Backend API:** [https://novacart-backend-bnnb.onrender.com](https://novacart-backend-bnnb.onrender.com)
 - **Frontend Deployment:** _Coming soon!_
 
 ---
 
-##  Tech Stack
+## Tech Stack
 
 - **React** (with Vite)
 - **React Router** (routing)
@@ -28,7 +28,7 @@ NovaCart is a modern and dynamic e-commerce frontend powered by **React** and **
 
 ---
 
-##  Environment Setup
+## Environment Setup
 
 1. Install dependencies:
     ```sh
@@ -48,7 +48,7 @@ NovaCart is a modern and dynamic e-commerce frontend powered by **React** and **
 
 ---
 
-##  Features
+## Features
 
 - User Signup & Login (JWT-based auth)
 - Browse All Products
@@ -61,7 +61,7 @@ NovaCart is a modern and dynamic e-commerce frontend powered by **React** and **
 
 ---
 
-##  Roadmap
+## Roadmap
 
 - Improved UI/UX polish
 - Order Tracking Pages
@@ -70,21 +70,21 @@ NovaCart is a modern and dynamic e-commerce frontend powered by **React** and **
 
 ---
 
-##  Related Projects
+## Related Projects
 
 - **Backend (Django + DRF):**  
   [https://github.com/arunsabu21/novacart-backend](https://github.com/arunsabu21/novacart-backend)
 
 ---
 
-## 👨‍💻 Author
+## Author
 
 **Arun Sabu**  
 Full-Stack Developer (Django & React)
 
 ---
 
-## 🏷️ Version
+## Version
 
 - **Frontend:** Work in Progress
 - **Backend:** v1 API Ready
