@@ -4,6 +4,7 @@ import axios from "../api/axios";
 import "../AuthPage.css";
 import Loader from "../components/Loader";
 
+
 function Login({ setIsLoggedIn }) {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -32,7 +33,7 @@ function Login({ setIsLoggedIn }) {
     try {
       setLoading(true);
 
-      const response = await axios.post("/token/", {
+      const response = await axios.post("/api/token/", {
         username,
         password,
       });

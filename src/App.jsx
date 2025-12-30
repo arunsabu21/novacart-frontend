@@ -1,16 +1,10 @@
-import { useState } from "react";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-  useLocation,
-} from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import SiteNav from "./components/SiteNavbar";
-
+import AuthBackArrow from "./components/AuthBackArrow";
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -30,18 +24,49 @@ import Payment from "./pages/StripeCheckout";
 ========================= */
 function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
   const location = useLocation();
+  const path = location.pathname;
 
-  // checkout flow pages
+  // ✅ reactive mobile detection
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth < 768);
+    }
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // 🛒 checkout flow
   const checkoutRoutes = ["/cart", "/checkout", "/payment"];
-  const isCheckoutFlow = checkoutRoutes.includes(location.pathname);
+  const isCheckoutFlow = checkoutRoutes.includes(path);
+
+  // 🔐 auth pages
+  const authRoutes = ["/login", "/signup", "/forgot-password"];
+  const isAuthPage =
+    authRoutes.includes(path) || path.startsWith("/reset-password");
 
   return (
     <>
-      {/* ✅ SHOW SiteNav ONLY for checkout flow */}
+      {/* 🛒 Checkout pages: SiteNav only */}
       {isCheckoutFlow && <SiteNav />}
 
-      {/* ✅ SHOW Main Navbar ONLY for non-checkout pages */}
-      {!isCheckoutFlow && (
+      {/* 🔐 AUTH PAGES: no navbar anywhere */}
+      {/* 🔐 AUTH PAGES */}
+      {isAuthPage && (
+        <>
+          {/* 🖥️ Desktop → show normal navbar */}
+          {!isMobile && (
+            <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+          )}
+
+          {/* 📱 Mobile → only back arrow */}
+          {isMobile && <AuthBackArrow />}
+        </>
+      )}
+
+      {/* 🌐 NORMAL PAGES (not auth, not checkout) */}
+      {!isCheckoutFlow && !isAuthPage && (
         <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
       )}
 
@@ -50,6 +75,7 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
           path="/login"
           element={<Login setIsLoggedIn={setIsLoggedIn} />}
         />
+
         <Route path="/signup" element={<Signup />} />
 
         <Route
@@ -58,7 +84,12 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
         />
 
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password/:uid/:token" element={<SetNewPassword />} />
+
+        <Route
+          path="/reset-password/:uid/:token"
+          element={<SetNewPassword />}
+        />
+
         <Route path="/profile" element={<Profile />} />
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<ProductDetail />} />
@@ -68,8 +99,8 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
         <Route path="/payment" element={<Payment />} />
       </Routes>
 
-      {/* ✅ FOOTER ONLY FOR NON-CHECKOUT */}
-      {!isCheckoutFlow && <Footer />}
+      {/* ⛔ Footer only on normal pages */}
+      {!isCheckoutFlow && !isAuthPage && <Footer />}
     </>
   );
 }
@@ -89,13 +120,11 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
-      <Layout
-        isLoggedIn={isLoggedIn}
-        setIsLoggedIn={setIsLoggedIn}
-        handleLogout={handleLogout}
-      />
-    </BrowserRouter>
+    <Layout
+      isLoggedIn={isLoggedIn}
+      setIsLoggedIn={setIsLoggedIn}
+      handleLogout={handleLogout}
+    />
   );
 }
 

@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../api/axios";   
-import "../App.css";
+import axios from "../api/axios";
+import "../AuthPage.css";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -26,10 +27,7 @@ function ForgotPassword() {
 
     try {
       //  axios automatically calls:  <BASE_URL>/api/password-reset/
-      await axios.post(
-        "/password-reset/",
-        new URLSearchParams({ email })
-      );
+      await axios.post("/password-reset/", new URLSearchParams({ email }));
 
       setMessage("Reset link sent to your email");
       setEmail("");
@@ -45,41 +43,58 @@ function ForgotPassword() {
   }
 
   return (
-    <div className="auth-container">
-      {message && <div className="toast">{message}</div>}
+    <>
+      <div className="bgColor" />
+      <div className="layout">
+        <div id="mainContent">
+          <div id="reactPage">
+            <div className="authPage">
+              {loading && <Loader />}
+              {message && (
+                <div className="login-messages">
+                  <div className="login-alert error">{message}</div>
+                </div>
+              )}
 
-      <div className="auth-box">
-        <h2 style={{ textAlign: "left", fontSize: 20, color: "#424553" }}>
-          Forgot Password
-        </h2>
+              <div className="formContainer Gap">
+                <div className="authHeader plHeader">Reset Password</div>
+                <p>
+                  Enter your email and we’ll send a link on your email to reset
+                  your password.
+                </p>
+                <form onSubmit={handleSubmit}>
+                  <input
+                    type="email"
+                    className="auth-input"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
 
-        <form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            className="auth-input"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+                  <button className="auth-button">Send Reset Link</button>
 
-          <button className="auth-button">Send Reset Link</button>
-
-          <p
-            style={{
-              marginTop: 14,
-              fontSize: 13,
-              cursor: "pointer",
-              color: "#20bd99",
-              textAlign: "center",
-              fontWeight: "bold",
-            }}
-            onClick={() => navigate("/login")}
-          >
-            Back to Login
-          </p>
-        </form>
+                  <div style={{ marginTop: "14px", fontSize: "12px" }}>
+                    <p style={{ marginBottom: "8px" }}>
+                      Back to login?{" "}
+                      <span
+                        onClick={() => navigate("/login")}
+                        style={{
+                          color: "#20bd99",
+                          cursor: "pointer",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Login
+                      </span>
+                    </p>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
