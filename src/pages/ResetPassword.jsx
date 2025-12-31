@@ -20,14 +20,15 @@ function ForgotPassword() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (!email) {
+    const cleanEmail = email.trim().toLowerCase();
+
+    if (!cleanEmail) {
       setMessage("Email is required");
       return;
     }
 
     try {
-      //  axios automatically calls:  <BASE_URL>/api/password-reset/
-      await axios.post("/password-reset/", new URLSearchParams({ email }));
+      await axios.post("/api/password-reset/", { email: cleanEmail });
 
       setMessage("Reset link sent to your email");
       setEmail("");

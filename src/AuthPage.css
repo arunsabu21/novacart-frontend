@@ -81,3 +81,56 @@ body {
     font-size: 10px;
   }
 }
+
+.password-page-height {
+  height: 100%;
+}
+
+.base-password {
+  margin-top: 5px;
+}
+
+.password-reset-card {
+  background-color: white;
+  padding: 10px 0px 20px;
+  margin-bottom: 10px;
+  text-align: justify;
+  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
+  padding: 55px 40px 20px 40px;
+}
+
+.page-page {
+  background-color: #f5f5f6;
+}
+
+.page-password-reset {
+  font-size: 14px;
+  background: #f5f5f6;
+}
+
+@media (min-width: 780px) {
+  .page-password-reset {
+    width: 40%;
+    display: block;
+    margin: 0 auto;
+    background: #ffffff;
+  }
+  .page-page {
+    margin: 10% 5%;
+    min-height: 650px;
+    background-color: white;
+  }
+}
+
+@media (min-width: 980px) {
+  .page-page {
+    margin: 8% auto;
+    max-width: 980px;
+  }
+
+  .page-password-reset {
+    width: 40%;
+    background: #ffffff;
+  }
+}
