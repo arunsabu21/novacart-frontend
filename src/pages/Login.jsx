@@ -31,7 +31,7 @@ function Login({ setIsLoggedIn }) {
     }
 
     if (AUTH_MAINTENANCE) {
-      setMessage("Server maintenance in progress. Try again later.");
+      setMessage("We're currently under maintenance.Please try again soon.");
       return;
     }
 
