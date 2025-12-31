@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../api/axios";
 import "../AuthPage.css";
+import { AUTH_MAINTENANCE } from "../config";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -27,8 +28,13 @@ function ForgotPassword() {
       return;
     }
 
+    if (AUTH_MAINTENANCE) {
+      setMessage("Server maintenance in progress. Try again later.");
+      return;
+    }
+
     try {
-      await axios.post("/api/password-reset/", { email: cleanEmail });
+      await axios.post("/password-reset/", { email: cleanEmail });
 
       setMessage("Reset link sent to your email");
       setEmail("");

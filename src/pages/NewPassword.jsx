@@ -33,7 +33,7 @@ function SetNewPassword() {
       setLoading(true);
 
       // send ONLY what backend expects
-      const res = await axios.post("/api/password-reset/confirm/", {
+      const res = await axios.post("/password-reset/confirm/", {
         token,
         password,
       });

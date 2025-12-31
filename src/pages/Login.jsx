@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "../api/axios";
 import "../AuthPage.css";
 import Loader from "../components/Loader";
-
+import { AUTH_MAINTENANCE } from "../config";
 
 function Login({ setIsLoggedIn }) {
   const [username, setUserName] = useState("");
@@ -27,6 +27,11 @@ function Login({ setIsLoggedIn }) {
 
     if (!username || !password) {
       setMessage("Please fill all fields");
+      return;
+    }
+
+    if (AUTH_MAINTENANCE) {
+      setMessage("Server maintenance in progress. Try again later.");
       return;
     }
 

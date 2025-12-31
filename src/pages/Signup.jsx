@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../api/axios"; 
+import axios from "../api/axios";
 import "../AuthPage.css";
 import Loader from "../components/Loader";
+import { AUTH_MAINTENANCE } from "../config";
 
 function Signup() {
   const [username, setUserName] = useState("");
@@ -30,6 +31,11 @@ function Signup() {
       return;
     }
 
+    if (AUTH_MAINTENANCE) {
+      setMessage("Server maintenance in progress. Try again later.");
+      return;
+    }
+
     try {
       setLoading(true);
 
@@ -46,13 +52,13 @@ function Signup() {
 
       setTimeout(() => navigate("/login"), 1500);
     } catch (err) {
+      console.log("SIGNUP ERROR:", err.response?.data, err.response?.status);
+
       if (err.response?.status === 400 || err.response?.status === 409) {
-        setMessage("User already exists");
+        setMessage(err.response?.data || "User already exists");
       } else {
         setMessage("Server error. Try again.");
       }
-    } finally {
-      setLoading(false);
     }
   }
 
