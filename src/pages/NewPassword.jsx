@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../components/Loader";
 import axios from "../api/axios";
-import "../Authpage.css";
+import "../AuthPage.css";
 
 function SetNewPassword() {
   // only token needed
