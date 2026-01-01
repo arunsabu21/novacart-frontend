@@ -1,1 +1,1 @@
-export const AUTH_MAINTENANCE = true;
+export const AUTH_MAINTENANCE = false;

@@ -41,8 +41,14 @@ function ForgotPassword() {
 
       setTimeout(() => navigate("/login"), 1500);
     } catch (err) {
+      console.log("RESET ERROR:", err.response?.data, err.response?.status);
+
       if (err.response?.status === 404) {
         setMessage("Email not registered");
+      } else if (err.response?.data?.email) {
+        setMessage(err.response.data.email);
+      } else if (err.response?.data?.detail) {
+        setMessage(err.response.data.detail);
       } else {
         setMessage("Server error. Try again");
       }
