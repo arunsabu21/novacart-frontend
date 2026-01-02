@@ -38,7 +38,7 @@ function Login({ setIsLoggedIn }) {
     try {
       setLoading(true);
       // FIXED
-      const response = await axios.post("/api/token/", {
+      const response = await axios.post("/token/", {
         username,
         password,
       });
