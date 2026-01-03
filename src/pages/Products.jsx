@@ -23,32 +23,30 @@ function Products() {
 
   return (
     <div className="products-container">
-      <h1 className="products-heading">Collections</h1>
+    <div className="products-grid">
+      {products.map((product) => (
+        <div
+          key={product.id}
+          className="product-card"
+          onClick={() => navigate(`/products/${product.id}`)}
+        >
+          <div className="img-wrapper">
+            <img src={product.image} alt={product.title} />
+          </div>
 
-      <div className="products-grid">
-        {products.map((book) => {
-          console.log("IMAGE VALUE:", book.image);
+          <div className="product-details">
+            <h3>{product.title}</h3>
+            <p className="subtitle">{product.category}</p>
 
-          return (
-            <div
-              key={book.id}
-              className="product-card"
-              onClick={() => navigate(`/products/${book.id}`)}
-            >
-              <img
-                src={book.image}                 // ✅ direct URL from backend
-                alt={book.title}
-                className="product-image"
-              />
-
-              <div className="product-info">
-                <h3 className="product-title">{book.title}</h3>
-                <p className="product-price">₹ {book.price}</p>
-              </div>
+            <div className="price-row">
+              <span className="price">₹{product.price}</span>
+              <span className="old-price">₹{product.old_price}</span>
+              <span className="discount">{product.discount}% OFF</span>
             </div>
-          );
-        })}
-      </div>
+          </div>
+        </div>
+      ))}
+    </div>
     </div>
   );
 }
