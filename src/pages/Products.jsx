@@ -90,7 +90,7 @@ function Products() {
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
-        setMessage("Added to wishlist");
+        setMessage("Product added to wishlist");
       }
 
       // reload wishlist from backend
@@ -104,10 +104,14 @@ function Products() {
   };
 
   return (
-    <div className="products-container">
+    <div className="products-container products-page">
       {pageLoading && <Loader />}
 
-      {message && <div className="flash-message">{message}</div>}
+      {message && (
+        <div className="login-messages">
+          <div className="login-alert info">{message}</div>
+        </div>
+      )}
 
       <div className="products-grid">
         {products.map((product) => (
