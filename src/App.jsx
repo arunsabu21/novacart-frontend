@@ -42,7 +42,7 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
   const isCheckoutFlow = checkoutRoutes.includes(path);
 
   // 🔐 auth pages
-  const authRoutes = ["/login", "/signup", "/forgot-password"];
+  const authRoutes = ["/login", "/signup", "/forgot-password",];
   const isAuthPage =
     authRoutes.includes(path) || path.startsWith("/reset-password");
 
