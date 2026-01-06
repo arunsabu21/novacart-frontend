@@ -6,6 +6,11 @@ body {
   overflow-x: hidden;
 }
 
+/* #root {
+  min-height: 1500px;
+  margin-top: -2px;
+} */
+
 * {
   margin: 0;
   padding: 0;
@@ -243,3 +248,5 @@ body {
   font-weight: bold;
   margin-top: 10px;
 }
+
+

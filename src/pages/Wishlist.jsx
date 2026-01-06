@@ -1,13 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios, { BASE_URL } from "../api/axios";
+import { useState, useEffect } from "react";
+import axios from "../api/axios";
+import DesktopWishlist from "../components/DesktopWishlist";
+import MobileWishlist from "../components/MobileWishlist";
 import EmptyWishlist from "../components/EmptyWishlist";
-import "../Wishlist.css";
+import Loader from "../components/Loader";
 
-function Wishlist() {
+export default function Wishlist() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [wishlist, setWishlist] = useState([]);
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
+  // responsive switch
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth < 768);
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // fetch wishlist once here
   useEffect(() => {
     fetchWishlist();
   }, []);
@@ -15,101 +28,67 @@ function Wishlist() {
   const fetchWishlist = async () => {
     try {
       const token = localStorage.getItem("access");
-      const response = await axios.get("/products/wishlist/", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+
+      const res = await axios.get("/products/wishlist/", {
+        headers: { Authorization: `Bearer ${token}` },
       });
-      setWishlist(response.data);
+
+      setWishlist(res.data);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
   const removeFromWishlist = async (id) => {
     try {
       const token = localStorage.getItem("access");
+
       await axios.delete(`/products/wishlist/${id}/`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
+
       fetchWishlist();
     } catch (err) {
       console.log(err);
     }
   };
 
-  async function addToCart(bookId) {
+  const addToCart = async (bookId) => {
     try {
       const token = localStorage.getItem("access");
 
       await axios.post(
         "/cart/add/",
         { book_id: bookId },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      alert("Added to cart"); // temporary feedback
+      alert("Moved to bag 😄");
     } catch (err) {
-      console.error(err);
-      alert("Login required");
+      console.log("❌ CART ERROR:", err.response?.data);
     }
-  }
+  };
 
-  return (
-    <div className="wishlist-layout">
-      <div className="wishlist-container">
-        {wishlist.length > 0 && (
-          <h1 className="wishlist-heading">My Wishlist ❤️</h1>
-        )}
+  // ---------- CONDITIONAL RENDER ----------
 
-        {wishlist.length === 0 ? (
-          <EmptyWishlist />
-        ) : (
-          <div className="wishlist-grid">
-            {wishlist.map((item) => (
-              <div key={item.id} className="wishlist-card">
-                {/* ❌ REMOVE ICON */}
-                <button
-                  className="wishlist-close"
-                  onClick={() => removeFromWishlist(item.id)}
-                >
-                  ×
-                </button>
+  if (loading) return <Loader />;
 
-                {/* IMAGE */}
-                <img
-                  src={item.book.image}
-                  alt={item.book.title}
-                  className="wishlist-image"
-                  onClick={() => navigate(`/products/${item.book.id}`)}
-                />
+  if (!loading && wishlist.length === 0) return <EmptyWishlist />;
 
-                {/* INFO */}
-                <div className="wishlist-info">
-                  <h3 className="wishlist-title">{item.book.title}</h3>
-                  <p className="wishlist-price">₹ {item.book.price}</p>
-
-                  {/* ADD TO BAG */}
-                  <button
-                    className="wishlist-bag"
-                    onClick={() => addToCart(item.book.id)}
-                  >
-                    Add to Bag
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
+  // send data + handlers to children
+  return isMobile ? (
+    <MobileWishlist
+      wishlist={wishlist}
+      removeFromWishlist={removeFromWishlist}
+      addToCart={addToCart}
+    />
+  ) : (
+    <DesktopWishlist
+      wishlist={wishlist}
+      removeFromWishlist={removeFromWishlist}
+      addToCart={addToCart}
+    />
   );
 }
-
-export default Wishlist;
