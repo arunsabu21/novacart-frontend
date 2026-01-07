@@ -1,81 +1,110 @@
-# NovaCourt Frontend
+# NovaCart Frontend
 
-A modern, responsive frontend application built with cutting-edge web technologies. This project delivers a seamless user experience with a clean, intuitive interface.
+[![JavaScript](https://img.shields.io/badge/JavaScript-70.7%25-F7DF1E?style=flat-square&logo=javascript)](https://github.com/arunsabu21/novacart-frontend)
+[![CSS](https://img.shields.io/badge/CSS-28.5%25-1572B6?style=flat-square&logo=css3)](https://github.com/arunsabu21/novacart-frontend)
+[![HTML](https://img.shields.io/badge/HTML-0.8%25-E34C26?style=flat-square&logo=html5)](https://github.com/arunsabu21/novacart-frontend)
+[![React](https://img.shields.io/badge/React-19.2.0-61DAFB?style=flat-square&logo=react)](https://github.com/arunsabu21/novacart-frontend)
+[![Vite](https://img.shields.io/badge/Vite-7.2.4-646CFF?style=flat-square&logo=vite)](https://github.com/arunsabu21/novacart-frontend)
 
-## 📋 Project Overview
+A modern, responsive e-commerce frontend built with React and Vite. NovaCart delivers a seamless shopping experience with intuitive UI, secure payment processing, and real-time cart management.
 
-NovaCourt Frontend is a comprehensive frontend solution designed to provide users with an engaging and efficient platform. The application leverages modern web development practices and frameworks to ensure optimal performance and maintainability.
+## Overview
 
-## 🛠️ Technology Stack
+NovaCart Frontend is a full-featured e-commerce platform providing users with a complete shopping journey from product discovery to secure checkout. The application integrates with a Django REST API backend and Stripe for secure payment processing.
 
-### Language Composition
-- **JavaScript**: 70.7% - Core application logic and interactivity
-- **CSS**: 28.5% - Styling and responsive design
-- **HTML**: 0.8% - Markup structure
+## Features
 
-### Key Technologies
-- Modern JavaScript (ES6+)
-- Responsive CSS styling
-- Clean HTML5 structure
-- Performance-optimized frontend architecture
+- User Authentication with JWT-based signup & login
+- Product Catalog with detailed product information
+- Wishlists for saving favorite products
+- Shopping Cart with real-time management
+- Secure Payments with Stripe integration
+- Responsive Design optimized for all devices
+- Image Optimization with Cloudinary
+- Fast Performance powered by Vite
 
-## 🚀 Features
+## Tech Stack
 
-- **Responsive Design** - Mobile-first approach ensuring compatibility across all devices
-- **Modern UI/UX** - Clean and intuitive interface for optimal user experience
-- **Performance Optimized** - Fast load times and smooth interactions
-- **Scalable Architecture** - Designed for easy maintenance and feature expansion
+- React 19.2.0
+- Vite 7.2.4
+- React Router DOM 7.10.1
+- Axios 1.13.2
+- Stripe (React & JS)
+- React Icons 5.5.0
+- CSS3
+- JWT Authentication
 
-## 📦 Project Structure
+## Installation
+
+### Prerequisites
+- Node.js (v16 or higher)
+- npm or yarn
+
+### Setup Steps
+
+1. Clone the repository
+   ```sh
+   git clone https://github.com/arunsabu21/novacart-frontend.git
+   cd novacart-frontend
+   ```
+
+2. Install dependencies
+   ```sh
+   npm install
+   ```
+
+3. Create a `.env` file in the project root:
+   ```
+   VITE_API_BASE_URL=https://novacart-backend-bnnb.onrender.com/api
+   VITE_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
+   ```
+
+4. Start the development server
+   ```sh
+   npm run dev
+   ```
+
+## Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run lint` - Run ESLint
+- `npm run preview` - Preview production build
+
+## Project Structure
 
 ```
 novacart-frontend/
 ├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── styles/
+│   ├── utils/
+│   └── App.jsx
 ├── public/
-├── components/
-├── styles/
-└── assets/
+├── index.html
+├── vite.config.js
+├── package.json
+└── README.md
 ```
 
-## 🔧 Installation & Setup
+## API Integration
 
-1. Clone the repository
-   ```bash
-   git clone https://github.com/arunsabu21/novacart-frontend.git
-   ```
+Backend Repository: [arunsabu21/novacart-backend](https://github.com/arunsabu21/novacart-backend)
 
-2. Navigate to project directory
-   ```bash
-   cd novacart-frontend
-   ```
+API Base URL: https://novacart-backend-bnnb.onrender.com/api
 
-3. Install dependencies
-   ```bash
-   npm install
-   ```
+## Roadmap
 
-4. Start development server
-   ```bash
-   npm start
-   ```
+- Frontend deployment
+- Order tracking dashboard
+- Advanced product search & filters
+- Customer reviews & ratings
+- Admin dashboard
 
-## 📝 Usage
-
-[Add specific usage instructions for your application]
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
-## 👤 Author
+## Author
 
 **Arun Sabu**
-- GitHub: [@arunsabu21](https://github.com/arunsabu21)
+Full-Stack Developer (Django & React)
 
----
-
-**Last Updated**: 2026-01-07 07:41:21 UTC
+GitHub: [@arunsabu21](https://github.com/arunsabu21)
