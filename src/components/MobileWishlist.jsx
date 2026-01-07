@@ -7,7 +7,7 @@ export default function MobileWishlist({
   addToCart,
 }) {
   return (
-    <div style={{ paddingTop: "66px" }}>
+    <div style={{ paddingTop: "55px" }}>
       {/* Empty wishlist */}
       {wishlist.length === 0 && (
         <div style={{ padding: "40px", textAlign: "center" }}>

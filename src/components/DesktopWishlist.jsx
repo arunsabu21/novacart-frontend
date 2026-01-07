@@ -39,7 +39,7 @@ export default function DesktopWishlist({
 
                 <button
                   className="wishlist-move-btn"
-                  onClick={() => addToCart(item?.book?.id)}
+                  onClick={() => addToCart(item?.book)}
                 >
                   MOVE TO BAG
                 </button>

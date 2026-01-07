@@ -249,4 +249,70 @@ body {
   margin-top: 10px;
 }
 
+.mobile-nav-container {
+  background-color: #fff;
+  position: fixed;
+  z-index: 100;
+  width: 100%;
+  box-shadow: 0 1px 2px 0 rgba(148, 150, 159, 0.3);
+}
 
+.mobile-nav-back {
+  display: inline-block;
+}
+
+.mobile-nav-container .menu-icon {
+  margin-left: 16px !important;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.mobile-nav-container .header-icon {
+  width: 24px;
+  height: 24px;
+  margin: 16px 16px 16px 0;
+  display: inline-block;
+}
+
+svg:not(:root) {
+  overflow: hidden;
+}
+
+.header-title {
+  font-size: 16px;
+  vertical-align: top;
+  top: 19px;
+  position: relative;
+  font-weight: 700;
+  font-family: Assistant;
+  line-height: normal;
+  width: calc(100% - 260px);
+  text-transform: capitalize;
+}
+
+.header-heading {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: -18px;
+}
+.text-ellipse {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header-sub-heading {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.pull-right {
+  float: right !important;
+}
+.header-actions {
+  display: inline-block;
+}
+
+.mobile-page {
+  padding-top: 56px;
+}
