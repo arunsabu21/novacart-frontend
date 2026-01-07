@@ -142,12 +142,12 @@ function Cart() {
                 <span>₹ {totalAmount}</span>
               </div>
 
-              <button
+              {/* <button
                 className="checkout-btn"
                 onClick={() => navigate("/checkout")}
               >
                 Proceed to Checkout
-              </button>
+              </button> */}
             </div>
           </div>
         )}

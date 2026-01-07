@@ -62,7 +62,7 @@ function Products() {
   // ---------------------- TOGGLE ----------------------
   const toggleWishlist = async (product) => {
     if (!token) {
-      setMessage("Login required 🔐");
+      setMessage("Login required");
       setTimeout(() => setMessage(""), 1500);
       return;
     }
@@ -104,49 +104,50 @@ function Products() {
   };
 
   return (
-    <div className="products-container products-page">
-      {pageLoading && <Loader />}
+    <div className="mobile-page">
+      <div className="products-container products-page">
+        {pageLoading && <Loader />}
 
-      {message && (
-        <div className="login-messages">
-          <div className="login-alert info">{message}</div>
-        </div>
-      )}
-
-      <div className="products-grid">
-        {products.map((product) => (
-          <div
-            key={product.id}
-            className="product-card"
-            onClick={() => navigate(`/products/${product.id}`)}
-          >
-            <div className="img-wrapper">
-              <img src={product.image} alt={product.title} />
-            </div>
-
-            <button
-              className="wishlist-btn"
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleWishlist(product);
-              }}
+        {message && (
+          <div className="login-messages">
+            <div className="login-alert info">{message}</div>
+          </div>
+        )}
+        <div className="products-grid">
+          {products.map((product) => (
+            <div
+              key={product.id}
+              className="product-card"
+              onClick={() => navigate(`/products/${product.id}`)}
             >
-              <img
-                src={isWishlisted(product.id) ? wishListed : wishlistIcon}
-                alt="wishlist"
-                style={{ width: 19, height: 19 }}
-              />
-            </button>
+              <div className="img-wrapper">
+                <img src={product.image} alt={product.title} />
+              </div>
 
-            <div className="product-details">
-              <h3>{product.title}</h3>
-              <h4>{product.subtitle}</h4>
-              <div className="price-row">
-                <span className="price">₹{product.price}</span>
+              <button
+                className="wishlist-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleWishlist(product);
+                }}
+              >
+                <img
+                  src={isWishlisted(product.id) ? wishListed : wishlistIcon}
+                  alt="wishlist"
+                  style={{ width: 19, height: 19 }}
+                />
+              </button>
+
+              <div className="product-details">
+                <h3>{product.title}</h3>
+                <h4>{product.subtitle}</h4>
+                <div className="price-row">
+                  <span className="price">₹{product.price}</span>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import SiteNav from "./components/SiteNavbar";
 import AuthBackArrow from "./components/AuthBackArrow";
+import MobileNav from "./components/MobileNav";
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -42,7 +43,7 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
   const isCheckoutFlow = checkoutRoutes.includes(path);
 
   // 🔐 auth pages
-  const authRoutes = ["/login", "/signup", "/forgot-password",];
+  const authRoutes = ["/login", "/signup", "/forgot-password"];
   const isAuthPage =
     authRoutes.includes(path) || path.startsWith("/reset-password");
 
@@ -65,9 +66,15 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
         </>
       )}
 
-      {/* 🌐 NORMAL PAGES (not auth, not checkout) */}
+      {/* 🌐 NORMAL PAGES */}
       {!isCheckoutFlow && !isAuthPage && (
-        <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+        <>
+          {!isMobile && (
+            <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+          )}
+
+          {isMobile && <MobileNav />}
+        </>
       )}
 
       <Routes>
