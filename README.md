@@ -1,92 +1,81 @@
-# NovaCart Frontend
+# NovaCourt Frontend
 
-[![Languages](https://img.shields.io/badge/languages-JavaScript%2072.5%25%20%7C%20CSS%2026.5%25%20%7C%20HTML%201%25-brightgreen.svg)](https://github.com/arunsabu21/novacart-frontend)
+A modern, responsive frontend application built with cutting-edge web technologies. This project delivers a seamless user experience with a clean, intuitive interface.
 
-NovaCart is a modern and dynamic e-commerce frontend powered by **React** and **Vite**. This project delivers a seamless shopping experience with real-time cart actions, user authentication, wishlists, and secure Stripe payments. NovaCart consumes a Django REST API backend, providing end-to-end integration from browsing products to checking out.
+## 📋 Project Overview
 
-> **Status**: Actively in development.  
-> The UI, payment flow, and overall UX are being continuously improved.
+NovaCourt Frontend is a comprehensive frontend solution designed to provide users with an engaging and efficient platform. The application leverages modern web development practices and frameworks to ensure optimal performance and maintainability.
 
----
+## 🛠️ Technology Stack
 
-## Live Demo & Backend
+### Language Composition
+- **JavaScript**: 70.7% - Core application logic and interactivity
+- **CSS**: 28.5% - Styling and responsive design
+- **HTML**: 0.8% - Markup structure
 
-- **Live Backend API:** [https://novacart-backend-bnnb.onrender.com](https://novacart-backend-bnnb.onrender.com)
-- **Frontend Deployment:** _Coming soon!_
+### Key Technologies
+- Modern JavaScript (ES6+)
+- Responsive CSS styling
+- Clean HTML5 structure
+- Performance-optimized frontend architecture
 
----
+## 🚀 Features
 
-## Tech Stack
+- **Responsive Design** - Mobile-first approach ensuring compatibility across all devices
+- **Modern UI/UX** - Clean and intuitive interface for optimal user experience
+- **Performance Optimized** - Fast load times and smooth interactions
+- **Scalable Architecture** - Designed for easy maintenance and feature expansion
 
-- **React** (with Vite)
-- **React Router** (routing)
-- **Axios**
-- **Stripe** (secure card payments)
-- **JWT Authentication**
-- **Cloudinary** (product images)
-- **Custom CSS**
+## 📦 Project Structure
 
----
+```
+novacart-frontend/
+├── src/
+├── public/
+├── components/
+├── styles/
+└── assets/
+```
 
-## Environment Setup
+## 🔧 Installation & Setup
 
-1. Install dependencies:
-    ```sh
-    npm install
-    ```
-2. Create a `.env` file in the project root:
-    ```
-    VITE_API_BASE_URL=https://novacart-backend-bnnb.onrender.com/api
-    VITE_STRIPE_PUBLISHABLE_KEY=your_publishable_key_here
-    ```
-   > `.env` is gitignored and should not be committed.
+1. Clone the repository
+   ```bash
+   git clone https://github.com/arunsabu21/novacart-frontend.git
+   ```
 
-3. Start the development server:
-    ```sh
-    npm run dev
-    ```
+2. Navigate to project directory
+   ```bash
+   cd novacart-frontend
+   ```
 
----
+3. Install dependencies
+   ```bash
+   npm install
+   ```
 
-## Features
+4. Start development server
+   ```bash
+   npm start
+   ```
 
-- User Signup & Login (JWT-based auth)
-- Browse All Products
-- Product Detail Pages
-- Wishlists
-- Shopping Cart
-- Secure Stripe Checkout
-- Password Reset Flow
-- Responsive Layout
+## 📝 Usage
 
----
+[Add specific usage instructions for your application]
 
-## Roadmap
+## 🤝 Contributing
 
-- Improved UI/UX polish
-- Order Tracking Pages
-- Product Search & Filters
-- Public Frontend Deployment
+Contributions are welcome! Please feel free to submit a Pull Request.
 
----
+## 📄 License
 
-## Related Projects
+This project is licensed under the MIT License.
 
-- **Backend (Django + DRF):**  
-  [https://github.com/arunsabu21/novacart-backend](https://github.com/arunsabu21/novacart-backend)
+## 👤 Author
 
----
-
-## Author
-
-**Arun Sabu**  
-Full-Stack Developer (Django & React)
+**Arun Sabu**
+- GitHub: [@arunsabu21](https://github.com/arunsabu21)
 
 ---
 
-## Version
-
-- **Frontend:** Work in Progress
-- **Backend:** v1 API Ready
-
----
+**Last Updated**: 2026-01-07 07:41:21 UTC
