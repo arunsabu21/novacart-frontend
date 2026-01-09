@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "../api/axios";
 
-import DesktopProductDetail from "../components/DesktopProductDetail";
 import MobileProductDetail from "../components/MobileProductDetail";
 import Loader from "../components/Loader";
 import MobileToast from "../components/MobileToast";
@@ -60,7 +59,7 @@ export default function ProductDetail() {
         const exists = res.data.some((item) => item.product === product.id);
 
         if (exists) {
-          setAdded(true); 
+          setAdded(true);
         }
       } catch (err) {
         console.error(err);
@@ -131,7 +130,7 @@ export default function ProductDetail() {
 
   // Add to bag
   const handleAddToBag = async () => {
-    if (adding) return; 
+    if (adding) return;
 
     setAdding(true);
 
@@ -175,7 +174,7 @@ export default function ProductDetail() {
   if (loading) return <Loader />;
   if (!product) return <p>Product not found.</p>;
 
-  return isMobile ? (
+  return (
     <>
       <MobileProductDetail
         product={product}
@@ -185,13 +184,13 @@ export default function ProductDetail() {
         adding={adding}
       />
 
-      <MobileToast
-        message={toastMessage}
-        show={showToast}
-        onClose={() => setShowToast(false)}
-      />
+      {isMobile && (
+        <MobileToast
+          message={toastMessage}
+          show={showToast}
+          onClose={() => setShowToast(false)}
+        />
+      )}
     </>
-  ) : (
-    <DesktopProductDetail product={product} />
   );
 }
