@@ -10,6 +10,7 @@ export default function MobileProductDetail({
   onWishlist,
   onAddToBag,
   wishlisted,
+  wishlistLoading,
 }) {
   const [adding, setAdding] = useState(false);
   const [added, setAdded] = useState(false);
@@ -58,11 +59,19 @@ export default function MobileProductDetail({
       </div>
 
       <div className="m-pdp-actions">
-        <button className="m-wishlist" onClick={onWishlist}>
-          <img
-            src={wishlisted ? FilledWishIcon : OutlineWishIcon}
-            alt="Wishlist"
-          />
+        <button
+          className={`m-wishlist ${wishlisted ? "wish-active" : ""}`}
+          onClick={onWishlist}
+          disabled={wishlistLoading}
+        >
+          <span className="wish-bubble" />
+
+          {!wishlistLoading && (
+            <img
+              src={wishlisted ? FilledWishIcon : OutlineWishIcon}
+              alt="Wishlist"
+            />
+          )}
         </button>
 
         <button

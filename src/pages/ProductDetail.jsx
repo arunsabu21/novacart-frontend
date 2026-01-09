@@ -19,6 +19,8 @@ export default function ProductDetail() {
   const [added, setAdded] = useState(false);
   const [adding, setAdding] = useState(false);
   const [wishlisted, setWishlisted] = useState(false);
+  const [wishlistLoading, setWishlistLoading] = useState(true);
+  const [wishlistActionLoading, setWishlistActionLoading] = useState(false);
 
   /* ---------------- SCREEN DETECTION ---------------- */
   useEffect(() => {
@@ -82,11 +84,15 @@ export default function ProductDetail() {
           },
         });
 
-        const exists = res.data.some((item) => item.book === product.id);
+        const exists = res.data.some(
+          (item) => Number(item.book?.id) === Number(product.id)
+        );
 
         setWishlisted(exists);
       } catch (err) {
         console.error(err);
+      } finally {
+        setWishlistLoading(false);
       }
     }
 
@@ -96,11 +102,13 @@ export default function ProductDetail() {
   /* ---------------- ACTION ENDPOINTS ---------------- */
 
   const handleWishlist = async () => {
+    if (wishlistActionLoading) return;
+
+    setWishlistActionLoading(true);
     const token = localStorage.getItem("access");
 
     try {
       if (!wishlisted) {
-        // Add to wishlist
         await axios.post(
           "/products/wishlist/",
           { book_id: product.id },
@@ -110,7 +118,6 @@ export default function ProductDetail() {
         setWishlisted(true);
         setToastMessage("Product added to wishlist");
       } else {
-        // Remove from wishlist
         await axios.delete(`/products/wishlist/${product.id}/`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -125,6 +132,8 @@ export default function ProductDetail() {
       }
     } catch (err) {
       console.error(err);
+    } finally {
+      setWishlistActionLoading(false);
     }
   };
 
@@ -180,6 +189,7 @@ export default function ProductDetail() {
         product={product}
         onWishlist={handleWishlist}
         wishlisted={wishlisted}
+        wishlistLoading={wishlistLoading || wishlistActionLoading}
         onAddToBag={handleAddToBag}
         adding={adding}
       />
