@@ -82,8 +82,7 @@ export default function Wishlist() {
       });
 
       fetchWishlist();
-    } catch (err) {
-    }
+    } catch (err) {}
   };
 
   // ---------- ADD TO CART ----------
@@ -97,12 +96,15 @@ export default function Wishlist() {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
+      // 🔥 REMOVE FROM UI IMMEDIATELY
+      setWishlist((prev) => prev.filter((item) => item.book.id !== book.id));
+
       showNotify({
         text: isMobile
           ? "Product moved to bag"
           : "Item successfully added to bag",
         image: book.image,
-        showButton: !isMobile, 
+        showButton: !isMobile,
       });
     } catch (err) {
       console.log(err);

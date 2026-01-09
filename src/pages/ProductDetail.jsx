@@ -1,40 +1,145 @@
-import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import axios from "../api/axios";
 
-function ProductDetail() {
+import DesktopProductDetail from "../components/DesktopProductDetail";
+import MobileProductDetail from "../components/MobileProductDetail";
+import Loader from "../components/Loader";
+import MobileToast from "../components/MobileToast";
+import "../MobileProductDetail.css";
+import "../ProductDetails.css";
+
+export default function ProductDetail() {
   const { id } = useParams();
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [added, setAdded] = useState(false);
+  const [adding, setAdding] = useState(false);
+  const [wishlisted, setWishlisted] = useState(false);
 
-  const [wishlistLoading, setWishlistLoading] = useState(false);
-  const [message, setMessage] = useState("");
-
+  /* ---------------- SCREEN DETECTION ---------------- */
   useEffect(() => {
-    const fetchProduct = async () => {
+    const onResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  /* ---------------- FETCH PRODUCT ---------------- */
+  useEffect(() => {
+    async function fetchProduct() {
       try {
-        const response = await axios.get(`/products/${id}/`);
-        setProduct(response.data);
-        setLoading(false);
+        const res = await axios.get(`/products/${id}/`);
+        setProduct(res.data);
       } catch (err) {
-        console.log(err);
+        console.error(err);
+      } finally {
         setLoading(false);
       }
-    };
+    }
 
     fetchProduct();
   }, [id]);
 
-  const addToWishlist = async () => {
-    try {
-      setWishlistLoading(true);
-      setMessage("");
+  useEffect(() => {
+    async function checkCartStatus() {
+      if (!product) return;
 
       const token = localStorage.getItem("access");
 
+      try {
+        const res = await axios.get("/cart/", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const exists = res.data.some((item) => item.product === product.id);
+
+        if (exists) {
+          setAdded(true); 
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    checkCartStatus();
+  }, [product]);
+
+  useEffect(() => {
+    async function checkWishlistStatus() {
+      if (!product) return;
+
+      const token = localStorage.getItem("access");
+
+      try {
+        const res = await axios.get("/products/wishlist/", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const exists = res.data.some((item) => item.book === product.id);
+
+        setWishlisted(exists);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    checkWishlistStatus();
+  }, [product]);
+
+  /* ---------------- ACTION ENDPOINTS ---------------- */
+
+  const handleWishlist = async () => {
+    const token = localStorage.getItem("access");
+
+    try {
+      if (!wishlisted) {
+        // Add to wishlist
+        await axios.post(
+          "/products/wishlist/",
+          { book_id: product.id },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        setWishlisted(true);
+        setToastMessage("Product added to wishlist");
+      } else {
+        // Remove from wishlist
+        await axios.delete(`/products/wishlist/${product.id}/`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        setWishlisted(false);
+        setToastMessage("Product removed from wishlist");
+      }
+
+      if (isMobile) {
+        setShowToast(false);
+        setTimeout(() => setShowToast(true), 10);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // Add to bag
+  const handleAddToBag = async () => {
+    if (adding) return; 
+
+    setAdding(true);
+
+    const token = localStorage.getItem("access");
+
+    try {
       await axios.post(
-        "/products/wishlist/",
+        "/cart/add/",
         { book_id: product.id },
         {
           headers: {
@@ -43,142 +148,50 @@ function ProductDetail() {
         }
       );
 
-      setMessage("Added to wishlist ❤️");
+      setAdded((prevAdded) => {
+        if (!prevAdded) {
+          setToastMessage("Product added to bag");
+          return true;
+        } else {
+          setToastMessage(
+            "This item is already in your bag. We’ve increased the quantity by 1"
+          );
+          return true;
+        }
+      });
+
+      if (isMobile) {
+        setShowToast(false);
+        setTimeout(() => setShowToast(true), 10);
+      }
     } catch (err) {
-      console.log(err);
-      setMessage("Already in wishlist or error");
+      console.error(err);
     } finally {
-      setWishlistLoading(false);
+      setAdding(false);
     }
   };
 
-  if (loading) {
-    return <h2 style={{ textAlign: "center" }}>Loading...</h2>;
-  }
+  /* ---------------- UI STATES ---------------- */
+  if (loading) return <Loader />;
+  if (!product) return <p>Product not found.</p>;
 
-  if (!product) {
-    return <h2 style={{ textAlign: "center" }}>Product not found</h2>;
-  }
+  return isMobile ? (
+    <>
+      <MobileProductDetail
+        product={product}
+        onWishlist={handleWishlist}
+        wishlisted={wishlisted}
+        onAddToBag={handleAddToBag}
+        adding={adding}
+      />
 
-  return (
-    <div style={styles.container}>
-      {/* Image */}
-      <div>
-        <img
-          src={product.image}
-          alt={product.title}
-          style={styles.image}
-        />
-      </div>
-
-      {/* Details */}
-      <div style={styles.details}>
-        <h1>{product.title}</h1>
-
-        <p style={styles.author}>by {product.author}</p>
-
-        <p style={styles.price}>₹ {product.price}</p>
-
-        <p style={styles.description}>{product.description}</p>
-
-        <p>
-          <strong>Published Year:</strong> {product.published_year}
-        </p>
-
-        <p>
-          <strong>Stock:</strong>{" "}
-          {product.stock > 0 ? "In Stock" : "Out of Stock"}
-        </p>
-
-        {/* Buttons */}
-        <div style={styles.buttonRow}>
-          <button style={styles.cartButton}>Add to Cart</button>
-
-          <button
-            style={styles.wishlistButton}
-            onClick={addToWishlist}
-            disabled={wishlistLoading}
-          >
-            {wishlistLoading ? "Adding..." : "♡ Add to Wishlist"}
-          </button>
-        </div>
-
-        {/* Message */}
-        {message && <p style={styles.message}>{message}</p>}
-      </div>
-    </div>
+      <MobileToast
+        message={toastMessage}
+        show={showToast}
+        onClose={() => setShowToast(false)}
+      />
+    </>
+  ) : (
+    <DesktopProductDetail product={product} />
   );
 }
-
-const styles = {
-  container: {
-    maxWidth: "1000px",
-    margin: "60px auto",
-    padding: "20px",
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: "40px",
-    alignItems: "center",
-  },
-
-  image: {
-    width: "100%",
-    boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-    border: "1px solid #d4d5d9",
-  },
-
-  details: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "12px",
-  },
-
-  author: {
-    fontStyle: "italic",
-    color: "#555",
-  },
-
-  price: {
-    fontSize: "22px",
-    fontWeight: "bold",
-    color: "#4F46E5",
-  },
-
-  description: {
-    lineHeight: "1.6",
-  },
-
-  buttonRow: {
-    display: "flex",
-    gap: "16px",
-    marginTop: "20px",
-  },
-
-  cartButton: {
-    padding: "12px",
-    fontSize: "16px",
-    backgroundColor: "#4F46E5",
-    color: "white",
-    border: "none",
-    borderRadius: "8px",
-    cursor: "pointer",
-  },
-
-  wishlistButton: {
-    padding: "12px",
-    fontSize: "16px",
-    backgroundColor: "transparent",
-    color: "#4F46E5",
-    border: "2px solid #4F46E5",
-    borderRadius: "8px",
-    cursor: "pointer",
-  },
-
-  message: {
-    marginTop: "10px",
-    fontWeight: "500",
-    color: "green",
-  },
-};
-
-export default ProductDetail;
