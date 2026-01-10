@@ -15,13 +15,9 @@ jobs:
           node-version: "18"
 
       - name: Install dependencies
-        run: |
-          cd frontend
-          npm install
+        run: npm install
 
       - name: Build frontend
         env:
           VITE_API_BASE_URL: "http://localhost"
-        run: |
-          cd frontend
-          npm run build
+        run: npm run build
