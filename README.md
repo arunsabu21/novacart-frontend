@@ -33,6 +33,7 @@ NovaCart Frontend is a full-featured e-commerce platform providing users with a 
 - React Icons 5.5.0
 - CSS3
 - JWT Authentication
+- Netlify (deployment)
 
 ## Installation
 
