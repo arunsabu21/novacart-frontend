@@ -1,116 +1,186 @@
-body {
-  width: 100%;
-  overflow-x: hidden;
-  font-family: Assistant, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-    Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-body {
-  margin: 0;
-}
 
 * {
   box-sizing: border-box;
 }
 
-main {
-  display: block;
-}
-
-.itm-itm-container {
-  max-width: 1600px;
-  min-width: 1128px;
-  margin: 90px auto 0;
-  position: relative;
-  min-height: 700px;
-  padding-bottom: 15px;
-  padding-left: 28px;
-  padding-right: 28px;
-  background-color: #fff;
-}
-
-.itm-details {
-  position: relative;
-}
-
-.common-clearfix:after,
-.common-clearfix:before {
-  content: " ";
-  display: table;
-}
-
-.image-grid-container {
-  float: left;
-  width: 58%;
-}
-
-.image-grid-col {
-  width: 49.5%;
-  float: left;
-  margin-bottom: 1%;
-  position: relative;
-}
-
-.image-grid-imageContainer {
-  height: 0;
-  padding-top: 133.33333333333331%;
-  height: 500px;
-  overflow: hidden;
-  position: relative;
-  border: 1px solid #f5f5f6;
-}
-
-.image-grid-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  background-repeat: no-repeat;
-  background-position: 0 0;
-  background-origin: border-box;
-  background-size: cover;
-  -webkit-transition: -webkit-transform 0.4s;
-  transition: -webkit-transform 0.4s;
-  transition: transform 0.4s;
-  transition: transform 0.4s, -webkit-transform 0.4s;
-  will-change: transform;
-}
-
-.image-grid-image:hover {
-  -webkit-transform: scale(1.04);
-  transform: scale(1.04);
-}
-
-.itm-description-container {
-  margin-top: 10px;
-}
-
-.itm-price-info {
-  padding: 0 0 10px;
-}
-
-.itm-title,
-.itm-name {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.itm-title {
+body {
+  margin: 0;
+  font-family: Assistant, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Helvetica, Arial, sans-serif;
   color: #282c3f;
-  padding: 0 20px 0 0;
+}
+
+.pdp-container {
+  max-width: 1600px;
+  margin: 90px auto;
+  padding: 0 28px;
+  display: flex;
+  gap: 40px;
+  background: #fff;
+}
+
+.pdp-left {
+  width: 55%;
+  display: flex;
+  justify-content: center;
+}
+
+.pdp-image-box {
+  width: 420px;
+  border: 1px solid #f5f5f6;
+  overflow: hidden;
+}
+
+.pdp-image-box img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.pdp-image-box img:hover {
+  transform: scale(1.03);
+}
+
+.pdp-right {
+  width: 45%;
+  padding-left: 12px;
+}
+
+.pdp-brand {
   font-size: 24px;
   font-weight: 700;
-  line-height: 1;
+  margin: 0;
 }
 
-.itm-name {
-  color: #535665;
-  padding: 5px 20px 14px 0;
+.pdp-title {
   font-size: 20px;
-  opacity: 0.8;
   font-weight: 400;
+  color: #535665;
+  margin-top: 6px;
+}
+
+.pdp-rating {
+  margin-top: 14px;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.pdp-rating span {
+  color: #696e79;
+}
+
+.pdp-price-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.pdp-price {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.pdp-mrp {
+  text-decoration: line-through;
+  color: #7e818c;
+  font-size: 16px;
+}
+
+.pdp-discount {
+  color: #ff905a;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.pdp-tax {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #03a685;
+  font-weight: 700;
+}
+
+.pdp-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.divider {
+  border-bottom: 1px solid #f5f5f6;
+  margin-top: 16px;
+}
+
+.btn-add,
+.btn-wishlist {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; 
+}
+
+.btn-add {
+  width: 290px;
+  background-color: #20bd99;
+  border: 1px solid #20bd99;
+  color: #fff;
+  padding: 14px 0;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.btn-add:hover {
+  background-color: #17a884;
+}
+
+.right-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.btn-wishlist {
+  width: 190px;
+  background: #fff;
+  border: 1px solid #d4d5d9;
+  border-radius: 3px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  color: #282c3f;
+}
+
+.btn-wishlist:hover {
+  border: 1px solid #535766;
+}
+
+.btn-wishlist.wishlisted {
+  background-color: #535766;
+  color: #fff;
+  border: 1px solid #535766;
+}
+
+.btn-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.pdp-desc-main {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #282c3f;
+}
+
+.pdp-desc-main h2 {
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.pdp-desc-main p {
+  color: #282c3f;
+  font-size: 16px;
 }
