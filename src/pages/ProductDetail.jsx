@@ -1,26 +1,34 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "../api/axios";
 
 import MobileProductDetail from "../components/MobileProductDetail";
+import DesktopProductDetail from "../components/DesktopProductDetail";
+import DesktopNotify from "../components/DesktopNotify";
 import Loader from "../components/Loader";
 import MobileToast from "../components/MobileToast";
+
 import "../MobileProductDetail.css";
 import "../ProductDetails.css";
 
 export default function ProductDetail() {
   const { id } = useParams();
-
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
+
+  const [showDesktopNotify, setShowDesktopNotify] = useState(false);
+
   const [added, setAdded] = useState(false);
   const [adding, setAdding] = useState(false);
+
   const [wishlisted, setWishlisted] = useState(false);
   const [wishlistLoading, setWishlistLoading] = useState(true);
   const [wishlistActionLoading, setWishlistActionLoading] = useState(false);
+  const [isRepeatAdd, setIsRepeatAdd] = useState(false);
 
   /* ---------------- SCREEN DETECTION ---------------- */
   useEffect(() => {
@@ -41,10 +49,10 @@ export default function ProductDetail() {
         setLoading(false);
       }
     }
-
     fetchProduct();
   }, [id]);
 
+  /* ---------------- CHECK CART ---------------- */
   useEffect(() => {
     async function checkCartStatus() {
       if (!product) return;
@@ -53,24 +61,20 @@ export default function ProductDetail() {
 
       try {
         const res = await axios.get("/cart/", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
 
         const exists = res.data.some((item) => item.product === product.id);
 
-        if (exists) {
-          setAdded(true);
-        }
+        if (exists) setAdded(true);
       } catch (err) {
         console.error(err);
       }
     }
-
     checkCartStatus();
   }, [product]);
 
+  /* ---------------- CHECK WISHLIST ---------------- */
   useEffect(() => {
     async function checkWishlistStatus() {
       if (!product) return;
@@ -79,9 +83,7 @@ export default function ProductDetail() {
 
       try {
         const res = await axios.get("/products/wishlist/", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
 
         const exists = res.data.some(
@@ -95,12 +97,10 @@ export default function ProductDetail() {
         setWishlistLoading(false);
       }
     }
-
     checkWishlistStatus();
   }, [product]);
 
-  /* ---------------- ACTION ENDPOINTS ---------------- */
-
+  /* ---------------- WISHLIST ACTION ---------------- */
   const handleWishlist = async () => {
     if (wishlistActionLoading) return;
 
@@ -114,22 +114,24 @@ export default function ProductDetail() {
           { book_id: product.id },
           { headers: { Authorization: `Bearer ${token}` } }
         );
-
         setWishlisted(true);
-        setToastMessage("Product added to wishlist");
+
+        if (isMobile) {
+          setToastMessage("Product added to wishlist");
+          setShowToast(true);
+        }
       } else {
         await axios.delete(`/products/wishlist/${product.id}/`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-
         setWishlisted(false);
-        setToastMessage("Product removed from wishlist");
+
+        if (isMobile) {
+          setToastMessage("Product removed from wishlist");
+          setShowToast(true);
+        }
       }
 
-      if (isMobile) {
-        setShowToast(false);
-        setTimeout(() => setShowToast(true), 10);
-      }
     } catch (err) {
       console.error(err);
     } finally {
@@ -137,40 +139,35 @@ export default function ProductDetail() {
     }
   };
 
-  // Add to bag
+  /* ---------------- ADD TO BAG ---------------- */
   const handleAddToBag = async () => {
     if (adding) return;
 
     setAdding(true);
-
     const token = localStorage.getItem("access");
 
     try {
       await axios.post(
         "/cart/add/",
         { book_id: product.id },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      setAdded((prevAdded) => {
-        if (!prevAdded) {
-          setToastMessage("Product added to bag");
-          return true;
-        } else {
-          setToastMessage(
-            "This item is already in your bag. We’ve increased the quantity by 1"
-          );
-          return true;
-        }
-      });
+      if (!added) {
+        setToastMessage("Product added to bag");
+      } else {
+        setToastMessage(
+          "You already have this product in your bag. We’ve increased the quantity by 1"
+        );
+      }
+
+      setAdded(true);
 
       if (isMobile) {
-        setShowToast(false);
-        setTimeout(() => setShowToast(true), 10);
+        setShowToast(true);
+      } else {
+        setShowDesktopNotify(true);
+        setTimeout(() => setShowDesktopNotify(false), 2500);
       }
     } catch (err) {
       console.error(err);
@@ -185,21 +182,47 @@ export default function ProductDetail() {
 
   return (
     <>
-      <MobileProductDetail
-        product={product}
-        onWishlist={handleWishlist}
-        wishlisted={wishlisted}
-        wishlistLoading={wishlistLoading || wishlistActionLoading}
-        onAddToBag={handleAddToBag}
-        adding={adding}
-      />
+      {isMobile ? (
+        <>
+          <MobileProductDetail
+            product={product}
+            onWishlist={handleWishlist}
+            wishlisted={wishlisted}
+            wishlistLoading={wishlistLoading || wishlistActionLoading}
+            onAddToBag={handleAddToBag}
+            adding={adding}
+          />
 
-      {isMobile && (
-        <MobileToast
-          message={toastMessage}
-          show={showToast}
-          onClose={() => setShowToast(false)}
-        />
+          <MobileToast
+            message={toastMessage}
+            show={showToast}
+            onClose={() => setShowToast(false)}
+          />
+        </>
+      ) : (
+        <>
+          <DesktopProductDetail
+            product={product}
+            onWishlist={handleWishlist}
+            wishlisted={wishlisted}
+            onAddToBag={handleAddToBag}
+            adding={adding}
+            added={added}
+          />
+
+          {showDesktopNotify && (
+            <DesktopNotify
+              type="info"
+              message={toastMessage}
+              thumbnail={
+                toastMessage ===
+                "You already have this product in your bag. We’ve increased the quantity by 1"
+                  ? null
+                  : product.image
+              }
+            />
+          )}
+        </>
       )}
     </>
   );
