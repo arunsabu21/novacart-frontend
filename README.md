@@ -22,6 +22,8 @@ NovaCart Frontend is a full-featured e-commerce platform providing users with a 
 - Responsive Design optimized for all devices
 - Image Optimization with Cloudinary
 - Fast Performance powered by Vite
+- Continuous Integration (CI) pipeline with GitHub Actions
+
 
 ## Tech Stack
 
@@ -34,6 +36,8 @@ NovaCart Frontend is a full-featured e-commerce platform providing users with a 
 - CSS3
 - JWT Authentication
 - Netlify (deployment)
+- GitHub Actions (CI pipeline)
+
 
 ## Installation
 
