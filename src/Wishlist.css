@@ -183,6 +183,32 @@
   margin-top: 20px;
 }
 
+@media screen and (max-width: 768px) {
+  .wishlistEmpty-container {
+    margin: 80px auto;
+    padding: 0 20px;
+  }
+
+  .wishlistEmpty-heading {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .wishlistEmpty-info {
+    font-size: 13px;
+    max-width: 250px;
+  }
+
+  .wishlistEmpty-image img {
+    max-width: 90px;
+  }
+
+  .wishlistEmpty-button {
+    font-size: 12px;
+    padding: 9px 30px;
+  }
+}
+
 .mobile-wishlistProducts {
   list-style: none;
   padding: 0 0 8px;
