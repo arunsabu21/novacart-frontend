@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "../Wishlist.css";
-import wishlistImg from "../assets/icons/add-to-favorites.png";
+import wishlistImg from "../assets/icons/empty-wishlist.png";
 
 function EmptyWishlist() {
   const navigate = useNavigate();
@@ -9,8 +9,7 @@ function EmptyWishlist() {
     <div className="wishlistEmpty-container">
       <div className="wishlistEmpty-heading">YOUR WISHLIST IS EMPTY</div>
       <div className="wishlistEmpty-info">
-        Add items that you like to your wishlist. Review them anytime and easily
-        move them to bag.
+        Save the items you love and move them to your bag whenever you're ready.
       </div>
       <div className="wishlistEmpty-image">
         <img src={wishlistImg} alt="empty wishlist" />
