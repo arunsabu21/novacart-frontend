@@ -18,6 +18,16 @@ body {
   font-family: "Assistant", sans-serif;
 }
 
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  outline: 0;
+}
+
 .auth-input {
   width: 100%;
   padding: 12px;

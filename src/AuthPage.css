@@ -16,7 +16,7 @@ body {
 }
 
 .bgColor {
-  background: linear-gradient(to bottom right, #e9fff6, #dffaf3);
+  background: linear-gradient(to bottom right, #e9fff6, rgb(223, 250, 243));
 }
 
 .bgColor {

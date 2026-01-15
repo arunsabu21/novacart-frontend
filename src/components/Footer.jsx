@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="footer-container">
 
         <div className="footer-left">
-          <h2>BookStore</h2>
+          <h2>NovaCart</h2>
           <p>Read. Learn. Grow.</p>
         </div>
 
@@ -18,7 +18,7 @@ export default function Footer() {
         </div>
 
         <div className="footer-right">
-          <p>© {new Date().getFullYear()} BookStore</p>
+          <p>© {new Date().getFullYear()} NovaCart</p>
           <p>All rights reserved</p>
         </div>
 

@@ -17,7 +17,7 @@ function EmptyCart() {
               src={emptyBag}
               alt="empty bag"
               className="image-base-imageResponsive"
-              fetchpriority="auto"
+              fetchPriority="auto"
               style={{ height: "165px", width: "146px" }}
             />
           </div>

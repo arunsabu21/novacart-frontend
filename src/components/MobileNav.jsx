@@ -4,6 +4,8 @@ export default function MobileNav({ count = 0 }) {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const hideIcons = location.pathname === "/cart";
+
   const titles = {
     "/products": "Products",
     "/wishlist": "Wishlist",
@@ -13,8 +15,8 @@ export default function MobileNav({ count = 0 }) {
 
   const pageTitle = titles[location.pathname] || "NovaCart";
 
-  const showCount =
-    location.pathname === "/wishlist" || location.pathname === "/cart";
+  const showCount = location.pathname === "/wishlist";
+
 
   return (
     <div className="mobile-nav-container">
@@ -38,7 +40,7 @@ export default function MobileNav({ count = 0 }) {
         )}
       </div>
       <div className="header-actions pull-right">
-        {location.pathname !== "/wishlist" && (
+        {!hideIcons && location.pathname !== "/wishlist" && (
         <div className="header-icon" style={{ display: "inline-block" }} onClick={() => navigate("/wishlist")}>
           <svg viewBox="0 0 24 24">
             <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
@@ -54,6 +56,8 @@ export default function MobileNav({ count = 0 }) {
           </svg>
         </div>
         )}
+
+        {!hideIcons && (
         <a href="/cart" className="header-icon">
           <svg viewBox="0 0 24 24">
             <path
@@ -63,6 +67,7 @@ export default function MobileNav({ count = 0 }) {
             ></path>
           </svg>
         </a>
+        )}
       </div>
     </div>
   );

@@ -27,62 +27,66 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
   const location = useLocation();
   const path = location.pathname;
 
-  // ✅ reactive mobile detection
+  // reactive mobile detection
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
-    function handleResize() {
-      setIsMobile(window.innerWidth < 768);
-    }
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    const onResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  // 🛒 checkout flow
-  const checkoutRoutes = ["/cart", "/checkout", "/payment"];
-  const isCheckoutFlow = checkoutRoutes.includes(path);
+  // pages that use SiteNav / MobileNav
+  const flowRoutes = ["/cart", "/checkout", "/payment"];
+  const isFlowPage = flowRoutes.includes(path);
 
-  // 🔐 auth pages
+  // auth pages
   const authRoutes = ["/login", "/signup", "/forgot-password"];
   const isAuthPage =
     authRoutes.includes(path) || path.startsWith("/reset-password");
 
   return (
     <>
-      {/* 🛒 Checkout pages: SiteNav only */}
-      {isCheckoutFlow && <SiteNav />}
+      {/* =====================
+          TOP NAVIGATION
+      ===================== */}
 
-      {/* 🔐 AUTH PAGES: no navbar anywhere */}
-      {/* 🔐 AUTH PAGES */}
-      {isAuthPage && (
+      {/* Cart / Checkout / Payment */}
+      {isFlowPage && (
         <>
-          {/* 🖥️ Desktop → show normal navbar */}
-          {!isMobile && (
-            <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
-          )}
-
-          {/* 📱 Mobile → only back arrow */}
-          {isMobile && <AuthBackArrow />}
-        </>
-      )}
-
-      {/* 🌐 NORMAL PAGES */}
-      {!isCheckoutFlow && !isAuthPage && (
-        <>
-          {!isMobile && (
-            <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
-          )}
-
+          {!isMobile && <SiteNav />}
           {isMobile && <MobileNav />}
         </>
       )}
 
+      {/* AUTH PAGES */}
+      {isAuthPage && (
+        <>
+          {!isMobile && (
+            <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+          )}
+          {isMobile && <AuthBackArrow />}
+        </>
+      )}
+
+      {/* NORMAL PAGES */}
+      {!isFlowPage && !isAuthPage && (
+        <>
+          {!isMobile && (
+            <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+          )}
+          {isMobile && <MobileNav />}
+        </>
+      )}
+
+      {/* =====================
+          ROUTES
+      ===================== */}
       <Routes>
         <Route
           path="/login"
           element={<Login setIsLoggedIn={setIsLoggedIn} />}
         />
-
         <Route path="/signup" element={<Signup />} />
 
         <Route
@@ -91,7 +95,6 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
         />
 
         <Route path="/forgot-password" element={<ForgotPassword />} />
-
         <Route
           path="/reset-password/:uid/:token"
           element={<SetNewPassword />}
@@ -106,8 +109,10 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
         <Route path="/payment" element={<Payment />} />
       </Routes>
 
-      {/* ⛔ Footer only on normal pages */}
-      {!isCheckoutFlow && !isAuthPage && <Footer />}
+      {/* =====================
+          FOOTER
+      ===================== */}
+      {!isFlowPage && !isAuthPage && <Footer />}
     </>
   );
 }

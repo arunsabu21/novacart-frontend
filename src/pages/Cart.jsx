@@ -1,14 +1,29 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios, { BASE_URL } from "../api/axios";
+import axios from "../api/axios";
 import EmptyCart from "../components/EmptyCart";
+import Loader from "../components/Loader";
+import MobileCart from "../components/MobileCart";
+import DesktopCart from "../components/DesktopCart";
 import "../Cart.css";
 
-function Cart() {
+export default function Cart() {
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [message, setMessage] = useState({
+    type: "",
+    text: "",
+  });
+  const [showFlash, setShowFlash] = useState(false);
 
+  /* ---------- SCREEN DETECTION ---------- */
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  /* ---------- FETCH CART ---------- */
   useEffect(() => {
     fetchCart();
   }, []);
@@ -27,133 +42,193 @@ function Cart() {
     }
   }
 
+  useEffect(() => {
+    if (!message.text) return;
+
+    requestAnimationFrame(() => {
+      setShowFlash(true);
+    });
+
+    const hideTimer = setTimeout(() => {
+      setShowFlash(false); 
+    }, 3000);
+
+    const cleanupTimer = setTimeout(() => {
+      setMessage({ type: "", text: "" });
+    }, 4500); 
+
+    return () => {
+      clearTimeout(hideTimer);
+      clearTimeout(cleanupTimer);
+    };
+  }, [message]);
+
+  /* ---------- UPDATE QUANTITY ---------- */
   async function updateQuantity(cartId, action) {
-    if (action === "decrease") {
-      const item = cart.find((i) => i.id === cartId);
-      if (item.quantity === 1) return;
+    const item = cart.find((i) => i.id === cartId);
+
+    if (action === "decrease" && item.quantity === 1) return;
+
+    if (action === "increase" && item.quantity >= 10) {
+      setMessage({
+        type: "info",
+        text: "Maximum 10 quantity allowed per item",
+      });
+      return;
     }
 
     try {
       const token = localStorage.getItem("access");
-      await axios.patch(
+
+      const res = await axios.patch(
         `/cart/update/${cartId}/`,
         { action },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
       setCart((prev) =>
-        prev.map((item) => {
-          if (item.id !== cartId) return item;
-          const price = Number(item.product_price);
-          const qty =
-            action === "increase" ? item.quantity + 1 : item.quantity - 1;
+        prev.map((i) => {
+          if (i.id !== cartId) return i;
+
+          const qty = action === "increase" ? i.quantity + 1 : i.quantity - 1;
 
           return {
-            ...item,
+            ...i,
             quantity: qty,
-            total_price: qty * price,
+            total_price: qty * Number(i.product_price),
           };
         })
       );
     } catch (err) {
-      console.error("Quantity update failed", err);
+      const errorMsg =
+        err.response?.data?.error ||
+        err.response?.data?.detail ||
+        "Quantity update failed";
+
+      setMessage({
+        type: "error",
+        text: errorMsg,
+      });
     }
   }
 
+  /* ---------- REMOVE ITEM ---------- */
   async function removeFromCart(cartId) {
     try {
       const token = localStorage.getItem("access");
       await axios.delete(`/cart/remove/${cartId}/`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setCart((prev) => prev.filter((item) => item.id !== cartId));
+      setCart((prev) => prev.filter((i) => i.id !== cartId));
     } catch (err) {
       console.error("Remove failed", err);
     }
   }
 
-  if (loading) return <p className="cart-loading">Loading...</p>;
+  /* ---------------BULK REMOVE-----------------*/
+  async function bulkRemove(cart_ids) {
+    try {
+      const token = localStorage.getItem("access");
 
-  const totalAmount = cart.reduce((sum, i) => sum + i.total_price, 0);
+      await axios.post(
+        `/cart/bulk-delete/`,
+        { cart_ids },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setCart((prev) => prev.filter((i) => !cart_ids.includes(i.id)));
+
+      const count = cart_ids.length;
+      setMessage({
+        type: "success",
+        text: `${formatItemText(count)} removed from cart`,
+      });
+    } catch (err) {
+      setMessage({
+        type: "error",
+        text: "Bulk remove failed",
+      });
+    }
+  }
+
+  function formatItemText(count) {
+    return count === 1 ? "1 item" : `${count} items`;
+  }
+
+  async function bulkMoveToWishlist(cart_ids) {
+    try {
+      const token = localStorage.getItem("access");
+
+      await axios.post(
+        "/cart/bulk-move-to-wishlist/",
+        { cart_ids },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setCart((prev) => prev.filter((i) => !cart_ids.includes(i.id)));
+
+      const count = cart_ids.length;
+      setMessage({
+        type: "success",
+        text: `${formatItemText(count)} moved to wishlist`,
+      });
+    } catch (err) {
+      setMessage({
+        type: "error",
+        text: "Failed to move items",
+      });
+    }
+  }
+
   const totalItems = cart.reduce((sum, i) => sum + i.quantity, 0);
+  const totalAmount = cart.reduce((sum, i) => sum + i.total_price, 0);
 
   return (
     <>
-      <div className="cart-container">
-        {cart.length > 0 && (
-          <h2 className="cart-heading">My Cart {totalItems}</h2>
-        )}
-
-        {cart.length === 0 ? (
-          <EmptyCart />
-        ) : (
-          <div className="cart-layout">
-            {/* LEFT */}
-            <div className="cart-items">
-              {cart.map((item) => (
-                <div key={item.id} className="cart-item">
-                  <button
-                    className="cart-remove"
-                    onClick={() => removeFromCart(item.id)}
-                  >
-                    ×
-                  </button>
-
-                  <img
-                    src={item.product_image}
-                    alt={item.product_title}
-                    className="cart-image"
-                  />
-
-                  <div className="cart-info">
-                    <h4>{item.product_title}</h4>
-                    <p className="price">₹ {item.product_price}</p>
-
-                    <div className="qty-controls">
-                      <button
-                        onClick={() => updateQuantity(item.id, "decrease")}
-                        disabled={item.quantity === 1}
-                      >
-                        −
-                      </button>
-                      <span>{item.quantity}</span>
-                      <button
-                        onClick={() => updateQuantity(item.id, "increase")}
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* RIGHT */}
-            <div className="cart-summary">
-              <h3>Order Summary</h3>
-
-              <div className="summary-row">
-                <span>Total Items</span>
-                <span>{totalItems}</span>
-              </div>
-
-              <div className="summary-row total">
-                <span>Total Amount</span>
-                <span>₹ {totalAmount}</span>
-              </div>
-
-              {/* <button
-                className="checkout-btn"
-                onClick={() => navigate("/checkout")}
-              >
-                Proceed to Checkout
-              </button> */}
-            </div>
+      {message.text && (
+        <div
+          className={`flashNotifyContainer ${showFlash ? "flashShow" : ""}`}
+          style={{ bottom: "105px" }}
+        >
+          <div className="flashContent flashInfo">
+            <span className="flashText">{message.text}</span>
           </div>
-        )}
-      </div>
+        </div>
+      )}
+
+      {loading ? (
+        <Loader />
+      ) : cart.length === 0 ? (
+        <EmptyCart />
+      ) : isMobile ? (
+        <MobileCart
+          cart={cart}
+          onQtyChange={updateQuantity}
+          onRemove={removeFromCart}
+          cartBulkRemove={bulkRemove}
+          cartBulkMove={bulkMoveToWishlist}
+          totalItems={totalItems}
+          totalAmount={totalAmount}
+        />
+      ) : (
+        <DesktopCart
+          cart={cart}
+          onQtyChange={updateQuantity}
+          onRemove={removeFromCart}
+          cartBulkRemove={bulkRemove}
+          cartBulkMove={bulkMoveToWishlist}
+          totalItems={totalItems}
+          totalAmount={totalAmount}
+        />
+      )}
     </>
   );
 }
-
-export default Cart;
