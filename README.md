@@ -14,15 +14,39 @@ NovaCart Frontend is a full-featured e-commerce platform providing users with a 
 
 ## Features
 
-- User Authentication with JWT-based signup & login
-- Product Catalog with detailed product information
-- Wishlists for saving favorite products
-- Shopping Cart with real-time management
-- Secure Payments with Stripe integration
-- Responsive Design optimized for all devices
-- Image Optimization with Cloudinary
-- Fast Performance powered by Vite
-- Continuous Integration (CI) pipeline with GitHub Actions
+### User Authentication & Authorization
+
+- JWT-based signup, login, and secure session handling
+- Protected routes for authenticated users
+
+### Product Catalog
+
+- Browse products with detailed information
+- Optimized product images using Cloudinary
+- Clean and scalable product APIs
+
+### Wishlist Management
+
+- Add and remove products from wishlist
+- Persistent wishlist per user account
+
+### Shopping Cart
+
+- Add, update, and remove items from cart
+- Real-time quantity and price updates
+- Cart persistence across sessions
+
+### Checkout & Address Management
+
+- Add and manage multiple delivery addresses
+- Default address selection
+- Responsive checkout flow for mobile and desktop
+
+### Secure Payments
+
+- Stripe integration for online payments
+- Backend-driven payment intent creation
+- Ready for webhook-based payment confirmation
 
 
 ## Tech Stack
