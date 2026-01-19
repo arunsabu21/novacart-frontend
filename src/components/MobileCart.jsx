@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../MobileCart.css";
 import ConfirmationModal from "../components/ConfirmModal";
 import SecurePaymentBanner from "../components/SecurePaymentBanner";
@@ -17,6 +18,12 @@ export default function MobileCart({
   const [confirmAction, setConfirmAction] = useState(null);
   const [showItemRemove, setShowItemRemove] = useState(false);
   const [activeItem, setActiveItem] = useState(null);
+
+  const navigate = useNavigate();
+
+  function goToCheckout() {
+    navigate("/checkout");
+  }
 
   return (
     <div className="layout">
@@ -254,7 +261,7 @@ export default function MobileCart({
                   {cart.length} Item ready to checkout
                 </div>
                 <div className="stickyButton-base-container">
-                  <button className="stickyButton-base-placeOrderButton stickyButton-base-fullWidthButton">
+                  <button onClick={goToCheckout} className="stickyButton-base-placeOrderButton stickyButton-base-fullWidthButton">
                     PLACE ORDER
                   </button>
                 </div>

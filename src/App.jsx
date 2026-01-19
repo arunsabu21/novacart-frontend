@@ -20,6 +20,7 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Payment from "./pages/StripeCheckout";
 
+
 /* =========================
    Layout Component
 ========================= */

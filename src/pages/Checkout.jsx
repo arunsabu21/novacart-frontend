@@ -1,81 +1,110 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../api/axios";
+import MobileCheckout from "../components/MobileCheckout";
+import DesktopCheckout from "../components/DesktopCheckout";
 import "../Checkout.css";
 
-function Checkout() {
-  const [loading, setLoading] = useState(false);
+export default function CheckOut() {
   const navigate = useNavigate();
 
-  async function placeOrder() {
-    try {
-      setLoading(true);
+  const [cartItems, setCartItems] = useState([]);
+  const [addresses, setAddresses] = useState([]);
+  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [checkoutLoading, setCheckoutLoading] = useState(true);
 
-      const token = localStorage.getItem("access");
-      if (!token) {
-        alert("Please login first");
-        return;
-      }
+  /* ---------- RESPONSIVE ---------- */
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-      // Create order
-      const orderRes = await axios.post(
-        "/orders/create/",
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      const order = orderRes.data;
-
-      // Create payment intent
-      const paymentRes = await axios.post(
-        "/payments/payment-intent/",
-        { order_id: order.id },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      // Navigate to payment
-      navigate("/payment", {
-        state: {
-          clientSecret: paymentRes.data.client_secret,
-          orderId: order.id,
-        },
-      });
-    } catch (err) {
-      alert("Checkout failed");
-    } finally {
-      setLoading(false);
+  /* ---------- FETCH CART + ADDRESS ---------- */
+  useEffect(() => {
+    const token = localStorage.getItem("access");
+    if (!token) {
+      navigate("/login");
+      return;
     }
+
+    const headers = { Authorization: `Bearer ${token}` };
+
+    setCheckoutLoading(true);
+
+    Promise.all([
+      axios.get("/cart/", { headers }),
+      axios.get("/addresses/", { headers }),
+    ])
+      .then(([cartRes, addressRes]) => {
+        setCartItems(cartRes.data);
+        setAddresses(addressRes.data);
+
+        const defaultAddr = addressRes.data.find((a) => a.is_default);
+        if (defaultAddr) {
+          setSelectedAddress(defaultAddr);
+        } else if (addressRes.data.length > 0) {
+          setSelectedAddress(addressRes.data[0]);
+        }
+      })
+      .finally(() => setCheckoutLoading(false));
+  }, [navigate]);
+
+  /* ---------- CONTINUE (MOBILE) ---------- */
+  function continueToPayment() {
+    if (!selectedAddress) {
+      alert("Please select address");
+      return;
+    }
+
+    navigate("/payment", {
+      state: { addressId: selectedAddress.id },
+    });
   }
 
-  return (
-    <div className="checkout-page">
-      <div className="checkout-card">
-        <h2>Checkout</h2>
-        <p className="subtitle">
-          Review your order and proceed securely
-        </p>
+  /* ---------- SAVE ADDRESS ---------- */
+  function handleAddressSaved(newAddress) {
+    setAddresses((prev) => [...prev, newAddress]);
+    setSelectedAddress(newAddress);
 
-        <div className="checkout-info">
-          <div className="row">
-            <span>Payment Method</span>
-            <span>Card (Stripe)</span>
-          </div>
-          <div className="row">
-            <span>Security</span>
-            <span>🔒 Encrypted</span>
-          </div>
-        </div>
+    navigate("/payment", {
+      state: { addressId: newAddress.id },
+    });
+  }
 
-        <button
-          className="checkout-btn"
-          onClick={placeOrder}
-          disabled={loading}
-        >
-          {loading ? "Processing..." : "Continue to Payment"}
-        </button>
-      </div>
-    </div>
+  /* ---------- PLACE ORDER (DESKTOP) ---------- */
+  function handlePlaceOrder() {
+    if (!selectedAddress) {
+      alert("Please select address");
+      return;
+    }
+
+    navigate("/payment", {
+      state: { addressId: selectedAddress.id },
+    });
+  }
+
+  const checkoutProps = {
+    cartItems,
+    addresses,
+    selectedAddress,
+    onContinue: continueToPayment,
+  };
+
+  return isMobile ? (
+    <MobileCheckout
+      {...checkoutProps}
+      loading={checkoutLoading}
+      onAddressSaved={handleAddressSaved}
+      onPlaceOrder={handlePlaceOrder}
+    />
+  ) : (
+    <DesktopCheckout
+      {...checkoutProps}
+      loading={checkoutLoading}
+      onPlaceOrder={handlePlaceOrder}
+      onAddressSaved={handleAddressSaved}
+    />
   );
 }
-
-export default Checkout;

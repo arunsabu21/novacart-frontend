@@ -4,13 +4,16 @@ export default function MobileNav({ count = 0 }) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const hideIcons = location.pathname === "/cart";
+  const ICON_HIDDEN_ROUTES = ["/cart", "/checkout", "/select-address"];
+  const hideIcons = ICON_HIDDEN_ROUTES.includes(location.pathname);
 
   const titles = {
     "/products": "Products",
     "/wishlist": "Wishlist",
     "/cart": "Shopping Bag",
+    "/checkout": "Checkout",
     "/profile": "Profile",
+    "/select-address": "Select Address",
   };
 
   const pageTitle = titles[location.pathname] || "NovaCart";

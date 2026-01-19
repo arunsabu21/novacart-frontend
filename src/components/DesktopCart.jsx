@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import QtySelector from "../components/QtySelector";
 import ConfirmationModal from "../components/ConfirmModal";
 import RemoveItemModal from "../components/RemoveItemModal";
@@ -16,6 +17,12 @@ export default function DesktopCart({
 
   const [showItemRemove, setShowItemRemove] = useState(false);
   const [activeItem, setActiveItem] = useState(null);
+
+  const navigate = useNavigate();
+
+  function goToCheckout() {
+    navigate("/checkout");
+  }
 
   return (
     <div className="layout">
@@ -148,59 +155,59 @@ export default function DesktopCart({
           </div>
 
           <a href="/wishlist">
-              <div className="addToWishlist-base-mainBlock">
-                <div className="addToWishlist-base-wishlistBlock addToWishlist-base-wishlistBlockWithoutTray">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="12"
-                    height="16"
-                    viewBox="0 0 12 16"
-                    className="addToWishlist-base-wishlistIcon"
-                  >
-                    <path
-                      fill="#000"
-                      fillRule="evenodd"
-                      d="M10.993 14.62a.067.067 0 0 1-.103.058l-4.571-2.77a.638.638 0 0 0-.64 0l-4.57 2.77a.067.067 0 0 1-.102-.058V1.133A.13.13 0 0 1 1.139 1H3.5V3.5c0 .298.18.543.486.543s.515-.245.515-.543V1h6.36a.13.13 0 0 1 .133.133V14.62zM11.307 0H.693A.687.687 0 0 0 0 .68v14.719A.61.61 0 0 0 .617 16a.63.63 0 0 0 .315-.086l4.996-3.026a.14.14 0 0 1 .144 0l4.996 3.026a.628.628 0 0 0 .315.086.61.61 0 0 0 .617-.602V.679C12 .306 11.69 0 11.307 0z"
-                    ></path>
-                  </svg>
-                  <div className="addToWishlist-base-wishlistText">
-                    Add More From Wishlist
-                  </div>
+            <div className="addToWishlist-base-mainBlock">
+              <div className="addToWishlist-base-wishlistBlock addToWishlist-base-wishlistBlockWithoutTray">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="12"
+                  height="16"
+                  viewBox="0 0 12 16"
+                  className="addToWishlist-base-wishlistIcon"
+                >
+                  <path
+                    fill="#000"
+                    fillRule="evenodd"
+                    d="M10.993 14.62a.067.067 0 0 1-.103.058l-4.571-2.77a.638.638 0 0 0-.64 0l-4.57 2.77a.067.067 0 0 1-.102-.058V1.133A.13.13 0 0 1 1.139 1H3.5V3.5c0 .298.18.543.486.543s.515-.245.515-.543V1h6.36a.13.13 0 0 1 .133.133V14.62zM11.307 0H.693A.687.687 0 0 0 0 .68v14.719A.61.61 0 0 0 .617 16a.63.63 0 0 0 .315-.086l4.996-3.026a.14.14 0 0 1 .144 0l4.996 3.026a.628.628 0 0 0 .315.086.61.61 0 0 0 .617-.602V.679C12 .306 11.69 0 11.307 0z"
+                  ></path>
+                </svg>
+                <div className="addToWishlist-base-wishlistText">
+                  Add More From Wishlist
                 </div>
               </div>
-            </a>
+            </div>
+          </a>
         </div>
         <div className="itemBlockDesktop-RightSide">
           <div className="desktop-base-priceBlock">
-            <div className="priceBlock-base-priceHeader">PRICE DETAILS ({cart.length} Items)</div>
+            <div className="priceBlock-base-priceHeader">
+              PRICE DETAILS ({cart.length} Items)
+            </div>
             <div className="priceBlock-base-priceBreakUpContainer">
-                <div className="priceBreakUp-base-orderSummary">
-                  <div className="priceDetail-base-row">
-                    <span>Total MRP</span>
-                    <span className="priceDetail-base-value">
-                      ₹ {totalAmount}
-                    </span>
-                  </div>
-                  <div className="priceDetail-base-row">
-                    <span>Total Items</span>
-                    <span className="priceDetail-base-value">
-                      {cart.length}
-                    </span>
-                  </div>
-                  <div className="priceDetail-base-row">
-                    <span>Delivery Charges</span>
-                    <span className="priceDetail-base-value tint">FREE</span>
-                  </div>
-                  <div className="priceDetail-base-total">
-                    <span>Amount Payable</span>
-                    <span className="priceDetail-base-value">
-                      ₹ {totalAmount}
-                    </span>
-                  </div>
+              <div className="priceBreakUp-base-orderSummary">
+                <div className="priceDetail-base-row">
+                  <span>Total MRP</span>
+                  <span className="priceDetail-base-value">
+                    ₹ {totalAmount}
+                  </span>
+                </div>
+                <div className="priceDetail-base-row">
+                  <span>Total Items</span>
+                  <span className="priceDetail-base-value">{cart.length}</span>
+                </div>
+                <div className="priceDetail-base-row">
+                  <span>Delivery Charges</span>
+                  <span className="priceDetail-base-value tint">FREE</span>
+                </div>
+                <div className="priceDetail-base-total">
+                  <span>Amount Payable</span>
+                  <span className="priceDetail-base-value">
+                    ₹ {totalAmount}
+                  </span>
                 </div>
               </div>
+            </div>
           </div>
-          <button className="placeOrder-button">PLACE ORDER</button>
+          <button onClick={goToCheckout} className="placeOrder-button">PLACE ORDER</button>
         </div>
       </div>
       <ConfirmationModal
