@@ -50,6 +50,9 @@ NovaCart Frontend is a full-featured e-commerce platform providing users with a 
 
 ### Order Flow
 
+- Mobile & Desktop specific checkout UI
+- Address selection before payment
+
 
 ## Tech Stack
 
