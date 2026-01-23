@@ -10,7 +10,9 @@ A modern, responsive e-commerce frontend built with React and Vite. NovaCart del
 
 ## Overview
 
-NovaCart Frontend is a full-featured e-commerce platform providing users with a complete shopping journey from product discovery to secure checkout. The application integrates with a Django REST API backend and Stripe for secure payment processing.
+NovaCart Frontend provides a complete end-to-end shopping journey — from product discovery to secure checkout.
+It integrates seamlessly with a Django REST API backend and Stripe for reliable and secure payment processing.
+The application is fully responsive, offering optimized user experiences for both mobile and desktop users.
 
 ## Features
 
