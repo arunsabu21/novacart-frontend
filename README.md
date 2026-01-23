@@ -73,6 +73,15 @@ The application is fully responsive, offering optimized user experiences for bot
 - Netlify (deployment)
 - GitHub Actions (CI pipeline)
 
+## Architecture and design 
+
+- Component-based architecture
+- Separation of concerns between pages, UI Components, API Logic
+- Mobile & Desktop views handled explicitly for better UX
+- Centralized API communication via Axios instance
+- Predictable state transitions using React hooks
+
+
 
 ## Installation
 
