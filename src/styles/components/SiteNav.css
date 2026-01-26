@@ -1,0 +1,119 @@
+body {
+  font-family: Assistant;
+  font-size: 13px;
+  line-height: 1.42857143;
+  color: #424553;
+  background-color: #fff;
+  margin: 0;
+}
+
+.header {
+  border-bottom: 1px solid #f5f5f6;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.mount-point {
+  min-height: 420px;
+  clear: both;
+}
+
+.site-nav-container {
+  background-color: #fff;
+  width: 100%;
+  min-height: 78px;
+  max-width: 92%;
+  margin: auto;
+}
+
+.header .container {
+  line-height: 78px;
+}
+
+.header .flora-logo {
+  height: 40px;
+  width: 40px;
+  float: left;
+}
+
+.header .checkout-steps {
+  margin: 0 0 0 34%;
+  width: 40%;
+  color: #696b79;
+  padding: 0;
+  display: inline-block;
+  line-height: 20px;
+}
+
+.header .checkout-steps .step {
+  display: inline-block;
+  letter-spacing: 3px;
+}
+
+.header .checkout-steps .step1 {
+  margin: 0 5px 0 0;
+}
+
+.header .checkout-steps .step2 {
+  margin: 0 5px 0 6px;
+}
+
+.header .checkout-steps .step3 {
+  margin: 0 0 0 7px;
+}
+
+.header .checkout-steps .active {
+  color: #20bd99;
+  border-bottom: 2px solid #20bd99;
+}
+
+.header .checkout-steps .divider {
+  display: inline-block;
+  border-top: 1px dashed #696b79;
+  height: 4px;
+  width: 10%;
+}
+
+.header .checkout-steps .clickable {
+  cursor: pointer;
+}
+
+.header .security-container {
+  float: right;
+  max-height: 78px;
+}
+
+.header .security-container .secureIcon {
+  margin: -7px 5px 0 0;
+}
+
+.header .security-container .secure {
+  float: right;
+  letter-spacing: 3px;
+  color: #535766;
+  margin: 0 20px 0 0;
+}
+
+.header .security-container {
+  float: right;
+  max-height: 78px;
+}
+
+.header .security-container .secureIcon {
+  margin: -7px 5px 0 0;
+}
+
+.header .security-container .secure {
+  float: right;
+  letter-spacing: 3px;
+  color: #535766;
+  margin: 0 20px 0 0;
+}
+
+img {
+  vertical-align: middle;
+}
+
+img {
+  border-style: none;
+}

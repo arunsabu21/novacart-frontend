@@ -1,0 +1,134 @@
+.paymentDesktop-base-paymentLayout {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.paymentDesktop-base-left {
+  display: inline-block;
+  width: 67.5%;
+  vertical-align: top;
+  border-right: 1px solid #eaeaec;
+  padding-right: 35px;
+  margin-top: 30px;
+}
+
+.tabBar-base-tabBar {
+  border: 1px solid #eaeaec;
+  border-radius: 4px;
+  background-color: #f4f4f5;
+  display: table;
+}
+
+.paymentDesktop-base-paymentOptionsBlock:last-child {
+  margin-bottom: 32px;
+}
+
+.paymentDesktop-base-paymentOptionsBlock {
+  margin-top: 16px;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.tabBar-base-tabsBlock {
+  display: table-cell;
+  width: 35%;
+}
+
+.tabBar-base-tab {
+  border-bottom: 1px solid #eaeaec;
+  border-right: 1px solid #eaeaec;
+  border-left: 5px solid #f4f4f5;
+  border-top: 0px;
+  font-size: 14px;
+  cursor: pointer;
+  height: 60px;
+  align-items: center;
+  display: flex;
+  padding-left: 8px;
+}
+
+.tabBar-base-selected {
+  background-color: #ffffff;
+  border-left-color: #20bd99;
+  border-right: 0px;
+  color: #20bd99;
+}
+
+.tabBar-base-tabLabel {
+  font-weight: 700;
+  display: inline-block;
+}
+
+.paymentOptions-base-tabDisplayContainer {
+  display: flex;
+  align-items: center;
+}
+
+.paymentOptions-base-tabDisplayIcon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.paymentOptions-base-tabText {
+  gap: 8px;
+  align-items: center;
+}
+
+.tabBar-base-contentBlock {
+  vertical-align: top;
+  display: table-cell;
+  width: 65%;
+  padding: 24px 32px;
+  background: #ffffff;
+  border-radius: 0px 4px 4px 0px;
+}
+
+.tabBar-base-contentBlockHeader {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.tabBar-base-contentBlock-container {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.desktopBase-paymentRow {
+  padding: 16px 0px;
+  border-bottom: 1px dashed #f4f4f5 !important;
+}
+
+.desktopBase-paymentRow-widthAdj {
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.desktopBase-paymentRow:last-child {
+  border-bottom: none;
+}
+
+.paymentDesktop-base-right {
+  display: inline-block;
+  width: 32.5%;
+  vertical-align: top;
+  padding: 35px 0 0 35px;
+}
+
+.paymentDesktop-priceHeader {
+  line-height: 15px;
+  color: #535766;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.paymentDesktop-priceDetailBase {
+  padding-top: 16px;
+}
