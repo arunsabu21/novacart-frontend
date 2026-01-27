@@ -70,7 +70,7 @@ The application is fully responsive, offering optimized user experiences for bot
 - React Icons 5.5.0
 - CSS3
 - JWT Authentication
-- Netlify (deployment)
+- Vercel (deployment)
 - GitHub Actions (CI pipeline)
 
 ## Architecture and design 
