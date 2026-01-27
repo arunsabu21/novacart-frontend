@@ -12,6 +12,7 @@ export default function DesktopPayment({
   placeCODOrder,
   clientSecret,
   totalItems,
+  setMessage,
 }) {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("recommended");
@@ -320,6 +321,7 @@ export default function DesktopPayment({
                         <StripeCheckout
                           clientSecret={clientSecret}
                           amount={amount}
+                          setMessage={setMessage}
                           startCardPayment={startCardPayment}
                           onSuccess={async () => {
                             setShowPlacingLoader(true); // 🔥 SAME AS COD
@@ -327,7 +329,9 @@ export default function DesktopPayment({
                             // give webhook + DB a moment to finish
                             await new Promise((r) => setTimeout(r, 1200));
 
-                            navigate("/order-success");
+                            navigate("/order-success", {
+                              state: { fromPayment: true },
+                            });
                           }}
                           onError={(msg) => {
                             console.log(msg);

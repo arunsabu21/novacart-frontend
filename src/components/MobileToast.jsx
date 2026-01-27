@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import "../MobileProductDetail.css";
+import "../styles/mobile/MobileProductDetail.css";
 
 export default function MobileToast({ message, show, onClose }) {
   useEffect(() => {

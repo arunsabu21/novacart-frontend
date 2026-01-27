@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../MobileCart.css";
+import "../styles/mobile/MobileCart.css";
 import ConfirmationModal from "../components/ConfirmModal";
 import SecurePaymentBanner from "../components/SecurePaymentBanner";
 import QtySelector from "../components/QtySelector";

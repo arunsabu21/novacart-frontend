@@ -8,8 +8,8 @@ import DesktopNotify from "../components/DesktopNotify";
 import Loader from "../components/Loader";
 import MobileToast from "../components/MobileToast";
 
-import "../MobileProductDetail.css";
-import "../ProductDetails.css";
+import "../styles/mobile/MobileProductDetail.css";
+import "../styles/desktop/ProductDetails.css";
 
 export default function ProductDetail() {
   const { id } = useParams();

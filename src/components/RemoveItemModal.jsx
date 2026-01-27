@@ -1,4 +1,4 @@
-import "../MobileCartV2.css";
+import "../styles/mobile/MobileCartV2.css";
 
 export default function RemoveItemModal({
   open,

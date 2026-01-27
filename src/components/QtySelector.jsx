@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../MobileCartV2.css";
+import "../styles/mobile/MobileCartV2.css";
 
 export default function QtySelector({ quantity, stock, max = 10, onSelect }) {
   const [open, setOpen] = useState(false);

@@ -18,8 +18,8 @@ import ProductDetail from "./pages/ProductDetail";
 import Wishlist from "./pages/Wishlist";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
-import Payment from "./pages/StripeCheckout";
-
+import Payment from "./pages/Payment";
+import OrderSuccess from "./pages/OrderSuccess";
 
 /* =========================
    Layout Component
@@ -108,6 +108,7 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/payment" element={<Payment />} />
+        <Route path="order-success" element={<OrderSuccess/>} />
       </Routes>
 
       {/* =====================

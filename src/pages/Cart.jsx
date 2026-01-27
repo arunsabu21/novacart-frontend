@@ -4,7 +4,7 @@ import EmptyCart from "../components/EmptyCart";
 import Loader from "../components/Loader";
 import MobileCart from "../components/MobileCart";
 import DesktopCart from "../components/DesktopCart";
-import "../Cart.css";
+import "../styles/desktop/Cart.css";
 
 export default function Cart() {
   const [cart, setCart] = useState([]);

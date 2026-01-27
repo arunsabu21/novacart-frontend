@@ -1,4 +1,4 @@
-import "../Cart.css";
+import "../styles/desktop/Cart.css";
 import emptyBag from "../assets/icons/emptybag.png";
 import { useNavigate } from "react-router-dom";
 

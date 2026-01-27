@@ -1,4 +1,4 @@
-import "../MobileCheckout.css";
+import "../styles/mobile/MobileCheckout.css";
 import Loader from "../components/Loader";
 import AddressForm from "../components/AddressForm";
 import { useNavigate } from "react-router-dom";
@@ -141,6 +141,7 @@ export default function MobileCheckout({
                   <button
                     className="stickyButton-placeOrder stickyButton-placeOrderFullW"
                     disabled={loading || !selectedAddress}
+                    onClick={onContinue}
                   >
                     {loading ? <Loader /> : "CONTINUE"}
                   </button>

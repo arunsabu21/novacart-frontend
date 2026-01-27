@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "../api/axios";
 import Loader from "../components/Loader";
 import MobileOrderSuccess from "../components/MobileOrderSuccess";
@@ -10,6 +11,13 @@ export default function OrderSuccess() {
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!location.state?.fromPayment) {
+      navigate("/");
+    }
+  }, [location, navigate]);
 
   /* RESPONSIVE */
   useEffect(() => {
@@ -18,34 +26,37 @@ export default function OrderSuccess() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  /* FETCH LATEST ORDER */
-
+  /* FETCH LATEST ORDER (SAFE POLLING) */
   useEffect(() => {
-    let interval;
+    let attempts = 0;
+    const MAX_ATTEMPTS = 6; // ~12 seconds
 
-    async function fetchOrder() {
+    const interval = setInterval(async () => {
       try {
         const token = localStorage.getItem("access");
         const res = await axios.get("/orders/latest/", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        // ✅ If no order or no items → redirect
-        if (!res.data || !res.data.items?.length) {
-          navigate("/");
-          return;
+        if (res.data?.items?.length) {
+          setOrder(res.data);
+          setLoading(false);
+          clearInterval(interval);
+        } else {
+          attempts++;
+          if (attempts >= MAX_ATTEMPTS) {
+            clearInterval(interval);
+            navigate("/");
+          }
         }
-
-        setOrder(res.data);
-        setLoading(false);
-        clearInterval(interval);
-      } catch (err) {
-        navigate("/");
+      } catch {
+        attempts++;
+        if (attempts >= MAX_ATTEMPTS) {
+          clearInterval(interval);
+          navigate("/");
+        }
       }
-    }
-
-    fetchOrder();
-    interval = setInterval(fetchOrder, 2000);
+    }, 2000);
 
     return () => clearInterval(interval);
   }, [navigate]);
@@ -56,10 +67,6 @@ export default function OrderSuccess() {
         <Loader />
       </div>
     );
-  }
-
-  if (!order) {
-    return <p>Order not found</p>;
   }
 
   return isMobile ? (

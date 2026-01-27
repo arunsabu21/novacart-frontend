@@ -10,6 +10,7 @@ export default function MobilePayment({
   amount,
   placeCODOrder,
   clientSecret,
+  setMessage,
 }) {
   const navigate = useNavigate();
   const [openAccordion, setOpenAccordion] = useState(null);
@@ -254,6 +255,7 @@ export default function MobilePayment({
                               key={clientSecret}
                               clientSecret={clientSecret}
                               amount={amount}
+                              setMessage={setMessage}
                               onSuccess={async () => {
                                 setShowPlacingLoader(true); // 🔥 SAME AS COD
 

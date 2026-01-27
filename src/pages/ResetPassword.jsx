@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../api/axios";
-import "../AuthPage.css";
-import { AUTH_MAINTENANCE } from "../config";
+import "../styles/desktop/AuthPage.css";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -25,11 +24,6 @@ function ForgotPassword() {
 
     if (!cleanEmail) {
       setMessage("Email is required");
-      return;
-    }
-
-    if (AUTH_MAINTENANCE) {
-      setMessage("We're currently under maintenance.Please try again soon.");
       return;
     }
 

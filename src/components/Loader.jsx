@@ -1,4 +1,4 @@
-import "../App.css";
+import "../styles/desktop/App.css";
 
 function Loader() {
   return (

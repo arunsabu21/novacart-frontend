@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
 import axios from "../api/axios";
-import "../Products.css";
+import "../styles/desktop/Products.css";
 
 import wishlistIcon from "../assets/icons/wishlist.png";
 import wishListed from "../assets/icons/wishlisted.png";

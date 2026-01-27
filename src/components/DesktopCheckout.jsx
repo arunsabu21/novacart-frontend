@@ -199,7 +199,7 @@ export default function DesktopCheckout({
             </div>
           </div>
           <div className="checkoutButton-desktopLay">
-            <button className="placeOrder-button">
+            <button className="placeOrder-button" onClick={onPlaceOrder}>
               PLACE ORDER
             </button>
           </div>

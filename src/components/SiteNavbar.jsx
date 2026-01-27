@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import secureIcon from "../assets/icons/secure.png";
-import "../SiteNav.css";
+import "../styles/components/SiteNav.css";
 
 function SiteNav() {
   const location = useLocation();

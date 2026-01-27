@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../api/axios";
-import "../AuthPage.css";
+import "../styles/desktop/AuthPage.css";
 import Loader from "../components/Loader";
-import { AUTH_MAINTENANCE } from "../config";
 
 function Signup() {
   const [username, setUserName] = useState("");
@@ -30,12 +29,6 @@ function Signup() {
       setMessage("Please fill all fields");
       return;
     }
-
-    if (AUTH_MAINTENANCE) {
-      setMessage("We're currently under maintenance.Please try again soon.");
-      return;
-    }
-
     try {
       setLoading(true);
 

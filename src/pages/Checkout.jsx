@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "../api/axios";
 import MobileCheckout from "../components/MobileCheckout";
 import DesktopCheckout from "../components/DesktopCheckout";
-import "../Checkout.css";
+import "../styles/desktop/Checkout.css";
 
 export default function CheckOut() {
   const navigate = useNavigate();
@@ -38,6 +38,11 @@ export default function CheckOut() {
       axios.get("/addresses/", { headers }),
     ])
       .then(([cartRes, addressRes]) => {
+        if (!cartRes.data || cartRes.data.length === 0) {
+          navigate("/cart");
+          return;
+        }
+
         setCartItems(cartRes.data);
         setAddresses(addressRes.data);
 

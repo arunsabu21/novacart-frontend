@@ -9,7 +9,6 @@ export default function DesktopCart({
   onRemove,
   cartBulkRemove,
   cartBulkMove,
-  totalItems,
   totalAmount,
 }) {
   const [showConfirm, setShowConfirm] = useState(false);

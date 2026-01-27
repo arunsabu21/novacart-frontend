@@ -20,7 +20,11 @@ function StripeForm({ clientSecret, onSuccess, amount, setMessage }) {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
+    console.log("stripe", stripe);
+    console.log("elements", elements);
     e.preventDefault();
+
+    if (loading) return;
 
     if (!stripe || !elements) {
       setMessage({
@@ -77,7 +81,7 @@ function StripeForm({ clientSecret, onSuccess, amount, setMessage }) {
           <div className="floatingInput-container stripe-element-container">
             <CardNumberElement
               className="stripe-element"
-              options={stripeStyle}
+              options={cardNumberStyle}
             />
             <label className="floatingLabel active">Card Number</label>
           </div>
@@ -108,7 +112,7 @@ function StripeForm({ clientSecret, onSuccess, amount, setMessage }) {
           <div className="floatingInput-container stripe-element-container">
             <CardExpiryElement
               className="stripe-element"
-              options={stripeStyle}
+              options={otherStripeStyle}
             />
             <label className="floatingLabel active">Valid Thru (MM/YY)</label>
           </div>
@@ -116,7 +120,7 @@ function StripeForm({ clientSecret, onSuccess, amount, setMessage }) {
 
         <div className="floatingInputRow">
           <div className="floatingInput-container stripe-element-container">
-            <CardCvcElement className="stripe-element" options={stripeStyle} />
+            <CardCvcElement className="stripe-element" options={otherStripeStyle} />
             <label className="floatingLabel active">CVV</label>
           </div>
         </div>
@@ -139,7 +143,7 @@ export default function StripeCheckout({ clientSecret, onSuccess, amount, setMes
   if (!clientSecret) return null;
 
   return (
-    <Elements stripe={stripePromise}>
+    <Elements stripe={stripePromise} >
       <StripeForm
         key={clientSecret} // 🔥 fixes accordion remount bug
         clientSecret={clientSecret}
@@ -152,19 +156,26 @@ export default function StripeCheckout({ clientSecret, onSuccess, amount, setMes
 }
 
 /* ================= STRIPE STYLE ================= */
-const stripeStyle = {
-  showIcon: true, // 🔥 CARD BRAND ICONS (Visa / MC / RuPay)
+const cardNumberStyle = {
+  showIcon: true,
   style: {
     base: {
       fontSize: "14px",
       color: "#282c3f",
       fontFamily: "inherit",
-      "::placeholder": {
-        color: "transparent",
-      },
+      "::placeholder": { color: "transparent" },
     },
-    invalid: {
-      color: "#ff3f6c",
+    invalid: { color: "#ff3f6c" },
+  },
+};
+
+const otherStripeStyle = {
+  style: {
+    base: {
+      fontSize: "14px",
+      color: "#282c3f",
+      fontFamily: "inherit",
     },
+    invalid: { color: "#ff3f6c" },
   },
 };

@@ -1,4 +1,4 @@
-import "../App.css";
+import "../styles/desktop/App.css";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
