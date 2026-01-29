@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "../styles/mobile/MobileCart.css";
 import ConfirmationModal from "../components/ConfirmModal";
@@ -11,8 +12,8 @@ export default function MobileCart({
   onRemove,
   cartBulkRemove,
   cartBulkMove,
-  totalItems,
   totalAmount,
+  address,
 }) {
   const [showConfirm, setShowConfirm] = useState(false);
   const [confirmAction, setConfirmAction] = useState(null);
@@ -35,7 +36,14 @@ export default function MobileCart({
                 <div className="mobile-address-block">
                   <div className="address-base-title">
                     Deliver to:
-                    <span className="address-base-highlight"> 686520</span>
+                    <span className="address-base-highlight">
+                      {" "}
+                      {address?.name}, {address?.pincode}
+                    </span>
+                    <div className="address-base-subText">
+                      {address?.house_number}, {address?.address},{" "}
+                      {address?.location}, {address?.district}
+                    </div>
                   </div>
                 </div>
                 <div className="msg-container"></div>
@@ -118,14 +126,16 @@ export default function MobileCart({
                                 width: "111px",
                               }}
                             >
-                              <img
-                                src={item.product_image}
-                                alt={item.product_title}
-                                className="image-base-imgResponsive"
-                                fetchPriority="high"
-                                loading="eager"
-                                style={{ height: "148px", width: "111px" }}
-                              />
+                              <Link to={`/products/${item.product}`}>
+                                <img
+                                  src={item.product_image}
+                                  alt={item.product_title}
+                                  className="image-base-imgResponsive"
+                                  fetchPriority="high"
+                                  loading="eager"
+                                  style={{ height: "148px", width: "111px" }}
+                                />
+                              </Link>
                             </div>
                           </div>
                         </div>
@@ -135,12 +145,12 @@ export default function MobileCart({
                               <div className="itemContainer-base-brand">
                                 {item.product_title}
                               </div>
-                              <a
-                                href="#"
+                              <Link
+                                to={`/products/${item.product}`}
                                 className="itemContainer-base-itemLink"
                               >
                                 {item.product_subtitle}
-                              </a>
+                              </Link>
                             </div>
                             <QtySelector
                               quantity={item.quantity}
@@ -261,7 +271,10 @@ export default function MobileCart({
                   {cart.length} Item ready to checkout
                 </div>
                 <div className="stickyButton-base-container">
-                  <button onClick={goToCheckout} className="stickyButton-base-placeOrderButton stickyButton-base-fullWidthButton">
+                  <button
+                    onClick={goToCheckout}
+                    className="stickyButton-base-placeOrderButton stickyButton-base-fullWidthButton"
+                  >
                     PLACE ORDER
                   </button>
                 </div>

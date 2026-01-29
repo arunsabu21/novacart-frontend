@@ -77,7 +77,7 @@
 }
 
 .remove-mark {
-  background-image: url("./assets/icons/close.png");
+  background-image: url("/icons/close.png");
   background-size: 12px 12px;
   background-repeat: no-repeat;
   background-position: center;

@@ -29,7 +29,7 @@ export default function OrderSuccess() {
   /* FETCH LATEST ORDER (SAFE POLLING) */
   useEffect(() => {
     let attempts = 0;
-    const MAX_ATTEMPTS = 6; // ~12 seconds
+    const MAX_ATTEMPTS = 8; // ~12 seconds
 
     const interval = setInterval(async () => {
       try {
@@ -46,20 +46,20 @@ export default function OrderSuccess() {
           attempts++;
           if (attempts >= MAX_ATTEMPTS) {
             clearInterval(interval);
-            navigate("/");
+            setLoading(false);
           }
         }
       } catch {
         attempts++;
         if (attempts >= MAX_ATTEMPTS) {
           clearInterval(interval);
-          navigate("/");
+          setLoading(false);
         }
       }
     }, 2000);
 
     return () => clearInterval(interval);
-  }, [navigate]);
+  }, []);
 
   if (loading) {
     return (

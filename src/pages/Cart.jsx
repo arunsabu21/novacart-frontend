@@ -10,6 +10,7 @@ export default function Cart() {
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [address, setAddress] = useState(null);
   const [message, setMessage] = useState({
     type: "",
     text: "",
@@ -41,6 +42,26 @@ export default function Cart() {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    const token = localStorage.getItem("access");
+    if(!token) return;
+
+    async function fetchAddress() {
+      try {
+        const res = await axios.get("/addresses/", {
+          headers: { Authorization: `Bearer ${token}`}
+        });
+
+        const defaultAddress = res.data.find(a => a.is_default);
+        setAddress(defaultAddress || res.data[0] || null);
+      } catch (err) {
+        console.error("Failed to fetch address", err);
+        setAddress(null);
+      }
+    }
+    fetchAddress();
+  }, []);
 
   useEffect(() => {
     if (!message.text) return;
@@ -211,6 +232,7 @@ export default function Cart() {
       ) : isMobile ? (
         <MobileCart
           cart={cart}
+          address={address}
           onQtyChange={updateQuantity}
           onRemove={removeFromCart}
           cartBulkRemove={bulkRemove}
@@ -221,6 +243,7 @@ export default function Cart() {
       ) : (
         <DesktopCart
           cart={cart}
+          address={address}
           onQtyChange={updateQuantity}
           onRemove={removeFromCart}
           cartBulkRemove={bulkRemove}

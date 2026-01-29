@@ -11,6 +11,7 @@ export default function MobilePayment({
   placeCODOrder,
   clientSecret,
   setMessage,
+  orderId,
 }) {
   const navigate = useNavigate();
   const [openAccordion, setOpenAccordion] = useState(null);
@@ -256,11 +257,9 @@ export default function MobilePayment({
                               clientSecret={clientSecret}
                               amount={amount}
                               setMessage={setMessage}
+                              orderId={orderId}
                               onSuccess={async () => {
                                 setShowPlacingLoader(true); // 🔥 SAME AS COD
-
-                                // give webhook + DB a moment to finish
-                                await new Promise((r) => setTimeout(r, 1200));
 
                                 navigate("/order-success", {
                                   state: { fromPayment: true },

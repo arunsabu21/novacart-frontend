@@ -13,7 +13,7 @@ import { useState } from "react";
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 /* ================= INNER FORM ================= */
-function StripeForm({ clientSecret, onSuccess, amount, setMessage }) {
+function StripeForm({ clientSecret, onSuccess, amount, setMessage, orderId }) {
   const stripe = useStripe();
   const elements = useElements();
   const [name, setName] = useState("");
@@ -69,7 +69,7 @@ function StripeForm({ clientSecret, onSuccess, amount, setMessage }) {
         type: "success",
         text: "Payment successful! Placing your order…",
       });
-      onSuccess();
+      onSuccess(orderId);
     }
   };
 
@@ -120,7 +120,10 @@ function StripeForm({ clientSecret, onSuccess, amount, setMessage }) {
 
         <div className="floatingInputRow">
           <div className="floatingInput-container stripe-element-container">
-            <CardCvcElement className="stripe-element" options={otherStripeStyle} />
+            <CardCvcElement
+              className="stripe-element"
+              options={otherStripeStyle}
+            />
             <label className="floatingLabel active">CVV</label>
           </div>
         </div>
@@ -139,17 +142,24 @@ function StripeForm({ clientSecret, onSuccess, amount, setMessage }) {
 }
 
 /* ================= EXPORTED COMPONENT ================= */
-export default function StripeCheckout({ clientSecret, onSuccess, amount, setMessage }) {
+export default function StripeCheckout({
+  clientSecret,
+  onSuccess,
+  amount,
+  setMessage,
+  orderId,
+}) {
   if (!clientSecret) return null;
 
   return (
-    <Elements stripe={stripePromise} >
+    <Elements stripe={stripePromise}>
       <StripeForm
         key={clientSecret} // 🔥 fixes accordion remount bug
         clientSecret={clientSecret}
         onSuccess={onSuccess}
         amount={amount}
         setMessage={setMessage}
+        orderId={orderId}
       />
     </Elements>
   );

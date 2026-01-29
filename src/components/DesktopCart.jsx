@@ -10,6 +10,7 @@ export default function DesktopCart({
   cartBulkRemove,
   cartBulkMove,
   totalAmount,
+  address,
 }) {
   const [showConfirm, setShowConfirm] = useState(false);
   const [confirmAction, setConfirmAction] = useState(null);
@@ -30,7 +31,8 @@ export default function DesktopCart({
           <div className="desktopAddress-baseContainer">
             <div className="desktopAddress-baseTitle">
               Deliver to:
-              <span className="desktopAddressHighLight"> 686520</span>
+              <span className="desktopAddressHighLight"> {address.name}, {address.pincode}</span>
+              <div className="address-base-subText">{address.house_number}, {address.address}, {address.location}, {address.district}</div>
             </div>
           </div>
           <div className="bulkAction-containerDesktop">
