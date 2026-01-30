@@ -13,7 +13,7 @@ a {
 #mobileCart {
   background: #f4f4f5;
   min-height: 100vh;
-  padding-top: 56px;
+  padding-top: 58px;
 }
 
 .mobile-address-block {
@@ -50,6 +50,27 @@ a {
   text-overflow: ellipsis;
   text-transform: capitalize;
   max-width: 90%;
+}
+
+.address-error {
+  border: 1px solid rgba(255, 90, 90, 0.9);
+  border-radius: 4px;
+}
+
+.address-warning {
+  color: rgba(255, 90, 90, 0.9);
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.addressMobile-addButton {
+  font-size: 14px;
+  font-weight: 700;
+  color: #20bd99;
+  margin-right: 4px;
+  position: relative;
+  border: none;
+  background: #fff;
 }
 
 .msg-container {
@@ -283,6 +304,53 @@ a {
   flex: 1;
   font-size: 14px;
   color: #282c3f;
+}
+
+.itemDelivery-estimate {
+  margin-top: 4px;
+}
+
+.itemDelivery-baseMessage {
+  color: #282c3f;
+  font-size: 12px;
+  letter-spacing: -0.1px;
+  margin-bottom: 8px;
+  line-height: 15px;
+  white-space: pre-wrap;
+  text-align: center;
+}
+
+.itemDelivery-estimateContainer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.itemDelivery-iconBase {
+  height: 21px;
+}
+
+.itemDelivery-check {
+  fill: #03a685;
+  margin-right: 8px;
+  height: 10px;
+  width: 12px;
+  vertical-align: middle;
+}
+
+.itemDelivery-messageText {
+  display: inline-block;
+}
+
+.itemDelivery-baseMessage {
+  color: #282c3f;
+  font-size: 12px;
+  letter-spacing: -0.1px;
+  margin-bottom: 8px;
+  line-height: 15px;
+  white-space: pre-wrap;
+  text-align: center;
 }
 
 .priceBlock-base-container {

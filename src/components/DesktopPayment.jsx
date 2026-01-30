@@ -13,6 +13,7 @@ export default function DesktopPayment({
   clientSecret,
   totalItems,
   setMessage,
+  orderId,
 }) {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("recommended");
@@ -296,7 +297,9 @@ export default function DesktopPayment({
 
                                 try {
                                   await placeCODOrder(); // ✅ wait for backend
-                                  navigate("/order-success"); // ✅ navigate ONLY after success
+                                  navigate("/order-success", {
+                                    state: { fromPayment: true },
+                                  }); // ✅ navigate ONLY after success
                                 } catch {
                                   setShowPlacingLoader(false); // ❌ hide loader on error
                                 }
@@ -322,9 +325,10 @@ export default function DesktopPayment({
                           clientSecret={clientSecret}
                           amount={amount}
                           setMessage={setMessage}
+                          orderId={orderId}
                           startCardPayment={startCardPayment}
                           onSuccess={async () => {
-                            setShowPlacingLoader(true); // 🔥 SAME AS COD
+                            setShowPlacingLoader(true); 
 
                             // give webhook + DB a moment to finish
                             await new Promise((r) => setTimeout(r, 1200));

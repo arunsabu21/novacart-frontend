@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "../api/axios";
 import MobilePayment from "../components/MobilePayment";
 import DesktopPayment from "../components/DesktopPayment";
-import StripeCheckout from "../components/StripeCheckout";
 import Loader from "../components/Loader";
 import "../styles/desktop/Payment.css";
 
@@ -12,34 +11,32 @@ export default function Payment() {
   const location = useLocation();
 
   const addressId = location.state?.addressId;
+
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [paymentMethod, setPaymentMethod] = useState(null);
   const [clientSecret, setClientSecret] = useState(null);
-  const [loading, setLoading] = useState(false);
+
   const [cartLoaded, setCartLoaded] = useState(false);
-  const [message, setMessage] = useState({
-    type: "",
-    text: "",
-  });
+  const [cartItems, setCartItems] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const [message, setMessage] = useState({ type: "", text: "" });
   const [showFlash, setShowFlash] = useState(false);
+
   const [amount, setAmount] = useState(0);
   const [displayAmount, setDisplayAmount] = useState(0);
-  const [cartItems, setCartItems] = useState([]);
 
+  /* ---------------- FLASH MESSAGE ---------------- */
   useEffect(() => {
     if (!message.text) return;
 
-    requestAnimationFrame(() => {
-      setShowFlash(true);
-    });
+    requestAnimationFrame(() => setShowFlash(true));
 
-    const hideTimer = setTimeout(() => {
-      setShowFlash(false);
-    }, 3000);
-
-    const cleanupTimer = setTimeout(() => {
-      setMessage({ type: "", text: "" });
-    }, 4500);
+    const hideTimer = setTimeout(() => setShowFlash(false), 3000);
+    const cleanupTimer = setTimeout(
+      () => setMessage({ type: "", text: "" }),
+      4500
+    );
 
     return () => {
       clearTimeout(hideTimer);
@@ -47,23 +44,7 @@ export default function Payment() {
     };
   }, [message]);
 
-  useEffect(() => {
-    if (!cartLoaded) return; 
-
-    if (cartItems.length === 0) {
-      setMessage({
-        type: "error",
-        text: "Bag is invalid or empty. Redirecting back...",
-      });
-
-      const timer = setTimeout(() => {
-        navigate("/cart");
-      }, 1800);
-
-      return () => clearTimeout(timer);
-    }
-  }, [cartLoaded, cartItems, navigate]);
-
+  /* ---------------- FETCH CART (PAGE LOAD) ---------------- */
   useEffect(() => {
     async function fetchCart() {
       try {
@@ -72,52 +53,67 @@ export default function Payment() {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        console.log("CART RESPONSE 👉", res.data);
-
         setCartItems(Array.isArray(res.data) ? res.data : []);
-      } catch (err) {
-        console.log("Cart fetch failed", err);
+      } catch {
         setCartItems([]);
       } finally {
-        setCartLoaded(true);
+        setCartLoaded(true); // 🔥 page ready
       }
     }
 
     fetchCart();
   }, []);
 
-  const totalItems = cartItems.length;
+  /* ---------------- CART VALIDATION ---------------- */
+  useEffect(() => {
+    if (!cartLoaded) return;
 
+    if (cartItems.length === 0) {
+      setMessage({
+        type: "error",
+        text: "Bag is invalid or empty. Redirecting back...",
+      });
+
+      const t = setTimeout(() => navigate("/cart"), 1800);
+      return () => clearTimeout(t);
+    }
+  }, [cartLoaded, cartItems, navigate]);
+
+  /* ---------------- TOTAL ---------------- */
   useEffect(() => {
     const total = cartItems.reduce(
       (sum, item) =>
         sum + Number(item.product_price || 0) * Number(item.quantity || 1),
-      0,
+      0
     );
     setDisplayAmount(total);
   }, [cartItems]);
 
+  /* ---------------- MOBILE / DESKTOP ---------------- */
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    const resize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", resize);
+    return () => window.removeEventListener("resize", resize);
   }, []);
 
+  /* ---------------- ADDRESS GUARD ---------------- */
   useEffect(() => {
     if (!addressId) navigate("/checkout");
   }, [addressId, navigate]);
 
+  /* ---------------- CARD PAYMENT ---------------- */
   async function startCardPayment() {
     try {
       setLoading(true);
-      setMessage({type: "", text: ""});
-      const token = localStorage.getItem("access");
+      setMessage({ type: "", text: "" });
 
+      const token = localStorage.getItem("access");
       const res = await axios.post(
         "/payments/payment-intent/",
         { address_id: addressId },
-        { headers: { Authorization: `Bearer ${token}` } },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
+
       setClientSecret(res.data.client_secret);
       setAmount(res.data.amount);
       setPaymentMethod("CARD");
@@ -128,25 +124,27 @@ export default function Payment() {
     }
   }
 
+  /* ---------------- COD ORDER ---------------- */
   async function placeCODOrder() {
-    setLoading(true);
-    setMessage({type: "", text: ""});
-
     try {
-      const token = localStorage.getItem("access");
+      setLoading(true);
+      setMessage({ type: "", text: "" });
 
+      const token = localStorage.getItem("access");
       const res = await axios.post(
         "/orders/create/",
         { address_id: addressId, payment_method: "COD" },
-        { headers: { Authorization: `Bearer ${token}` } },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      return res.data; // ✅ return backend response
-    } catch (err) {
-      throw err;
+      return res.data;
     } finally {
       setLoading(false);
     }
+  }
+
+  if (!cartLoaded) {
+    return <Loader />;
   }
 
   const commonProps = {
@@ -159,7 +157,7 @@ export default function Payment() {
     setPaymentMethod,
     startCardPayment,
     placeCODOrder,
-    totalItems,
+    totalItems: cartItems.length,
     setMessage,
     navigate,
   };

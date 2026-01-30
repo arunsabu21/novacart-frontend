@@ -4,7 +4,7 @@ export default function MobileNav({ count = 0 }) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const ICON_HIDDEN_ROUTES = ["/cart", "/checkout", "/select-address"];
+  const ICON_HIDDEN_ROUTES = ["/cart", "/checkout", "/select-address", "/payment", "/order-success"];
   const hideIcons = ICON_HIDDEN_ROUTES.includes(location.pathname);
 
   const titles = {
@@ -12,6 +12,8 @@ export default function MobileNav({ count = 0 }) {
     "/wishlist": "Wishlist",
     "/cart": "Shopping Bag",
     "/checkout": "Checkout",
+    "/payment": "Payment",
+    "/order-success": "Order Confirmed",
     "/profile": "Profile",
     "/select-address": "Select Address",
   };
@@ -35,7 +37,7 @@ export default function MobileNav({ count = 0 }) {
         </div>
       </div>
 
-      <div className="mobile-nav-back header-title" style={{ top: "11px" }}>
+      <div className="mobile-nav-back header-title" style={location.pathname === "/wishlist" ? {top: "11px"} : {}}>
         <h1 className="header-heading text-ellipse">{pageTitle}</h1>
         <br />
         {showCount && (

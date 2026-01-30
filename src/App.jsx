@@ -38,7 +38,7 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
   }, []);
 
   // pages that use SiteNav / MobileNav
-  const flowRoutes = ["/cart", "/checkout", "/payment"];
+  const flowRoutes = ["/cart", "/checkout", "/payment", "/order-success"];
   const isFlowPage = flowRoutes.includes(path);
 
   // auth pages

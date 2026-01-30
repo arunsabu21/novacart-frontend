@@ -33,18 +33,34 @@ export default function MobileCart({
           <div className="page">
             <div className="mobile-base-mobile">
               <div>
-                <div className="mobile-address-block">
-                  <div className="address-base-title">
-                    Deliver to:
-                    <span className="address-base-highlight">
-                      {" "}
-                      {address?.name}, {address?.pincode}
-                    </span>
-                    <div className="address-base-subText">
-                      {address?.house_number}, {address?.address},{" "}
-                      {address?.location}, {address?.district}
+                <div
+                  className={`mobile-address-block ${
+                    !address?.pincode ? "address-error" : ""
+                  }`}
+                >
+                  {address?.pincode ? (
+                    <div className="address-base-title">
+                      Deliver to:
+                      <span className="address-base-highlight">
+                        {" "}
+                        {address.name}, {address.pincode}
+                      </span>
+                      <div className="address-base-subText">
+                        {address.house_number}, {address.address},{" "}
+                        {address.location}, {address.district}
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    <>
+                      <div className="address-warning">
+                        Add delivery address and continue
+                      </div>
+
+                      <button className="addressMobile-addButton">
+                        Add Address
+                      </button>
+                    </>
+                  )}
                 </div>
                 <div className="msg-container"></div>
                 <div className="bulkActionStrip-mobileContainer">
@@ -174,12 +190,26 @@ export default function MobileCart({
                                 ₹ {item.product_price}
                               </div>
                             </div>
-                            <div className="returnPeriod-base-returnItem">
-                              <div className="returnPeriod-base-returnText">
-                                <span className="returnPeriod-base-returnDays">
-                                  7 Days
-                                </span>{" "}
-                                return available
+                            <div className="itemDelivery-estimate">
+                              <div className="itemDelivery-baseMessage itemDelivery-estimateContainer">
+                                <div className="itemDelivery-iconBase">
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="10"
+                                    height="8"
+                                    viewBox="0 0 10 8"
+                                    className="itemDelivery-check"
+                                  >
+                                    <path
+                                      fillRule="evenodd"
+                                      d="M9.775.227A.716.716 0 0 0 8.716.24L3.373 6.015a.09.09 0 0 1-.133 0L1.278 3.91a.716.716 0 0 0-1.059-.001.834.834 0 0 0 0 1.127l2.565 2.742c.14.15.33.223.53.223h.004a.71.71 0 0 0 .53-.23l5.939-6.416A.833.833 0 0 0 9.775.227"
+                                    ></path>
+                                  </svg>
+                                </div>
+                                <div className="itemDelivery-messageText itemDelivery-baseMessage">
+                                  <span>Delivery by</span>
+                                  <span style={{ fontWeight: "700"}}> {item.estimated_delivery}</span>
+                                </div>
                               </div>
                             </div>
                           </div>
