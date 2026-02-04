@@ -1,0 +1,171 @@
+.category-slider {
+  background: #fff;
+  padding: 12px 0;
+}
+
+.category-track {
+  display: flex;
+  padding: 0 14px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.category-track::-webkit-scrollbar {
+  display: none;
+}
+
+.category-card {
+  width: 80px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.category-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgb(246, 242, 238);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.category-img.yellow {
+  background: #ffd400;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.category-card p {
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+}
+
+.mobile-banner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin: 0;
+  background: rgb(246, 242, 238);
+}
+
+.banner-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.4s ease-in-out;
+}
+
+.banner-track img {
+  width: 100%;
+  height: 100%;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+/* dots */
+.banner-dots {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.dot.active {
+  background: #fff;
+}
+
+.secure-banner {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
+  padding: 0;
+  background: rgb(245, 229, 255);
+}
+
+.secure-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.category-banner {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+  padding: 0;
+}
+
+.category-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.category-card-slider {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.category-card-slider::-webkit-scrollbar {
+  display: none;
+}
+
+.category-card-track {
+  display: flex;
+  gap: 14px;
+}
+
+.cat-scroll {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding: 10px 14px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.cat-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.cat-item {
+  flex: 0 0 auto;
+  text-align: center;
+}
+
+.cat-item img {
+  background-color: rgb(246, 245, 239);
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.cat-item p {
+  margin-top: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #333;
+}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Loader from "../components/Loader";
 import axios from "../api/axios";
 import "../styles/desktop/Products.css";
@@ -16,6 +16,9 @@ function Products() {
 
   const navigate = useNavigate();
   const token = localStorage.getItem("access");
+  const [searchParams] = useSearchParams();
+  const categoryId = searchParams.get("category");
+  console.log("Category Id", categoryId);
 
   // ---------------------- FETCH PRODUCTS ----------------------
   useEffect(() => {
@@ -23,7 +26,10 @@ function Products() {
       setPageLoading(true);
 
       try {
-        const res = await axios.get("/products/");
+        const url = categoryId
+        ? `/products/?category=${categoryId}`
+        : `/products/`;
+        const res = await axios.get(url);
         setProducts(res.data);
       } catch (err) {
         console.log("Products fetch error:", err);
@@ -33,7 +39,7 @@ function Products() {
     };
 
     fetchProducts();
-  }, []);
+  }, [categoryId]);
 
   // ---------------------- FETCH WISHLIST ----------------------
   const loadWishlist = async () => {

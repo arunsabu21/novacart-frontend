@@ -28,7 +28,6 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
   const location = useLocation();
   const path = location.pathname;
 
-  // reactive mobile detection
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
@@ -37,7 +36,7 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  // pages that use SiteNav / MobileNav
+  // flow pages
   const flowRoutes = ["/cart", "/checkout", "/payment", "/order-success"];
   const isFlowPage = flowRoutes.includes(path);
 
@@ -52,15 +51,15 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
           TOP NAVIGATION
       ===================== */}
 
-      {/* Cart / Checkout / Payment */}
       {isFlowPage && (
         <>
           {!isMobile && <SiteNav />}
-          {isMobile && <MobileNav />}
+          {isMobile && (
+            <MobileNav isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+          )}
         </>
       )}
 
-      {/* AUTH PAGES */}
       {isAuthPage && (
         <>
           {!isMobile && (
@@ -70,13 +69,12 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
         </>
       )}
 
-      {/* NORMAL PAGES */}
       {!isFlowPage && !isAuthPage && (
         <>
           {!isMobile && (
             <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
           )}
-          {isMobile && <MobileNav />}
+          {isMobile && <MobileNav isLoggedIn={isLoggedIn} handleLogout={handleLogout}/>}
         </>
       )}
 
@@ -90,10 +88,8 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
         />
         <Route path="/signup" element={<Signup />} />
 
-        <Route
-          path="/"
-          element={isLoggedIn ? <Home /> : <Navigate to="/login" />}
-        />
+        {/* ✅ FIX 1: HOME IS PUBLIC */}
+        <Route path="/" element={<Home />} />
 
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route
@@ -108,7 +104,9 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/payment" element={<Payment />} />
-        <Route path="order-success" element={<OrderSuccess/>} />
+
+        {/* ✅ FIX 2: missing slash */}
+        <Route path="/order-success" element={<OrderSuccess />} />
       </Routes>
 
       {/* =====================
@@ -124,7 +122,7 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
 ========================= */
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
-    !!localStorage.getItem("access")
+    !!localStorage.getItem("access"),
   );
 
   function handleLogout() {
