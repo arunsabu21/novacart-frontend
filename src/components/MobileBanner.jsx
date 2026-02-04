@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react";
 import "../styles/mobile/MobileCategorySlider.css";
+import banner1 from "../assets/images/BANNER1.png";
+import banner2 from "../assets/images/BANNER2.png";
+import banner3 from "../assets/images/BANNER3.png";
+import banner4 from "../assets/images/BANNER4.png";
+import banner5 from "../assets/images/BANNER5.png";
+import banner6 from "../assets/images/BANNER6.png";
 
 const banners = [
-  "/src/assets/images/BANNER1.png",
-  "/src/assets/images/BANNER2.png",
-  "/src/assets/images/BANNER3.png",
-  "/src/assets/images/BANNER4.png",
-  "/src/assets/images/BANNER5.png",
-  "/src/assets/images/BANNER6.png",
+  banner1,
+  banner2,
+  banner3,
+  banner4,
+  banner5,
+  banner6,
 ];
 
 export default function MobileBanner() {
