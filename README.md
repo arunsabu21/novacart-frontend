@@ -69,6 +69,7 @@ The application is fully responsive, offering optimized user experiences for bot
 - Stripe (React & JS)
 - React Icons 5.5.0
 - CSS3
+- Canva (UI Assets)
 - JWT Authentication
 - Vercel (deployment)
 - GitHub Actions (CI pipeline)
