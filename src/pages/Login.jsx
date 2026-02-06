@@ -81,27 +81,41 @@ function Login({ setIsLoggedIn }) {
                 <div className="authHeader plHeader">Login to your account</div>
 
                 <form onSubmit={handleSubmit}>
-                  <input
-                    className="auth-input"
-                    placeholder="Username"
-                    onChange={(e) => setUserName(e.target.value)}
-                    disabled={loading}
-                  />
+                  <div className="floatingInputRow">
+                    <div className="floatingInput-container marginMB">
+                      <input
+                        type="text"
+                        className="floatingInput-input noRadius"
+                        onChange={(e) => setUserName(e.target.value)}
+                        placeholder=""
+                      />
 
-                  <input
-                    type="password"
-                    className="auth-input"
-                    placeholder="Password"
-                    onChange={(e) => setPassword(e.target.value)}
-                    disabled={loading}
-                  />
+                      <label htmlFor="name" className="floatingLabel">
+                        Username*
+                      </label>
+                    </div>
+                  </div>
 
+                  <div className="floatingInputRow">
+                    <div className="floatingInput-container">
+                      <input
+                        type="password"
+                        className="floatingInput-input  noRadius"
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder=""
+                      />
+
+                      <label htmlFor="mobile" className="floatingLabel">
+                        Password*
+                      </label>
+                    </div>
+                  </div>
                   <button className="auth-button" disabled={loading}>
                     Login
                   </button>
 
                   <div style={{ marginTop: "14px", fontSize: "12px" }}>
-                    <p style={{ marginBottom: "8px" }}>
+                    <p style={{ marginBottom: "18px" }}>
                       Don't have an account?{" "}
                       <span
                         onClick={() => navigate("/signup")}
@@ -125,7 +139,7 @@ function Login({ setIsLoggedIn }) {
                           fontWeight: "bold",
                         }}
                       >
-                        Reset
+                        Reset here
                       </span>
                     </p>
                   </div>
