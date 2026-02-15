@@ -14,18 +14,46 @@ api.interceptors.request.use(
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      console.log("Unauthorized – please login");
-      // later: redirect to /login
+  async (error) => {
+    const originalRequest = error.config;
+
+    if (originalRequest.url?.includes("/token/refresh/")) {
+      return Promise.reject(error);
     }
+
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        const refresh = localStorage.getItem("refresh");
+        if (!refresh) throw new Error("No refresh token");
+
+        const res = await axios.post(`${BASE_URL}/token/refresh/`, { refresh });
+
+        const newAccess = res.data.access;
+        const newRefresh = res.data.refresh;
+
+        localStorage.setItem("access", newAccess);
+        if (newRefresh) {
+          localStorage.setItem("refresh", newRefresh);
+        }
+
+        originalRequest.headers.Authorization = `Bearer ${newAccess}`;
+        return api(originalRequest);
+      } catch (err) {
+        localStorage.clear();
+        window.location.href = "/login";
+        return Promise.reject(err);
+      }
+    }
+
     return Promise.reject(error);
-  }
+  },
 );
 
 export default api;
