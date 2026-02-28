@@ -68,7 +68,8 @@ The application is fully responsive, offering optimized user experiences for bot
 - Axios 1.13.2
 - Stripe (React & JS)
 - React Icons 5.5.0
-- Cloudnary 
+- Cloudnary
+- Figma (UI/UX)
 - CSS3
 - Canva (UI Assets)
 - JWT Authentication
