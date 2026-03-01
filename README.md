@@ -71,7 +71,6 @@ The application is fully responsive, offering optimized user experiences for bot
 - Cloudnary
 - Figma (UI/UX)
 - CSS3
-- Canva (UI Assets)
 - JWT Authentication
 - Vercel (deployment)
 - GitHub Actions (CI pipeline)
@@ -159,4 +158,5 @@ API Base URL: https://novacart-backend-bnnb.onrender.com/api
 **Arun Sabu**
 Full-Stack Developer (Django & React)
 
-GitHub: [@arunsabu21](https://github.com/arunsabu21)
+GitHub: [@arunsabu21](https://github.com/arunsabu21) </br>
+Linkedin: [@arunsabu21](https://linkedin.com/in/arunsabu21)
