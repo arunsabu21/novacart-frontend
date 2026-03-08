@@ -16,7 +16,7 @@ function EmptyWishlist() {
       </div>
       <button
         className="wishlistEmpty-button"
-        onClick={() => navigate("/products")}
+        onClick={() => navigate("/")}
       >
         CONTINUE SHOPPING
       </button>

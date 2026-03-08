@@ -17,7 +17,7 @@ export default function MobileWishlist({
 
       {/* Wishlist list */}
       <ul className="mobile-wishlistProducts">
-        {wishlist.map((item) => (
+        {wishlist.map((item) =>  (
           <li key={item.id} className="item">
             <div className="mobile-wishlistProduct">
               <div className="ripple-container">

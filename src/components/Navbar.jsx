@@ -9,7 +9,10 @@ function Navbar({ isLoggedIn, handleLogout }) {
 
   function onLogout() {
     handleLogout();
-    navigate("/", { replace: true});
+    navigate("/", {
+      replace: true,
+      state: { message: "Logged out successfully" },
+    })
   }
 
   function goLogin(e) {

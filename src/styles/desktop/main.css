@@ -1,0 +1,125 @@
+.application-base {
+  color: inherit;
+  margin-top: 5px;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.page-page {
+  background-color: #f5f5f6;
+}
+
+@media (min-width: 780px) {
+  .page-page {
+    margin: 10% 5%;
+    min-height: 650px;
+    background-color: white;
+  }
+}
+
+.account-account {
+  display: none;
+  border-bottom: 1px solid #d4d5d9;
+  padding: 15px 0px;
+  font-size: 12px;
+}
+
+@media (min-width: 780px) {
+  .account-account {
+    display: block;
+  }
+}
+
+.account-heading {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.sidebar-sidebar {
+  vertical-align: top;
+  display: none;
+  border-right: 1px solid #d4d5d9;
+  box-shadow-right: 1px 1px 5px #888888;
+  text-align: left;
+  padding: 0px 25px 0px 0px;
+  font-size: 15px;
+}
+
+@media (min-width: 780px) {
+  .sidebar-sidebar {
+    display: inline-block;
+  }
+}
+
+.segment-segment:first-child {
+  border-top: none;
+}
+
+.segment-segment {
+  border-top: 1px solid #d4d5d9;
+  padding: 20px 0px;
+  width: 145px;
+}
+
+.segment-activeLink {
+  color: #14cda8;
+  font-weight: 800;
+}
+
+.segment-link {
+  display: block;
+  margin: 5px 0px;
+}
+
+.segment-heading {
+  color: #7e818c;
+  font-size: 12px;
+  text-transform: uppercase;
+  padding: 10px 0px;
+}
+
+.pageMainComponent {
+  font-size: 14px;
+}
+
+@media (min-width: 780px) {
+  .pageMainComponent {
+    padding: 10px;
+    width: 71%;
+    display: inline-block;
+    margin: 5px;
+  }
+}
+
+.user-user {
+  padding-bottom: 25px;
+  background-color: white;
+}
+
+@media (min-width: 780px) {
+  .user-user {
+    margin-bottom: 35px;
+    padding-bottom: unset;
+    background-color: none;
+  }
+}
+
+.user-user .user-bg {
+  position: relative;
+  background: #F5F5F6;
+  height: 180px;
+  padding: 25px 30px;
+}
+
+.user-user .user-bg .user-wrapper {
+  text-align: center;
+}
+
+.user-user .user-bg .user-wrapper .user-default {
+  height: 130px;
+  width: 130px;
+  float: left;
+  display: inline;
+}

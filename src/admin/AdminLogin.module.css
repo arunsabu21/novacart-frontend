@@ -1,0 +1,238 @@
+.adminLoginBaseLogin {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  font-family: "Open Sans", sans-serif !important;
+}
+
+.imageImageWrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+@media (max-width: 767px) {
+  .imageImageWrapper {
+    height: 30% !important;
+  }
+}
+
+.loginActionWrapper {
+  text-align: center;
+  min-height: 300px;
+  width: 360px;
+  height: 450px;
+}
+
+.actionWrapper {
+  position: absolute;
+  top: 22%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-width: 500px;
+  margin: auto;
+  background-color: #fff;
+  z-index: 2;
+}
+
+.actionErrorMessage {
+  color: #ff1100;
+  font-size: 12px;
+  margin-top: 15px;
+  font-family: "Open Sans", sans-serif !important;
+}
+
+@media (min-width: 780px) {
+  .actionWrapper {
+    top: 30px;
+    min-height: 500px;
+    max-height: 780px;
+  }
+}
+
+.actionWrapperLogoContainer {
+  position: relative;
+  top: -31px;
+  display: table;
+  background-color: #fff;
+  margin: 0 auto;
+  padding: 4px 60px;
+  border-radius: 1px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.09);
+  z-index: 3;
+}
+
+.actionWrapperLogo {
+  z-index: 4;
+  height: 50px;
+  object-fit: contain;
+}
+
+.adminLoginContainer {
+  padding: 0 30px;
+  margin-top: -30px;
+}
+
+.adminLoginHeader {
+  font-weight: 700;
+  color: #282c3f;
+  font-size: 14px;
+  margin: 10px;
+  display: block;
+  font-family: "Open Sans", sans-serif !important;
+}
+
+.adminLoginLabel {
+  font-size: 11px;
+  letter-spacing: normal;
+  color: #7e818c;
+  margin-top: 6px;
+  display: block;
+  margin-bottom: 30px;
+  font-family: "Open Sans", sans-serif !important;
+}
+
+.inputTextBox {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  font-family: "Open Sans", sans-serif;
+}
+
+.adminLoginUsernameInput,
+.adminLoginPasswordInput {
+  margin-top: 40px;
+  margin-bottom: 5px;
+}
+
+.inputTextBoxInputValue {
+  height: 30px;
+  display: flex;
+  background: none;
+  font-size: 16px;
+  border-width: 0;
+  border-color: transparent;
+  line-height: 1.9;
+  width: 100%;
+  color: transparent;
+  transition: all 0.3s ease;
+  box-shadow: none;
+  flex-grow: 1;
+  padding: 5px 0;
+  outline: 0 none;
+  font-family: "Open Sans", sans-serif !important;
+}
+
+.inputTextBoxInputValue:focus,
+.inputTextBoxInputValue:not(:placeholder-shown) {
+  color: #282c3f;
+}
+
+.inputTextBoxInputLabel {
+  position: absolute;
+  top: 0;
+  pointer-events: none;
+  padding: 6px 0;
+  z-index: 5;
+  color: #b5b6b9;
+  font-size: 16px;
+  left: 0;
+  transition: all 0.3s ease;
+  font-family: "Open Sans", sans-serif !important;
+}
+
+.inputTextBoxInputValue:focus ~ .inputTextBoxInputLabel,
+.inputTextBoxInputValue:not(:placeholder-shown) ~ .inputTextBoxInputLabel {
+  font-size: 11px;
+  top: -26px;
+  left: 0;
+}
+
+.inputTextBoxInputValue:focus ~ .inputTextBoxInputLabel {
+  color: #2563eb;
+}
+
+.inputTextBoxBorderBottom {
+  position: relative;
+  border-bottom: 1px solid #e5e8ee;
+  display: block;
+}
+
+.inputTextBox:focus-within .inputTextBoxBorderBottom {
+  border-bottom-color: #2563eb;
+}
+
+.inputTextBoxBorderBottom:before {
+  content: "";
+  height: 2px;
+  width: 0;
+  left: 50%;
+  bottom: -1px;
+  position: absolute;
+  transition:
+    left 0.3s ease,
+    width 0.3s ease;
+  z-index: 2;
+}
+
+.buttonWrap {
+  clear: both;
+  margin: 40px auto 0;
+}
+
+.adminActionButton {
+  display: inline-block;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  text-shadow: none;
+  text-align: center;
+  padding: 13px 0;
+  background: #2563eb;
+  border: none;
+  border-radius: 4px;
+  width: 100%;
+  font-family: "Open Sans", sans-serif !important;
+}
+
+.adminTermsAndConditions {
+  margin-top: 25px;
+}
+
+.adminTermsAndConditionsHeader {
+  font-weight: 700;
+  height: 16px;
+  left: 615.5px;
+  top: 364px;
+  font-family: Roboto;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  color: #121319;
+  font-family: "Open Sans", sans-serif !important;
+}
+
+.adminTermsAndConditionsList {
+  height: 275px;
+  font-family: Roboto;
+  font-size: 12px;
+  line-height: 15px;
+  align-items: center;
+  text-align: justify;
+  font-feature-settings: "cpsp" on;
+  color: rgba(18, 19, 25, 0.7);
+  padding: 4px 15px 15px;
+}
+
+.adminTermsAndConditionsList li {
+  margin-bottom: 15px;
+  line-height: 15px;
+  font-family: "Open Sans", sans-serif !important;
+}

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import axios from "./api/axios";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -20,6 +21,12 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Payment from "./pages/Payment";
 import OrderSuccess from "./pages/OrderSuccess";
+
+// Admin Routes
+import AdminLogin from "./admin/AdminLogin";
+import AdminProtectedRoute from "./admin/AdminProtectedRoute";
+import AdminLayout from "./admin/layout/AdminLayout";
+import AdminDashboard from "./admin/pages/AdminDashboard";
 
 /* =========================
    Layout Component
@@ -45,13 +52,15 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
   const isAuthPage =
     authRoutes.includes(path) || path.startsWith("/reset-password");
 
+  const isAdminRoute = path.startsWith("/admin");
+
   return (
     <>
       {/* =====================
           TOP NAVIGATION
       ===================== */}
 
-      {isFlowPage && (
+      {!isAdminRoute && isFlowPage && (
         <>
           {!isMobile && <SiteNav />}
           {isMobile && (
@@ -60,7 +69,7 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
         </>
       )}
 
-      {isAuthPage && (
+      {!isAdminRoute && isAuthPage && (
         <>
           {!isMobile && (
             <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
@@ -69,12 +78,14 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
         </>
       )}
 
-      {!isFlowPage && !isAuthPage && (
+      {!isAdminRoute && !isFlowPage && !isAuthPage && (
         <>
           {!isMobile && (
             <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
           )}
-          {isMobile && <MobileNav isLoggedIn={isLoggedIn} handleLogout={handleLogout}/>}
+          {isMobile && (
+            <MobileNav isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+          )}
         </>
       )}
 
@@ -99,20 +110,33 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
 
         <Route path="/profile" element={<Profile />} />
         <Route path="/products" element={<Products />} />
+        <Route path="/category/:slug" element={<Products />} />
         <Route path="/products/:id" element={<ProductDetail />} />
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/payment" element={<Payment />} />
 
-        {/* ✅ FIX 2: missing slash */}
+        
         <Route path="/order-success" element={<OrderSuccess />} />
+
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route
+          path="/admin"
+          element={
+            <AdminProtectedRoute>
+              <AdminLayout />
+            </AdminProtectedRoute>
+          }
+        >
+          <Route path="dashboard" element={<AdminDashboard />} />
+        </Route>
       </Routes>
 
       {/* =====================
           FOOTER
       ===================== */}
-      {!isFlowPage && !isAuthPage && <Footer />}
+      {!isAdminRoute && !isFlowPage && !isAuthPage && <Footer />}
     </>
   );
 }
@@ -128,6 +152,7 @@ function App() {
   function handleLogout() {
     localStorage.removeItem("access");
     localStorage.removeItem("refresh");
+    delete axios.defaults.headers.common["Authorization"];
     setIsLoggedIn(false);
   }
 

@@ -1,0 +1,22 @@
+.Load {
+  width: auto !important;
+}
+
+.slideShow {
+  position: relative;
+}
+
+.slideShow .slides {
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.carouselBoxContainer {
+}
+
+.slideShow .carouselBox {
+  float: left;
+  height: 100%;
+}
+
+

@@ -251,6 +251,31 @@
   left: 0;
 }
 
+.ripple-container .ripple .span {
+  -webkit-transform: scale(0);
+  transform: scale(0);
+  border-radius: 100%;
+  position: absolute;
+  opacity: 0.75;
+  background-color: #20bd99;
+  -webkit-animation: rippleAnimation 0.5s;
+  animation: rippleAnimation 0.5s;
+}
+
+@keyframes rippleAnimation {
+  0% {
+    opacity: 0.75;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: scale(2);
+    transform: scale(2);
+  }
+}
+
 .product-container .LazyLoad {
   width: auto !important;
   min-height: 250px;

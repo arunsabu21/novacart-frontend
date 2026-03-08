@@ -1,47 +1,161 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import Loader from "../components/Loader";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "../api/axios";
-import "../styles/desktop/Products.css";
 
-import wishlistIcon from "../assets/icons/wishlist.png";
-import wishListed from "../assets/icons/wishlisted.png";
+import MobileProducts from "../components/MobileProducts";
+import DesktopProducts from "../components/DesktopProducts";
+import Loader from "../components/Loader";
 
 function Products() {
+  const navigate = useNavigate();
+  const { slug } = useParams();
+  const token = localStorage.getItem("access");
+
+  // ---------------- STATE ----------------
   const [products, setProducts] = useState([]);
   const [wishlist, setWishlist] = useState([]);
-
-  const [pageLoading, setPageLoading] = useState(false);
+  const [actionLoading, setActionLoading] = useState(false);
+  const [productsLoading, setProductsLoading] = useState(false);
+  const [productsCount, setProductsCount] = useState(6);
   const [message, setMessage] = useState("");
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [animatingId, setAnimatingId] = useState(null);
 
-  const navigate = useNavigate();
-  const token = localStorage.getItem("access");
-  const [searchParams] = useSearchParams();
-  const categoryId = searchParams.get("category");
-  console.log("Category Id", categoryId);
+  const [categories, setCategories] = useState([]);
+  const [brands, setBrands] = useState([]);
+  const [selectedBrands, setSelectedBrands] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(slug || "");
+  const [sortBy, setSortBy] = useState("");
 
-  // ---------------------- FETCH PRODUCTS ----------------------
+  // ---------------- PRICE STATE ----------------
+  const SLIDER_WIDTH = 200;
+
+  const [priceMinLimit, setPriceMinLimit] = useState(0);
+  const [priceMaxLimit, setPriceMaxLimit] = useState(0);
+
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(0);
+
+  // ---------------- CONVERSION FUNCTIONS ----------------
+  const pixelToPrice = (px) => {
+    if (!priceMaxLimit) return 0;
+
+    return Math.round(
+      priceMinLimit + (px / SLIDER_WIDTH) * (priceMaxLimit - priceMinLimit),
+    );
+  };
+
+  const priceToPixel = (price) => {
+    if (!priceMaxLimit) return 0;
+
+    return (
+      ((price - priceMinLimit) / (priceMaxLimit - priceMinLimit)) * SLIDER_WIDTH
+    );
+  };
+
+  // ---------------- SCREEN DETECTION ----------------
   useEffect(() => {
-    const fetchProducts = async () => {
-      setPageLoading(true);
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
 
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // ---------------- SYNC SLUG ----------------
+  useEffect(() => {
+    if (slug) setSelectedCategory(slug);
+  }, [slug]);
+
+  // ---------------- FETCH CATEGORIES ----------------
+  useEffect(() => {
+    axios
+      .get("/categories/")
+      .then((res) => setCategories(res.data))
+      .catch((err) => console.log(err));
+  }, []);
+
+  // ---------------- FETCH BRANDS ----------------
+  useEffect(() => {
+    if (!selectedCategory) return;
+
+    axios
+      .get(`/products/brands/?category=${selectedCategory}`)
+      .then((res) => setBrands(res.data))
+      .catch((err) => console.log(err));
+  }, [selectedCategory]);
+
+  // ---------------- FETCH PRICE RANGE ----------------
+  useEffect(() => {
+    const fetchPriceRange = async () => {
       try {
-        const url = categoryId
-        ? `/products/?category=${categoryId}`
-        : `/products/`;
-        const res = await axios.get(url);
-        setProducts(res.data);
+        const res = await axios.get(
+          `/products/price-range/?category=${selectedCategory || ""}`,
+        );
+
+        const min = Math.floor(res.data.min_price || 0);
+        const max = Math.ceil(res.data.max_price || 0);
+
+        setPriceMinLimit(min);
+        setPriceMaxLimit(max);
+
+        setMinPrice(min);
+        setMaxPrice(max);
       } catch (err) {
-        console.log("Products fetch error:", err);
-      } finally {
-        setPageLoading(false);
+        console.log("Price range error:", err);
       }
     };
 
-    fetchProducts();
-  }, [categoryId]);
+    fetchPriceRange();
+  }, [selectedCategory]);
 
-  // ---------------------- FETCH WISHLIST ----------------------
+  // ---------------- HANDLE BRAND CHECKBOX ----------------
+  const handleBrandChange = (brand) => {
+    setSelectedBrands((prev) =>
+      prev.includes(brand) ? prev.filter((b) => b !== brand) : [...prev, brand],
+    );
+  };
+
+  // ---------------- FETCH PRODUCTS ----------------
+  useEffect(() => {
+    const fetchProducts = async () => {
+      
+      if (isMobile) {
+        setProductsLoading(true);
+      } else {
+        setActionLoading(true);
+      }
+
+      try {
+        const params = new URLSearchParams();
+
+        if (selectedCategory) params.append("category", selectedCategory);
+
+        selectedBrands.forEach((brand) => params.append("brand", brand));
+
+        params.append("min_price", minPrice);
+        params.append("max_price", maxPrice);
+
+        if (sortBy) params.append("sort", sortBy);
+        const res = await axios.get(`/products/?${params.toString()}`);
+
+        setProducts(res.data);
+        setProductsCount(res.data.length);
+      } catch (err) {
+        console.log("Products fetch error:", err);
+      } finally {
+        setActionLoading(false);
+        setProductsLoading(false);
+      }
+    };
+
+    if (priceMaxLimit !== 0) {
+      fetchProducts();
+    }
+  }, [selectedCategory, selectedBrands, minPrice, maxPrice, priceMaxLimit, sortBy, isMobile]);
+
+  // ---------------- WISHLIST ----------------
   const loadWishlist = async () => {
     if (!token) return;
 
@@ -49,11 +163,9 @@ function Products() {
       const res = await axios.get("/products/wishlist/", {
         headers: { Authorization: `Bearer ${token}` },
       });
-
-      console.log("👉 REAL wishlist from backend:", res.data);
       setWishlist(res.data);
     } catch (err) {
-      console.log("Wishlist fetch error:", err);
+      console.log(err);
     }
   };
 
@@ -61,11 +173,9 @@ function Products() {
     loadWishlist();
   }, [token]);
 
-  // ---------------------- CHECK IF ITEM IN WISHLIST ----------------------
   const isWishlisted = (productId) =>
     wishlist.some((w) => Number(w.book?.id) === Number(productId));
 
-  // ---------------------- TOGGLE ----------------------
   const toggleWishlist = async (product) => {
     if (!token) {
       setMessage("Login required");
@@ -73,89 +183,95 @@ function Products() {
       return;
     }
 
+    if (!isMobile) {
+      setActionLoading(true);
+    }
+
     try {
-      // check match by w.book.id
       const exists = wishlist.find(
-        (w) => Number(w.book?.id) === Number(product.id)
+        (w) => Number(w.book?.id) === Number(product.id),
       );
 
-      // REMOVE
+      if (!exists) {
+        setAnimatingId(product.id);
+        setTimeout(() => setAnimatingId(null), 600);
+      }
+
       if (exists) {
         await axios.delete(`/products/wishlist/${exists.id}/`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-
         setMessage("Removed from wishlist");
-      }
-
-      // ADD
-      else {
+      } else {
         await axios.post(
           "/products/wishlist/",
           { book_id: product.id },
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: { Authorization: `Bearer ${token}` } },
         );
-
         setMessage("Product added to wishlist");
       }
 
-      // reload wishlist from backend
       await loadWishlist();
     } catch (err) {
-      console.log("Wishlist toggle error:", err);
       setMessage("Something went wrong");
     } finally {
+      if (!isMobile) {
+        setActionLoading(false);
+      }
       setTimeout(() => setMessage(""), 1500);
     }
   };
 
+  // ---------------- CLEAR FILTERS ----------------
+  const clearFilters = () => {
+    setActionLoading(true);
+    setSelectedBrands([]);
+    setSelectedCategory("");
+  };
+
+  // ---------------- COMMON PROPS ----------------
+  const commonProps = {
+    products,
+    message,
+    navigate,
+    isWishlisted,
+    toggleWishlist,
+    animatingId,
+    productsLoading,
+    productsCount,
+
+    categories,
+    brands,
+    selectedBrands,
+    selectedCategory,
+    handleBrandChange,
+    setSelectedCategory,
+    clearFilters,
+
+    minPrice,
+    maxPrice,
+    setMinPrice,
+    setMaxPrice,
+    priceMinLimit,
+    priceMaxLimit,
+    SLIDER_WIDTH,
+    pixelToPrice,
+    priceToPixel,
+    pageLoading: false,
+    sortBy,
+    setSortBy,
+  };
+
   return (
-    <div className="mobile-page">
-      <div className="products-container products-page">
-        {pageLoading && <Loader />}
+    <>
+      {actionLoading && <Loader />}
 
-        {message && (
-          <div className="login-messages">
-            <div className="login-alert info">{message}</div>
-          </div>
-        )}
-        <div className="products-grid">
-          {products.map((product) => (
-            <div
-              key={product.id}
-              className="product-card"
-              onClick={() => navigate(`/products/${product.id}`)}
-            >
-              <div className="img-wrapper">
-                <img src={product.image} alt={product.title} />
-              </div>
-
-              <button
-                className="wishlist-btn"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleWishlist(product);
-                }}
-              >
-                <img
-                  src={isWishlisted(product.id) ? wishListed : wishlistIcon}
-                  alt="wishlist"
-                  style={{ width: 19, height: 19 }}
-                />
-              </button>
-
-              <div className="product-details">
-                <h3>{product.title}</h3>
-                <h4>{product.subtitle}</h4>
-                <div className="price-row">
-                  <span className="price">₹{product.price}</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
+      {isMobile ? (
+        <MobileProducts {...commonProps} />
+      ) : (
+        <DesktopProducts {...commonProps} />
+      )}
+    </>
   );
 }
 
