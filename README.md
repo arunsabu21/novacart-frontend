@@ -14,6 +14,14 @@ NovaCart Frontend provides a complete end-to-end shopping journey — from produ
 It integrates seamlessly with a Django REST API backend and Stripe for reliable and secure payment processing.
 The application is fully responsive, offering optimized user experiences for both mobile and desktop users.
 
+## Project Status
+
+NovaCart Frontend is currently under active development.
+
+Core e-commerce functionality is implemented, including authentication, product browsing, cart management, and checkout integration. The application is deployed and functional, but several components are still being refined as development continues.
+
+This repository reflects an evolving project focused on improving UI/UX, performance optimization, and expanding administrative capabilities.
+
 ## Features
 
 ### User Authentication & Authorization
