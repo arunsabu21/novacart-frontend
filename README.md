@@ -8,6 +8,12 @@
 
 A modern, responsive e-commerce frontend built with React and Vite. NovaCart delivers a seamless shopping experience with intuitive UI, secure payment processing, and real-time cart management.
 
+## Deployment Note
+
+![Backend](https://img.shields.io/badge/Backend-Render%20Free%20Tier-red)
+
+First request may be slow because the server sleeps on the free tier.
+
 ## Overview
 
 NovaCart Frontend provides a complete end-to-end shopping journey — from product discovery to secure checkout.
@@ -76,7 +82,7 @@ This repository reflects an evolving project focused on improving UI/UX, perform
 - Axios 1.13.2
 - Stripe (React & JS)
 - React Icons 5.5.0
-- Cloudnary
+- Cloudinary
 - Figma (UI/UX)
 - CSS3
 - JWT Authentication
