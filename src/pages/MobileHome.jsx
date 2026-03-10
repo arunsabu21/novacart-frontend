@@ -16,6 +16,7 @@ import exploreBanner from "../assets/images/explore.png";
 import sponsorBanner01 from "../assets/images/sponser-ban01.png";
 import sponsorBanner02 from "../assets/images/sponsor-ban02.png";
 import sponsorBanner03 from "../assets/images/sponsor-ban03.png";
+import cardOffer from "../assets/images/card-offer.png";
 
 function MobileHome() {
   const location = useLocation();
@@ -154,7 +155,7 @@ function MobileHome() {
                           <div className="container-base stretch">
                             <div>
                               <div className="container-container">
-                                <div style={{ paddingBottom: "71.81%" }}>
+                                <div style={{ paddingBottom: "70.81%" }}>
                                   <div className="container-container container-aspectContainer">
                                     <div className="row-base">
                                       <div className="column-base" style={{ flex: "1 1 0%" }}>
@@ -177,7 +178,7 @@ function MobileHome() {
                 </div>
               </div>
               <div className="indexContainer">
-                <div className="container-base stretch" style={{paddingBottom: "0px", paddingTop: "2px"}}>
+                <div className="container-base stretch" >
                   <div>
                     <div className="container-container">
                       <div className="row-base">
@@ -185,13 +186,13 @@ function MobileHome() {
                           <div className="container-base stretch">
                             <div>
                               <div className="container-container">
-                                <div style={{ paddingBottom: "5.81%" }}>
+                                <div>
                                   <div className="container-container container-aspectContainer">
                                     <div className="row-base">
                                       <div className="column-base" style={{ flex: "1 1 0%" }}>
                                         <a href="#">
                                           <div>
-                                            <div style={{backgroundColor: "rgb(244, 150, 52)", justifyContent: "flex-start", height: "50px"}}></div>
+                                            <div style={{backgroundColor: "rgb(244, 150, 52)", display: "flex", justifyContent: "flex-start", padding: "20px 12px 12px 12px"}}></div>
                                           </div>
                                         </a>
                                       </div>
@@ -277,13 +278,13 @@ function MobileHome() {
                           <div className="container-base stretch">
                             <div>
                               <div className="container-container">
-                                <div style={{ paddingBottom: "5.81%" }}>
+                                <div style={{ paddingBottom: "9.81%" }}>
                                   <div className="container-container container-aspectContainer">
                                     <div className="row-base">
                                       <div className="column-base" style={{ flex: "1 1 0%" }}>
                                         <a href="#">
                                           <div>
-                                            <div style={{backgroundColor: "rgb(244, 150, 52)", justifyContent: "flex-start", height: "50px"}}></div>
+                                            <img src={cardOffer} alt="Stripe" className="image-image image-hand" />
                                           </div>
                                         </a>
                                       </div>

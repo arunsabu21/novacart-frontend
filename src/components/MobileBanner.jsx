@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import "../styles/mobile/MobileCategorySlider.css";
-import banner1 from "../assets/images/BANNER1.png";
-import banner2 from "../assets/images/BANNER2.png";
-import banner3 from "../assets/images/BANNER3.png";
-import banner4 from "../assets/images/BANNER4.png";
-import banner5 from "../assets/images/BANNER5.png";
-import banner6 from "../assets/images/BANNER6.png";
+
+import banner1 from "../assets/images/mobile-banner01.png";
+import banner2 from "../assets/images/mobile-banner02.png";
+import banner3 from "../assets/images/mobile-banner03.png";
+import banner4 from "../assets/images/mobile-banner04.png";
+import banner5 from "../assets/images/mobile-banner05.png";
+import banner6 from "../assets/images/mobile-banner06.png";
 
 const banners = [
   banner1,
@@ -18,34 +19,45 @@ const banners = [
 
 export default function MobileBanner() {
   const [index, setIndex] = useState(0);
+  const trackRef = useRef(null);
 
-  // auto slide
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % banners.length);
-    }, 5500);
+  const scrollToSlide = (i) => {
+    const width = trackRef.current.offsetWidth;
 
-    return () => clearInterval(timer);
-  }, []);
+    trackRef.current.scrollTo({
+      left: width * i,
+      behavior: "smooth",
+    });
+
+    setIndex(i);
+  };
+
+  const handleScroll = () => {
+    const track = trackRef.current;
+    const slideWidth = track.offsetWidth;
+    const newIndex = Math.round(track.scrollLeft / slideWidth);
+
+    setIndex(newIndex);
+  };
 
   return (
     <div className="mobile-banner">
       <div
         className="banner-track"
-        style={{ transform: `translateX(-${index * 100}%)` }}
+        ref={trackRef}
+        onScroll={handleScroll}
       >
         {banners.map((img, i) => (
           <img key={i} src={img} alt="banner" />
         ))}
       </div>
 
-      {/* dots */}
       <div className="banner-dots">
         {banners.map((_, i) => (
           <span
             key={i}
             className={i === index ? "dot active" : "dot"}
-            onClick={() => setIndex(i)}
+            onClick={() => scrollToSlide(i)}
           />
         ))}
       </div>
