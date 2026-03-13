@@ -17,7 +17,6 @@ export default function MobileOrderDetails({ order }) {
             <div className="address-left">
               <p className="label">Delivering to:</p>
 
-              {/* You are NOT sending address yet from backend */}
               <p className="name">{order.address?.name} | {order.address?.mobile}</p>
               <p className="address">
                 {order.address?.address},

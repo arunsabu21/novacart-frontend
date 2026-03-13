@@ -15,7 +15,7 @@ function Products() {
   const [products, setProducts] = useState([]);
   const [wishlist, setWishlist] = useState([]);
   const [actionLoading, setActionLoading] = useState(false);
-  const [productsLoading, setProductsLoading] = useState(false);
+  const [productsLoading, setProductsLoading] = useState(true);
   const [productsCount, setProductsCount] = useState(6);
   const [message, setMessage] = useState("");
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -126,6 +126,7 @@ function Products() {
       } else {
         setActionLoading(true);
       }
+      setProducts([]);
 
       try {
         const params = new URLSearchParams();

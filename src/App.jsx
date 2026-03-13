@@ -108,7 +108,7 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
           element={<SetNewPassword />}
         />
 
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/my/dashboard/" element={<Profile setIsLoggedIn={setIsLoggedIn}/>} />
         <Route path="/products" element={<Products />} />
         <Route path="/category/:slug" element={<Products />} />
         <Route path="/products/:id" element={<ProductDetail />} />

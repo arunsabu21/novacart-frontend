@@ -22,15 +22,19 @@ export default function MobileNav({ count = 0, isLoggedIn, handleLogout }) {
   const hideIcons = ICON_HIDDEN_ROUTES.includes(location.pathname);
   const isHome = location.pathname === "/";
 
+  const NO_BACK_ROUTES = ["/order-success"];
+  const hideBackArrow = NO_BACK_ROUTES.includes(location.pathname);
+
   const titles = {
     "/products": "Products",
     "/wishlist": "Wishlist",
     "/cart": "Shopping Bag",
     "/checkout": "Checkout",
     "/payment": "Payment",
-    "/order-success": "Order Confirmed",
+    "/order-success": "ORDER CONFIRMED",
     "/profile": "Profile",
     "/select-address": "Select Address",
+    "/my/dashboard/": "Profile",
   };
 
   const pageTitle = titles[location.pathname] || "NovaCart";
@@ -39,8 +43,9 @@ export default function MobileNav({ count = 0, isLoggedIn, handleLogout }) {
   return (
     <div className="mobile-nav-container">
       <div className="mobile-nav-back">
-        {isHome ? (
-          /* HAMBURGER ON HOME */
+        {hideBackArrow ? (
+          <div style={{ width: "24px", height: "43px" }}></div>
+        ) : isHome ? (
           <div onClick={() => setDrawerOpen(true)}>
             <svg className="header-icon menu-icon" viewBox="0 0 24 24">
               <path
@@ -51,7 +56,6 @@ export default function MobileNav({ count = 0, isLoggedIn, handleLogout }) {
             </svg>
           </div>
         ) : (
-          /* BACK ARROW ON OTHER PAGES */
           <div onClick={() => navigate(-1)}>
             <svg className="header-icon menu-icon" viewBox="0 0 24 24">
               <path

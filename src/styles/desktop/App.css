@@ -262,11 +262,11 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 120px;
+  width: 34px;
 }
 
 .mobile-nav-logo {
-  height: 30px; /* increase to 32px if needed */
+  height: 50px; 
   width: auto;
   flex-shrink: 0;
 }
@@ -295,7 +295,7 @@ svg:not(:root) {
 .header-title {
   font-size: 16px;
   vertical-align: top;
-  top: 19px;
+  top: 5px;
   position: relative;
   font-weight: 700;
   font-family: Assistant;
@@ -307,7 +307,7 @@ svg:not(:root) {
 .header-heading {
   font-weight: 700;
   font-size: 16px;
-  margin-bottom: -18px;
+  margin-bottom: -14px;
 }
 .text-ellipse {
   white-space: nowrap;
@@ -333,6 +333,10 @@ svg:not(:root) {
 
 footer {
   display: none;
+}
+
+.hide-element {
+  display: none !important;
 }
 
 /* ================= HEADER ================= */

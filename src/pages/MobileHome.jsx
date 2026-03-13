@@ -18,6 +18,7 @@ import sponsorBanner02 from "../assets/images/sponsor-ban02.png";
 import sponsorBanner03 from "../assets/images/sponsor-ban03.png";
 import cardOffer from "../assets/images/card-offer.png";
 
+
 function MobileHome() {
   const location = useLocation();
 

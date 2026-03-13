@@ -1,9 +1,27 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "../api/axios";
 import "../styles/desktop/App.css";
 import "../styles/desktop/main.css";
+import Sidebar from "../components/SidebarSidebar";
 
-function Profile() {
+import orderIcon from "../assets/icons/gift.png";
+import wishlistIcon from "../assets/icons/wishlist-card.png";
+import editIcon from "../assets/icons/edit.png";
+
+function Profile({ setIsLoggedIn }) {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("access");
+    localStorage.removeItem("refresh");
+
+    delete axios.defaults.headers.common["Authorization"];
+
+    setIsLoggedIn(false);
+
+    navigate("/", { replace: true });
+  };
   const [profile, setProfile] = useState({
     username: "",
     email: "",
@@ -12,22 +30,20 @@ function Profile() {
   });
 
   const [loading, setLoading] = useState(true);
-  const [message, setMessage] = useState("");
 
   useEffect(() => {
-    setMessage("");
     const fetchProfile = async () => {
       try {
         const token = localStorage.getItem("access");
 
-        const response = await axios.get("/profile/", {
+        const response = await axios.get("/my/dashboard/", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
         setProfile(response.data);
-        setLoading(false);
       } catch (err) {
         console.log(err);
+      } finally {
         setLoading(false);
       }
     };
@@ -35,73 +51,150 @@ function Profile() {
     fetchProfile();
   }, []);
 
-  const handleChange = (e) => {
-    setProfile({
-      ...profile,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleUpdate = async () => {
-    try {
-      const token = localStorage.getItem("access");
-
-      const response = await axios.patch("/profile/update/", profile, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      setMessage("Profile updated successfully!");
-      setProfile(response.data);
-    } catch (err) {
-      setMessage("Error updating profile");
-      console.log(err);
-    }
-  };
-
   if (loading) return <h2 style={{ textAlign: "center" }}>Loading...</h2>;
 
-  const avatarLetter = profile.username
-    ? profile.username.charAt(0).toUpperCase()
-    : "U";
-
   return (
-    <div style={{marginTop: "-2px"}}>
+    <div className="mobile" style={{ marginTop: "-2px" }}>
       <div className="application-base full-height">
         <div className="page-page">
-          <div className="account-account">
-            <div className="account-heading">Account</div>
-            <div>Arun Sabu</div>
-          </div>
-          <div className="sidebar-sidebar">
-            <div className="segment-segment">
-              <a href="" className="segment-link segment-activeLink">
-                Overview
-              </a>
-            </div>
-            <div className="segment-segment">
-              <div className="segment-heading">ORDERS</div>
-              <a href="" className="segment-link">Orders & Returns</a>
-            </div>
-            <div className="segment-segment">
-              <div className="segment-heading">ACCOUNT</div>
-              <a href="" className="segment-link">Profile</a>
-              <a href="" className="segment-link">Shopping Bag</a>
-              <a href="" className="segment-link">Wishlist</a>
-              <a href="" className="segment-link">Account Deletion</a>
-            </div>
-            <div className="segment-segment">
-              <div className="segment-heading">SUPPORT</div>
-              <a href="" className="segment-link">Contact Us</a>
-            </div>
-          </div>
+          <Sidebar username={profile.username} />
+
           <div className="pageMainComponent">
             <div className="user-user">
               <div className="user-bg">
                 <div className="user-wrapper">
                   <div className="user-default">
-                    
+                    <div className="userDefaultImage"></div>
+                  </div>
+
+                  <div className="user-info">
+                    <a href="#" className="userEditProfile">
+                      Edit Profile
+                    </a>
+                    <div className="user-email">{profile.email}</div>
                   </div>
                 </div>
+              </div>
+
+              <div className="userMinInfo">{profile.email}</div>
+            </div>
+
+            <div className="user-dashboard-data">
+              <table className="dataMainContainer">
+                <tbody>
+                  <tr>
+                    <td>
+                      <a href="#" className="link-card">
+                        <div className="link-content">
+                          <img src={orderIcon} alt="" className="link-icon" />
+                          <div className="link-labels">
+                            <div className="link-label">Orders</div>
+                            <div className="link-subLabel">
+                              Check your order status
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </td>
+
+                    <td>
+                      <a href="#" className="link-card">
+                        <div className="link-content">
+                          <img
+                            src={wishlistIcon}
+                            alt=""
+                            className="link-icon"
+                          />
+                          <div className="link-labels">
+                            <div className="link-label">Wishlist</div>
+                            <div className="link-subLabel">
+                              Your saved products
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </td>
+
+                    <td>
+                      <a href="#" className="link-card">
+                        <div className="link-content">
+                          <img src={editIcon} alt="" className="link-icon" />
+                          <div className="link-labels">
+                            <div className="link-label">Edit Profile</div>
+                            <div className="link-subLabel">
+                              Change your profile details
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div className="dashboard-mobileContainer">
+                <div className="dashboard-section">
+                  <a href="#" className="link-card">
+                    <div className="link-content">
+                      <img src={orderIcon} alt="Orders" className="link-icon" />
+                      <div className="link-labels">
+                        <div className="link-label">Orders</div>
+                        <div className="link-subLabel">
+                          Check your order status
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+
+                  <a href="#" className="link-card">
+                    <div className="link-content">
+                      <img
+                        src={wishlistIcon}
+                        alt="Wishlist"
+                        className="link-icon"
+                      />
+                      <div className="link-labels">
+                        <div className="link-label">Collections & Wishlist</div>
+                        <div className="link-subLabel">
+                          All your curated product collections
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div className="dashboard-section">
+                  <a href="#" className="link-card">
+                    <div className="link-content">
+                      <img
+                        src={editIcon}
+                        alt="Edit Profile"
+                        className="link-icon"
+                      />
+                      <div className="link-labels">
+                        <div className="link-label">Edit Profile</div>
+                        <div className="link-subLabel">
+                          Change your profile details
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <div className="dashboard-mobileContainer">
+                <a href="#" className="footer-card">
+                  <div className="footer-content">ABOUT US</div>
+                </a>
+                <a href="#" className="footer-card">
+                  <div className="footer-content">TERMS AND CONDITIONS</div>
+                </a>
+              </div>
+            </div>
+
+            <div style={{ paddingTop: "15px" }}>
+              <div className="dashboard-logout" onClick={handleLogout}>
+                Logout
               </div>
             </div>
           </div>
