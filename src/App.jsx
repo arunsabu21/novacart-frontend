@@ -21,6 +21,7 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Payment from "./pages/Payment";
 import OrderSuccess from "./pages/OrderSuccess";
+import MyOrders from "./pages/MyOrders";
 
 // Admin Routes
 import AdminLogin from "./admin/AdminLogin";
@@ -119,6 +120,7 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
 
         
         <Route path="/order-success" element={<OrderSuccess />} />
+        <Route path="/my/orders" element={<MyOrders />} />
 
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route

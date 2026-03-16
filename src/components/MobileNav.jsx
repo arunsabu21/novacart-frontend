@@ -35,6 +35,7 @@ export default function MobileNav({ count = 0, isLoggedIn, handleLogout }) {
     "/profile": "Profile",
     "/select-address": "Select Address",
     "/my/dashboard/": "Profile",
+    "/my/orders/": "My Orders",
   };
 
   const pageTitle = titles[location.pathname] || "NovaCart";
