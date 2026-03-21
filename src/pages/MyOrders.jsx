@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import axios from "../api/axios";
 import SideBar from "../components/SidebarSidebar";
@@ -38,7 +39,52 @@ const ORDER_STATUS_CONFIG = {
   CANCELLED: {
     color: "rgb(40, 44, 63)",
     bg: "rgb(212, 213, 217)",
-    message: () => "Cancelled as per your request",
+    message: (order, item) =>
+      `on ${new Date(item.cancelled_at).toLocaleDateString("en-US", {
+        weekday: "short",
+        day: "numeric",
+        month: "short",
+      })} as per your request`,
+    actions: [],
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+      >
+        <path
+          fill="#282C3F"
+          fillRule="nonzero"
+          d="M15.854 8.146a.495.495 0 0 0-.703 0L12 11.296l-3.15-3.15a.495.495 0 0 0-.704 0 .495.495 0 0 0 0 .703L11.297 12l-3.15 3.15a.5.5 0 1 0 .35.85.485.485 0 0 0 .349-.146l3.15-3.15 3.151 3.15a.5.5 0 0 0 .35.147.479.479 0 0 0 .35-.147.495.495 0 0 0 0-.703L12.702 12l3.15-3.15a.495.495 0 0 0 0-.704z"
+        ></path>
+      </svg>
+    ),
+  },
+
+  REFUND_REQUESTED: {
+    color: "rgb(40, 44, 63)",
+    bg: "rgb(212, 213, 217)",
+    message: () => "Refund will be credited within 5-7 business days",
+    actions: [],
+  },
+
+  REFUNDED: {
+    color: "rgb(40, 44, 63)",
+    bg: "rgb(212, 213, 217)",
+    message: (order, item) => {
+      const amount = item.price_at_purchase * item.quantity;
+
+      return (
+        <>
+          Refund of{" "}
+          <span style={{ color: "rgb(31, 132, 90)", fontWeight: "600" }}>
+            ₹{amount}
+          </span>{" "}
+          completed successfully
+        </>
+      );
+    },
     actions: [],
     icon: (
       <svg
@@ -86,10 +132,11 @@ export default function MyOrders() {
   const [loading, setLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const search = searchParams.get("search") || "";
-  const page = searchParams.get("page") || 1;
+  const page = parseInt(searchParams.get("page")) || 1;
+  const navigate = useNavigate();
 
-  const start = (page - 1) * 5 + 1;
-  const end = Math.min(page * 5, totalOrders);
+  const start = totalOrders ? (page - 1) * 5 + 1 : 0;
+  const end = totalOrders ? Math.min(page * 5, totalOrders) : 0;
 
   const changePage = async (url) => {
     if (!url) return;
@@ -115,6 +162,14 @@ export default function MyOrders() {
     }
   };
 
+  const STATUS_LABELS = {
+    REFUND_REQUESTED: "Refund Requested",
+    REFUNDED: "Cancelled",
+    CANCELLED: "Cancelled",
+    CONFIRMED: "Confirmed",
+    PENDING: "Pending",
+  };
+
   useEffect(() => {
     const delay = setTimeout(() => {
       const fetchOrders = async () => {
@@ -129,6 +184,7 @@ export default function MyOrders() {
           );
 
           setOrders(response.data.results);
+          console.log(response.data.results);
           setNextPage(response.data.next);
           setPrevPage(response.data.previous);
           setTotalOrders(response.data.count);
@@ -211,139 +267,159 @@ export default function MyOrders() {
             </div>
             <div className="orderPage-listBackground">
               {orders.flatMap((order) => {
-                const statusConfig = ORDER_STATUS_CONFIG[order.status] || {};
+                return order.items?.map((item) => {
+                  const currentStatus =
+                    item.status === "ACTIVE" ? order.status : item.status;
+                  const statusConfig = ORDER_STATUS_CONFIG[currentStatus] || {};
 
-                return order.items?.map((item) => (
-                  <div key={item.id}>
-                    <div className="orderItem-itemView">
-                      <div className="orderItem-itemStatus">
-                        <div className="itemStatus-itemStatus">
-                          <div className="itemStatus-moreInfoContainer">
-                            <div className="itemStatus-iconBg">
-                              <div
-                                className="itemStatus-bgForIcon"
-                                style={{ background: statusConfig.bg }}
-                              >
-                                <div className="itemStatus-iconStatus">
-                                  {statusConfig.icon}
+                  return (
+                    <div key={item.id}>
+                      <div className="orderItem-itemView">
+                        <div className="orderItem-itemStatus">
+                          <div className="itemStatus-itemStatus">
+                            <div className="itemStatus-moreInfoContainer">
+                              <div className="itemStatus-iconBg">
+                                <div
+                                  className="itemStatus-bgForIcon"
+                                  style={{ background: statusConfig.bg }}
+                                >
+                                  <div className="itemStatus-iconStatus">
+                                    {statusConfig.icon}
+                                  </div>
                                 </div>
                               </div>
-                            </div>
 
-                            <div className="orderItem-orderDetails">
-                              <div className="orderItem-itemStatusTitle">
-                                <span
-                                  className="Text-Text"
-                                  style={{
-                                    fontWeight: "700",
-                                    color: statusConfig.color,
-                                  }}
-                                >
-                                  {order.status}
-                                </span>
-                              </div>
+                              <div className="orderItem-orderDetails">
+                                <div className="orderItem-itemStatusTitle">
+                                  <span
+                                    className="Text-Text"
+                                    style={{
+                                      fontWeight: "700",
+                                      color: statusConfig.color,
+                                    }}
+                                  >
+                                    {STATUS_LABELS[currentStatus] || [
+                                      currentStatus,
+                                    ]}
+                                  </span>
+                                </div>
 
-                              <div className="orderConfirm-status">
-                                {statusConfig.message?.(order)}
+                                <div className="orderConfirm-status">
+                                  {statusConfig.message?.(order, item)}
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div className="orderedItem-ListView">
-                        <div role="link" tabIndex="0">
-                          <div className="orderItemList-imageDetails">
-                            <div
-                              className="orderItem-thumbnail"
-                              role="link"
-                              tabIndex="0"
-                            >
+                        <div className="orderedItem-ListView">
+                          <div
+                            role="link"
+                            tabIndex="0"
+                            onClick={() =>
+                              navigate(
+                                `/my/item/details?orderId=${order.id}&itemId=${item.id}`,
+                              )
+                            }
+                          >
+                            <div className="orderItemList-imageDetails">
                               <div
-                                style={{
-                                  background: "rgb(224 242 241)",
-                                  height: "70px",
-                                  width: "53px",
-                                  borderRadius: "2px",
-                                }}
+                                className="orderItem-thumbnail"
+                                role="link"
+                                tabIndex="0"
                               >
                                 <div
-                                  className="lazyLoad"
-                                  style={{ height: "70px", width: "53px" }}
-                                >
-                                  <img
-                                    src={item.product_image}
-                                    alt="img"
-                                    className="image-imgResponsiveNew"
-                                    style={{
-                                      width: "100%",
-                                      borderRadius: "2px",
-                                    }}
-                                  />
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="orderItem-details orderItem-contentJustify">
-                              <div className="orderItem-bold">
-                                <span className="Text-Text">
-                                  {item.product_title}
-                                </span>
-                              </div>
-
-                              <div className="orderItem-normal">
-                                <span className="Text-Text">
-                                  {item.product_subtitle}
-                                </span>
-                              </div>
-
-                              <div className="orderItem-size">
-                                <span className="Text-Text"></span>
-                              </div>
-                            </div>
-
-                            <div className="orderItem-arrowIcon">
-                              <span
-                                className="svgImages-svg svgImages-next"
-                                style={{ width: "15px", height: "15px" }}
-                              ></span>
-                            </div>
-                          </div>
-                        </div>
-
-                        {statusConfig.actions?.length > 0 && (
-                          <div className="orderItem-actions">
-                            {statusConfig.actions.map((action) => (
-                              <div
-                                key={action}
-                                className="orderItem-button"
-                                role="presentation"
-                                style={{
-                                  height: "32px",
-                                  marginLeft: "4px",
-                                  marginRight: "4px",
-                                }}
-                              >
-                                <p
-                                  className="orderItem-buttonTextWrapper"
                                   style={{
-                                    color: "#282c3f",
-                                    margin: "0",
-                                    fontSize: "12px",
-                                    fontWeight: "700",
-                                    lineHeight: "16px",
+                                    background: "rgb(224 242 241)",
+                                    height: "70px",
+                                    width: "53px",
+                                    borderRadius: "2px",
                                   }}
                                 >
-                                  {action}
-                                </p>
+                                  <div
+                                    className="lazyLoad"
+                                    style={{ height: "70px", width: "53px" }}
+                                  >
+                                    <img
+                                      src={item.product_image}
+                                      alt="img"
+                                      className="image-imgResponsiveNew"
+                                      style={{
+                                        width: "100%",
+                                        borderRadius: "2px",
+                                      }}
+                                    />
+                                  </div>
+                                </div>
                               </div>
-                            ))}
+
+                              <div className="orderItem-details orderItem-contentJustify">
+                                <div className="orderItem-bold">
+                                  <span className="Text-Text">
+                                    {item.product_title}
+                                  </span>
+                                </div>
+
+                                <div className="orderItem-normal">
+                                  <span className="Text-Text">
+                                    {item.product_subtitle}
+                                  </span>
+                                </div>
+
+                                <div className="orderItem-size">
+                                  <span className="Text-Text"></span>
+                                </div>
+                              </div>
+
+                              <div className="orderItem-arrowIcon">
+                                <span
+                                  className="svgImages-svg svgImages-next"
+                                  style={{ width: "15px", height: "15px" }}
+                                ></span>
+                              </div>
+                            </div>
                           </div>
-                        )}
+
+                          {currentStatus === "CONFIRMED" &&
+                            statusConfig.actions?.length > 0 && (
+                              <div className="orderItem-actions">
+                                {statusConfig.actions.map((action) => (
+                                  <div
+                                    key={action}
+                                    className="orderItem-button"
+                                    role="presentation"
+                                    onClick={() =>
+                                      navigate(
+                                        `/cancel?orderId=${order.id}&itemId=${item.id}`,
+                                      )
+                                    }
+                                    style={{
+                                      height: "32px",
+                                      marginLeft: "4px",
+                                      marginRight: "4px",
+                                    }}
+                                  >
+                                    <p
+                                      className="orderItem-buttonTextWrapper"
+                                      style={{
+                                        color: "#282c3f",
+                                        margin: "0",
+                                        fontSize: "12px",
+                                        fontWeight: "700",
+                                        lineHeight: "16px",
+                                      }}
+                                    >
+                                      {action}
+                                    </p>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ));
+                  );
+                });
               })}
             </div>
             <div className="order-pagination">

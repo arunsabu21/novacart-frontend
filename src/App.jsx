@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import SiteNav from "./components/SiteNavbar";
 import AuthBackArrow from "./components/AuthBackArrow";
 import MobileNav from "./components/MobileNav";
+import NotFound from "./pages/NotFound";
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -22,6 +23,9 @@ import Checkout from "./pages/Checkout";
 import Payment from "./pages/Payment";
 import OrderSuccess from "./pages/OrderSuccess";
 import MyOrders from "./pages/MyOrders";
+import CancelOrder from "./pages/CancelOrder";
+import CancellationSuccess from "./pages/CancellationSuccess";
+import OrderItemDetails from "./pages/OrderItemDetails";
 
 // Admin Routes
 import AdminLogin from "./admin/AdminLogin";
@@ -121,6 +125,10 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
         
         <Route path="/order-success" element={<OrderSuccess />} />
         <Route path="/my/orders" element={<MyOrders />} />
+        <Route path="/cancel" element={<CancelOrder/>} />
+        <Route path="/cancel/success" element={<CancellationSuccess />} />
+        <Route path="/my/item/details" element={<OrderItemDetails  />} />
+        <Route path="*" element={<NotFound />} />
 
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route

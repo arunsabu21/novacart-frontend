@@ -105,6 +105,13 @@
   }
 }
 
+@media (min-width: 780px) {
+  .page-pageStyle {
+    background-color: #f5f5f5;
+    padding: 12px;
+  }
+}
+
 .user-user {
   padding-bottom: 25px;
   background-color: white;

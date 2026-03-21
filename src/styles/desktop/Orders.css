@@ -140,6 +140,37 @@
   background-size: contain;
   background-position: center;
 }
+
+.svgImages-cancelClose {
+  background: url("../../assets/icons/cancel.png") no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.svgImages-track {
+  background: url("../../assets/icons/track.png") no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.svgImages-phone {
+  background: url("../../assets/icons/telephone.png") no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.svgImages-email {
+  background: url("../../assets/icons/email.png") no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.svgImages-refund {
+  background: url("../../assets/icons/refund.png") no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
 .svgImages-svg {
   display: inline-block;
 }
@@ -198,6 +229,12 @@
 
 .svgImages-next {
   background: url("../../assets/icons/right-chevron.png") no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.svgImages-cod {
+  background: url("../../assets/icons/cash-on-delivery.png") no-repeat;
   background-size: contain;
   background-position: center;
 }
