@@ -269,7 +269,7 @@ export default function MyOrders() {
               {orders.flatMap((order) => {
                 return order.items?.map((item) => {
                   const currentStatus =
-                    item.status === "ACTIVE" ? order.status : item.status;
+                    item.status || order.status;
                   const statusConfig = ORDER_STATUS_CONFIG[currentStatus] || {};
 
                   return (
