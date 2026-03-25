@@ -242,6 +242,7 @@ export default function MyItemDetails() {
                   </div>
                 )}
                 <div className="setWidth"></div>
+                {isConfirmed && (
                 <div className="perItem-deliveryInfo">
                   <div className="infoPanel" style={{ paddingTop: "19px" }}>
                     <div className="infoPanel-default">
@@ -281,6 +282,7 @@ export default function MyItemDetails() {
                     </div>
                   </div>
                 </div>
+                )}
                 <div className="setWidth">
                   <div className="PriceDetails-price">
                     <div className="PriceDetails-itemPrice">

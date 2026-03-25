@@ -286,6 +286,11 @@
   background-color: #535766;
 }
 
+.messageError {
+  color: #fff;
+  background-color: #ff5a5a;
+}
+
 .messageText {
   font-weight: 700;
   font-size: 13px;
@@ -825,7 +830,5 @@
 .emptySubtitle {
   font-size: 13px;
   color: #94969f;
-  margin-bottom: 16px
+  margin-bottom: 16px;
 }
-
-

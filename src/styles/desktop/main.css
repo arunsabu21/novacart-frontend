@@ -416,3 +416,356 @@ table.dataMainContainer td:after {
   font-stretch: normal;
   font-style: normal;
 }
+
+/* =====================
+   WRAPPER
+===================== */
+.mobileNav-secondary {
+  width: 100%;
+  height: 50px;
+}
+
+/* =====================
+   HEADER
+===================== */
+.mobile-header {
+  width: 100%;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 12px;
+
+  background: #fff;
+  box-shadow: 0 1px 4px 0 #d4d5d9;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9;
+}
+
+/* =====================
+   LEFT SECTION
+===================== */
+.mobile-left {
+  display: flex;
+  align-items: center;
+}
+
+/* Hamburger */
+.mobile-leftNavBar {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.hamburger-hamburger {
+  width: 22px;
+  height: 22px;
+  background-position: -348px 0;
+}
+
+/* Logo */
+.svgImages-novaCartLogo {
+  background: url("../../assets/icons/nc-logo.png") no-repeat;
+  background-size: contain;
+  background-position: center;
+  display: inline-block;
+}
+
+.mobile-ncLogo {
+  width: 50px;
+  height: 35px;
+}
+
+/* =====================
+   RIGHT SECTION
+===================== */
+.mobile-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+/* Bag */
+.svgImages-bag {
+  background: url("../../assets/icons/bag.png") no-repeat;
+  background-size: contain;
+  background-position: center;
+  display: inline-block;
+}
+
+.mobile-bag {
+  width: 23px;
+  height: 23px;
+}
+
+/* Profile */
+.svgImages-profile {
+  background: url("../../assets/icons/profile.png") no-repeat;
+  background-size: contain;
+  background-position: center;
+  display: inline-block;
+}
+
+.mobile-user {
+  width: 18px;
+  height: 18px;
+}
+
+/* Search */
+.svgImages-mSearch {
+  background: url("../../assets/icons/magnifying-glass-search.png") no-repeat;
+  background-size: contain;
+  background-position: center;
+  display: inline-block;
+}
+
+.mobileSearch {
+  width: 18px;
+  height: 18px;
+}
+
+.myInput-inputRow {
+  position: relative;
+  margin: 40px 0px 0px 0px;
+}
+
+.myInput-inputRow.myInput-md {
+  margin: 30px 0px 0px 0px;
+}
+
+.myInput-inputRow.myInput-lg {
+  margin: 40px 0px 0px 0px;
+}
+
+.myInput-inputRow.myInput-lg input[type="text"],
+.myInput-inputRow.myInput-lg input[type="password"],
+.myInput-inputRow.myInput-lg input[type="number"],
+.myInput-inputRow.myInput-lg input[type="tel"] {
+  font-size: 16px;
+}
+
+.myInput-inputRow.myInput-lg input[type="text"]:focus + label,
+.myInput-inputRow.myInput-lg input[type="password"]:focus + label,
+.myInput-inputRow.myInput-lg input[type="number"]:focus + label,
+.myInput-inputRow.myInput-lg input[type="tel"]:focus + label {
+  top: -20px;
+}
+
+.myInput-inputRow.myInput-lg .myInput-label {
+  font-size: 16px;
+}
+
+.myInput-inputRow.myInput-lg .myInput-labelTop {
+  top: -20px;
+  font-size: 12px;
+}
+
+.myInput-inputRow.myInput-md {
+  margin: 30px 0px 0px 0px;
+}
+
+.myInput-inputRow.myInput-md input[type="text"],
+.myInput-inputRow.myInput-md input[type="password"],
+.myInput-inputRow.myInput-md input[type="number"],
+.myInput-inputRow.myInput-md input[type="tel"] {
+  font-size: 15px;
+}
+
+.myInput-inputRow.myInput-md input[type="text"]:focus + label,
+.myInput-inputRow.myInput-md input[type="password"]:focus + label,
+.myInput-inputRow.myInput-md input[type="number"]:focus + label,
+.myInput-inputRow.myInput-md input[type="tel"]:focus + label {
+  top: -18px;
+}
+
+.myInput-inputRow.myInput-md .myInput-label {
+  font-size: 15px;
+}
+
+.myInput-inputRow.myInput-md .myInput-labelTop {
+  top: -18px;
+  font-size: 12px;
+}
+
+.myInput-inputRow.myInput-sm {
+  margin: 20px 0px 0px 0px;
+}
+
+.myInput-inputRow.myInput-sm input[type="text"],
+.myInput-inputRow.myInput-sm input[type="password"],
+.myInput-inputRow.myInput-sm input[type="number"],
+.myInput-inputRow.myInput-sm input[type="tel"] {
+  font-size: 15px;
+}
+
+.myInput-inputRow.myInput-sm input[type="text"]:focus + label,
+.myInput-inputRow.myInput-sm input[type="password"]:focus + label,
+.myInput-inputRow.myInput-sm input[type="number"]:focus + label,
+.myInput-inputRow.myInput-sm input[type="tel"]:focus + label {
+  top: -15px;
+}
+
+.myInput-inputRow.myInput-sm .myInput-label {
+  font-size: 15px;
+}
+
+.myInput-inputRow.myInput-sm .myInput-labelTop {
+  top: -15px;
+  font-size: 12px;
+}
+
+.myInput-inputRow input[type="text"],
+.myInput-inputRow input[type="password"],
+.myInput-inputRow input[type="number"],
+.myInput-inputRow input[type="tel"] {
+  width: 100%;
+  border: 0px;
+  border-bottom: 1px solid #d4d5d9;
+  color: #282c3f;
+  outline: none;
+  padding-bottom: 5px;
+  -webkit-transition: all 0.4s ease-in-out;
+  -moz-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+
+.myInput-inputRow input[type="text"]:disabled,
+.myInput-inputRow input[type="number"]:disabled,
+.myInput-inputRow input[type="tel"]:disabled {
+  color: #94969f;
+  background-color: white;
+  -webkit-text-fill-color: #94969f;
+}
+
+.myInput-inputRow input[type="text"]:focus,
+.myInput-inputRow input[type="password"]:focus,
+.myInput-inputRow input[type="number"]:focus,
+.myInput-inputRow input[type="tel"]:focus {
+  border-bottom: 1px solid #14cda8;
+}
+
+.myInput-inputRow input[type="text"]:focus + label,
+.myInput-inputRow input[type="password"]:focus + label,
+.myInput-inputRow input[type="number"]:focus + label,
+.myInput-inputRow input[type="tel"]:focus + label {
+  color: #14cda8;
+  font-size: 12px;
+  top: -20px;
+  -webkit-transition: all 0.4s ease-in-out;
+  -moz-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+
+.myInput-inputRow .myInput-overlayInfo {
+  position: absolute;
+  top: -8px;
+  right: 0px;
+  pointer-events: none;
+}
+
+.myInput-inputRow .myInput-label {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  font-size: 16px;
+  color: #94969f;
+  pointer-events: none;
+}
+
+.myInput-inputRow .myInput-labelTop {
+  position: absolute;
+  font-size: 12px;
+  top: -20px;
+  left: 0px;
+  pointer-events: none;
+  color: #94969f;
+}
+
+.myInput-inputRow .myInput-inputError {
+  border-bottom: 1px solid #ff5a5a !important;
+}
+
+.myInput-inputRow .myInput-error {
+  visibility: hidden;
+  height: 20px;
+  margin: 2px 0px 0px 0px;
+  color: #ff5a5a !important;
+  font-size: 12px;
+}
+
+.myInput-inputRow .myInput-visible {
+  visibility: visible;
+}
+
+.passwordStrength-passwordWidgets {
+  border-radius: 2px;
+  margin-top: 6px;
+}
+
+.passwordStrength-passwordWidgets {
+  border-radius: 2px;
+  margin-top: 6px;
+}
+
+.passwordStrength-passwordWidgets .passwordStrength-disabled {
+  background-color: rgba(40, 44, 63, 0.05);
+}
+
+.passwordStrength-passwordWidgets .passwordStrength-widget {
+  padding: 5px 10px 6px 8px;
+  margin-right: 6px;
+  margin-bottom: 6px;
+  display: inline-block;
+}
+
+.passwordStrength-passwordWidgets .passwordStrength-widgetText {
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.passwordStrength-passwordWidgets
+  .passwordStrength-widget.passwordStrength-disabled
+  .passwordStrength-widgetText {
+  opacity: 0.5;
+}
+.passwordStrength-passwordWidgets
+  .passwordStrength-disabled
+  .passwordStrength-widgetText {
+  color: #282c3f;
+  opacity: 0.5;
+}
+
+.passwordStrength-passwordWidgets .passwordStrength-error {
+  border: solid 1px #ff5722;
+}
+
+.passwordStrength-passwordWidgets
+  .passwordStrength-success
+  .passwordStrength-widgetText {
+  color: #14958f;
+}
+
+.passwordStrength-passwordWidgets .passwordStrength-success {
+  background-color: #e7f4f2;
+}
+
+.resetPassword-disabled {
+  cursor: auto !important;
+  background-color: #bfc0c6 !important;
+}
+
+.resetPassword-editButton {
+  cursor: pointer;
+  text-transform: uppercase;
+  padding: 15px;
+  text-align: center;
+  font-weight: 800;
+  background-color: #20bd99;
+  margin: 30px 20px 30px 20px;
+  color: white;
+  border-radius: 5px;
+}

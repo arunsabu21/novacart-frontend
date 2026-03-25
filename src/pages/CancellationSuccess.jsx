@@ -25,7 +25,7 @@ export default function CancellationSuccess() {
             <div>
               <div className="cancel-success-outer">
                 <div className="cancel-success-successBlock">
-                  {item?.payment_method === "COD" ? (
+                  {item?.payment_method === "Cash on Delivery" ? (
                     <img
                       src={checkIcon}
                       alt="success"
@@ -39,7 +39,7 @@ export default function CancellationSuccess() {
                     />
                   )}
                   <p className="cancel-success-text">
-                    {item?.payment_method === "COD"
+                    {item?.payment_method === "Cash on Delivery"
                       ? "Order Cancelled"
                       : "Refund Requested"}
                   </p>
@@ -118,7 +118,7 @@ export default function CancellationSuccess() {
                     <div className="cancelInfoBlock-right">
                       <div className="refundDetails">REFUND DETAILS</div>
                       <p className="infoInfo">
-                        {item?.payment_method === "COD"
+                        {item?.payment_method === "Cash on Delivery"
                           ? "A refund is not applicable on this order as it is a Pay on delivery order"
                           : "Refund will be credited to your original payment method within 5-7 business days"}
                       </p>

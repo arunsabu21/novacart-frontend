@@ -1,99 +1,136 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../api/axios";
+import Loader from "../components/Loader";
 import "../styles/desktop/AuthPage.css";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("error"); // "error" | "success"
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (message) {
-      const timer = setTimeout(() => setMessage(""), 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [message]);
+  function showMessage(text, type = "error") {
+    setMessage(text);
+    setMessageType(type);
+    setTimeout(() => setMessage(""), 4000);
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
+    if (loading) return;
 
     const cleanEmail = email.trim().toLowerCase();
 
     if (!cleanEmail) {
-      setMessage("Email is required");
+      showMessage("Email is required");
       return;
     }
 
     try {
+      setLoading(true);
       await axios.post("/password-reset/", { email: cleanEmail });
 
-      setMessage("Reset link sent to your email");
       setEmail("");
-
+      showMessage("Reset link sent to your email", "success");
       setTimeout(() => navigate("/login"), 1500);
     } catch (err) {
-      console.log("RESET ERROR:", err.response?.data, err.response?.status);
-
       if (err.response?.status === 404) {
-        setMessage("Email not registered");
+        showMessage("Email not registered");
       } else if (err.response?.data?.email) {
-        setMessage(err.response.data.email);
+        showMessage(err.response.data.email);
       } else if (err.response?.data?.detail) {
-        setMessage(err.response.data.detail);
+        showMessage(err.response.data.detail);
       } else {
-        setMessage("Server error. Try again");
+        showMessage("Server error. Try again");
       }
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
     <>
       <div className="bgColor" />
+
+      {message && (
+        <div
+          id="messageMainDiv"
+          className="messageMainContainer messageTopLevel messageShow"
+        >
+          <div
+            className={`messageContent ${messageType === "success" ? "messageSuccess" : "messageError"}`}
+          >
+            <div
+              className="messageText"
+              style={{ width: "100%", textAlign: "center" }}
+            >
+              {message}
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="layout">
         <div id="mainContent">
           <div id="reactPage">
             <div className="authPage">
               {loading && <Loader />}
-              {message && (
-                <div className="login-messages">
-                  <div className="login-alert error">{message}</div>
-                </div>
-              )}
 
               <div className="formContainer Gap">
-                <div className="authHeader plHeader">Reset Password</div>
-                <p>
-                  Enter your email and we’ll send a link on your email to reset
-                  your password.
+                <div className="authHeader" style={{marginBottom: "8px"}}>Reset Password</div>
+                <p
+                  style={{
+                    fontSize: "13px",
+                    color: "#94969f",
+                    marginBottom: "10px",
+                  }}
+                >
+                  Enter your email and we’ll send a link on
+                  your email to reset your password.
                 </p>
+
                 <form onSubmit={handleSubmit}>
-                  <input
-                    type="email"
-                    className="auth-input"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-
-                  <button className="auth-button">Send Reset Link</button>
-
-                  <div style={{ marginTop: "14px", fontSize: "12px" }}>
-                    <p style={{ marginBottom: "8px" }}>
-                      Back to login?{" "}
-                      <span
-                        onClick={() => navigate("/login")}
-                        style={{
-                          color: "#20bd99",
-                          cursor: "pointer",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        Login
+                  <div style={{ marginTop: "30px" }}>
+                    {/* Email */}
+                    <div className="form-group">
+                      <input
+                        type="email"
+                        className="form-control"
+                        placeholder=" "
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+                      <span className="placeholderAlternative">
+                        Email
+                        <span style={{ color: "rgb(255, 87, 34)" }}>*</span>
                       </span>
-                    </p>
+                    </div>
+
+                    {/* Submit */}
+                    <div className="form-group">
+                      <button className="auth-button" disabled={loading}>
+                        Send Reset Link
+                      </button>
+                    </div>
+
+                    <div style={{ marginTop: "14px", fontSize: "12px" }}>
+                      <p>
+                        Back to login?{" "}
+                        <span
+                          onClick={() => navigate("/login")}
+                          style={{
+                            color: "#20bd99",
+                            cursor: "pointer",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          Login
+                        </span>
+                      </p>
+                    </div>
                   </div>
                 </form>
               </div>

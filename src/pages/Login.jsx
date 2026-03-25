@@ -5,8 +5,9 @@ import "../styles/desktop/AuthPage.css";
 import Loader from "../components/Loader";
 
 function Login({ setIsLoggedIn }) {
-  const [username, setUserName] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -19,41 +20,42 @@ function Login({ setIsLoggedIn }) {
     }
   }, [message]);
 
+  function validate() {
+    const newErrors = {};
+    if (!username.trim()) newErrors.username = "Please enter Username";
+    if (!password.trim()) newErrors.password = "Please enter Password";
+    return newErrors;
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
-
     if (loading) return;
 
-    if (!username || !password) {
-      setMessage("Please fill all fields");
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       return;
     }
+
+    setErrors({});
+
     try {
       setLoading(true);
-      // FIXED
-      const response = await axios.post("/token/", {
-        username,
-        password,
-      });
-
-      // ✅ AXIOS DATA
+      const response = await axios.post("/token/", { username, password });
       const data = response.data;
 
       localStorage.setItem("access", data.access);
       localStorage.setItem("refresh", data.refresh);
 
       setIsLoggedIn(true);
-
-      navigate("/", {
-        state: { message: "Logged in successfully" },
-      });
+      navigate("/", { state: { message: "Logged in successfully" } });
     } catch (error) {
-      if (error.response) {
-        // ❌ 400 / 401 from backend
+      if (error.response?.status === 401 || error.response?.status === 400) {
         setMessage("Invalid username or password");
+      } else if (error.response) {
+        setMessage("Something went wrong");
       } else {
-        // ❌ server down / network issue
-        setMessage("Server error. Try again.");
+        setMessage("Server busy. Try again");
       }
     } finally {
       setLoading(false);
@@ -62,57 +64,78 @@ function Login({ setIsLoggedIn }) {
 
   return (
     <>
-      {/* Fixed background only */}
       <div className="bgColor" />
 
-      {/* Scrollable content */}
+      {message && (
+        <div
+          id="messageMainDiv"
+          className="messageMainContainer messageTopLevel messageShow"
+        >
+          <div className="messageContent messageError">
+            <div
+              className="messageText"
+              style={{ width: "100%", textAlign: "center" }}
+            >
+              {message}
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="layout">
         <div id="mainContent">
           <div id="reactPage">
             <div className="authPage">
               {loading && <Loader />}
-              {message && (
-                <div className="login-messages">
-                  <div className="login-alert error">{message}</div>
-                </div>
-              )}
 
               <div className="formContainer Gap">
                 <div className="authHeader plHeader">Login to your account</div>
 
                 <form onSubmit={handleSubmit}>
-                  <div className="floatingInputRow">
-                    <div className="floatingInput-container marginMB">
-                      <input
-                        type="text"
-                        className="floatingInput-input noRadius"
-                        onChange={(e) => setUserName(e.target.value)}
-                        placeholder=""
-                      />
-
-                      <label htmlFor="name" className="floatingLabel">
-                        Username*
-                      </label>
-                    </div>
+                  {/* Username */}
+                  <div className="form-group">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder=" "
+                      value={username}
+                      onChange={(e) => {
+                        setUsername(e.target.value);
+                        setErrors((prev) => ({ ...prev, username: "" }));
+                      }}
+                    />
+                    <span className="placeholderAlternative">
+                      Username
+                      <span style={{ color: "rgb(255, 87, 34)" }}>*</span>
+                    </span>
+                    <div className="errorContainer">{errors.username}</div>
                   </div>
 
-                  <div className="floatingInputRow">
-                    <div className="floatingInput-container">
-                      <input
-                        type="password"
-                        className="floatingInput-input  noRadius"
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder=""
-                      />
-
-                      <label htmlFor="mobile" className="floatingLabel">
-                        Password*
-                      </label>
-                    </div>
+                  {/* Password */}
+                  <div className="form-group">
+                    <input
+                      type="password"
+                      className="form-control"
+                      placeholder=" "
+                      value={password}
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                        setErrors((prev) => ({ ...prev, password: "" }));
+                      }}
+                    />
+                    <span className="placeholderAlternative">
+                      Password
+                      <span style={{ color: "rgb(255, 87, 34)" }}>*</span>
+                    </span>
+                    <div className="errorContainer">{errors.password}</div>
                   </div>
-                  <button className="auth-button" disabled={loading}>
-                    Login
-                  </button>
+
+                  {/* Submit */}
+                  <div className="form-group">
+                    <button className="auth-button" disabled={loading}>
+                      Login
+                    </button>
+                  </div>
 
                   <div style={{ marginTop: "14px", fontSize: "12px" }}>
                     <p style={{ marginBottom: "18px" }}>
@@ -128,7 +151,6 @@ function Login({ setIsLoggedIn }) {
                         Signup
                       </span>
                     </p>
-
                     <p>
                       Forgot password?{" "}
                       <span

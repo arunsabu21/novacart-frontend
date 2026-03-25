@@ -22,7 +22,11 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (originalRequest.url?.includes("/token/refresh/")) {
+    // Skip interceptor for auth endpoints
+    if (
+      originalRequest.url?.includes("/token/refresh/") ||
+      originalRequest.url?.includes("/token/")
+    ) {
       return Promise.reject(error);
     }
 

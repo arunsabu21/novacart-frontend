@@ -248,7 +248,7 @@ img {
 .floatingLabel {
   display: -webkit-box;
   position: absolute;
-  top: 11px;
+  top: 12px;
   left: 13px;
   color: #94969f;
   transition-property: top;
@@ -413,3 +413,5 @@ input[type="radio"] {
 .isDefault input:checked + .customCheckbox .tick {
   opacity: 1;
 }
+
+

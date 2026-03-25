@@ -227,6 +227,12 @@
   background-position: center;
 }
 
+.svgImages-hamBurger {
+  background: url("../../assets/icons/hamburger-menu.png") no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
 .svgImages-next {
   background: url("../../assets/icons/right-chevron.png") no-repeat;
   background-size: contain;

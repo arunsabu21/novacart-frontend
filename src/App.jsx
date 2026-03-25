@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import SiteNav from "./components/SiteNavbar";
 import AuthBackArrow from "./components/AuthBackArrow";
 import MobileNav from "./components/MobileNav";
+import MobileNavSecondary from "./components/MobileNavSecondary";
 import NotFound from "./pages/NotFound";
 
 import Login from "./pages/Login";
@@ -55,9 +56,16 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
   // auth pages
   const authRoutes = ["/login", "/signup", "/forgot-password"];
   const isAuthPage =
-    authRoutes.includes(path) || path.startsWith("/reset-password");
+    authRoutes.includes(path);
 
   const isAdminRoute = path.startsWith("/admin");
+
+  // Mobile Secondary Nav
+  const isSecondaryPage = 
+  path.startsWith("/reset-password") ||
+  path.startsWith("/my/orders") ||
+  path.startsWith("/my/dashboard") ||
+  path.startsWith("/my/item/details")
 
   return (
     <>
@@ -83,14 +91,18 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
         </>
       )}
 
-      {!isAdminRoute && !isFlowPage && !isAuthPage && (
+      {!isAdminRoute && !isFlowPage && !isAuthPage &&  (
         <>
           {!isMobile && (
             <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
           )}
-          {isMobile && (
-            <MobileNav isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
-          )}
+
+          {isMobile &&
+            (isSecondaryPage ? (
+              <MobileNavSecondary isLoggedIn={isLoggedIn} handleLogout={handleLogout}  />
+            ) : (
+              <MobileNav isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+            ))}
         </>
       )}
 
@@ -113,7 +125,10 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
           element={<SetNewPassword />}
         />
 
-        <Route path="/my/dashboard/" element={<Profile setIsLoggedIn={setIsLoggedIn}/>} />
+        <Route
+          path="/my/dashboard/"
+          element={<Profile setIsLoggedIn={setIsLoggedIn} />}
+        />
         <Route path="/products" element={<Products />} />
         <Route path="/category/:slug" element={<Products />} />
         <Route path="/products/:id" element={<ProductDetail />} />
@@ -122,12 +137,11 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/payment" element={<Payment />} />
 
-        
         <Route path="/order-success" element={<OrderSuccess />} />
         <Route path="/my/orders" element={<MyOrders />} />
-        <Route path="/cancel" element={<CancelOrder/>} />
+        <Route path="/cancel" element={<CancelOrder />} />
         <Route path="/cancel/success" element={<CancellationSuccess />} />
-        <Route path="/my/item/details" element={<OrderItemDetails  />} />
+        <Route path="/my/item/details" element={<OrderItemDetails />} />
         <Route path="*" element={<NotFound />} />
 
         <Route path="/admin/login" element={<AdminLogin />} />
