@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../components/Loader";
 import axios from "../api/axios";
 import "../styles/desktop/AuthPage.css";
-import "../styles/desktop/Main.css";
+import "../styles/desktop/main.css";
 
 function SetNewPassword() {
   const { token } = useParams();
