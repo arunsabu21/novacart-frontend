@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useCart } from "../context/CartContext";
 import axios from "../api/axios";
 
 import MobileProductDetail from "../components/MobileProductDetail";
@@ -29,6 +30,8 @@ export default function ProductDetail() {
   const [wishlistLoading, setWishlistLoading] = useState(true);
   const [wishlistActionLoading, setWishlistActionLoading] = useState(false);
   const [isRepeatAdd, setIsRepeatAdd] = useState(false);
+
+  const { fetchCart } = useCart();
 
   /* ---------------- SCREEN DETECTION ---------------- */
   useEffect(() => {
@@ -152,6 +155,8 @@ export default function ProductDetail() {
         { book_id: product.id },
         { headers: { Authorization: `Bearer ${token}` } }
       );
+
+      fetchCart();
 
       if (!added) {
         setToastMessage("Product added to bag");

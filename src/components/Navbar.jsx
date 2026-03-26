@@ -1,4 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useCart } from "../context/CartContext";
+import axios from "../api/axios";
 import desktopUser from "../assets/icons/desktopuser.png";
 import Logo from "../assets/icons/nc-logo.png";
 import DesktopWishlist from "../assets/icons/wishlist.png";
@@ -6,13 +9,15 @@ import ShoppingBag from "../assets/icons/shopping-bag.png";
 
 function Navbar({ isLoggedIn, handleLogout }) {
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  const { cartCount } = useCart();
 
   function onLogout() {
     handleLogout();
     navigate("/", {
       replace: true,
       state: { message: "Logged out successfully" },
-    })
+    });
   }
 
   function goLogin(e) {
@@ -20,10 +25,22 @@ function Navbar({ isLoggedIn, handleLogout }) {
     navigate("/login");
   }
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      axios
+        .get("/whoami/")
+        .then((res) => {
+          setUser(res.data);
+        })
+        .catch((err) => {
+          console.log("User Fetch Err:", err);
+        });
+    }
+  }, [isLoggedIn]);
+
   return (
     <header className="desktop-nav-container">
       <div className="desktop-nav-mount">
-
         {/* LOGO */}
         <div className="desktop-nav-logo-container">
           <Link to="/" className="desktop-logo-link">
@@ -38,28 +55,26 @@ function Navbar({ isLoggedIn, handleLogout }) {
           </Link>
 
           <div className="desktop-actions">
-
             {/* USER + DROPDOWN */}
             <div className="desktop-user-wrapper">
-              <img
-                src={desktopUser}
-                alt="User"
-                className="desktop-user-icon"
-              />
+              <img src={desktopUser} alt="User" className="desktop-user-icon" />
 
               <div className="desktop-userDropdown">
                 <div className="desktop-userBar"></div>
 
                 <div className="desktop-user-actionContents">
-
                   {/* HEADER */}
                   <div className="desktop-actionInfo">
                     {isLoggedIn ? (
                       <>
-                        <div className="desktop-infoTitle">Hello User</div>
-                        <div className="desktop-infoEmail">
-                          user123@gmail.com
-                        </div>
+                        <Link to="/my/dashboard">
+                          <div className="desktop-infoTitle">
+                            Hello {user?.username || "User"}
+                          </div>
+                          <div className="desktop-infoEmail">
+                            {user?.email || "No Email Found"}
+                          </div>
+                        </Link>
                       </>
                     ) : (
                       <>
@@ -67,7 +82,9 @@ function Navbar({ isLoggedIn, handleLogout }) {
                         <div className="desktop-infoEmail">
                           To access account and manage orders
                         </div>
-                        <a href="/login" className="desktop-linkButton">login / signup</a>
+                        <a href="/login" className="desktop-linkButton">
+                          login / signup
+                        </a>
                       </>
                     )}
                   </div>
@@ -76,27 +93,53 @@ function Navbar({ isLoggedIn, handleLogout }) {
                   <div className="desktop-actionLinks">
                     {isLoggedIn ? (
                       <>
-                        <Link to="/orders" className="desktop-info">
+                        <Link to="/my/dashboard" className="desktop-info">
+                          <div className="desktop-infoSection">Account</div>
+                        </Link>
+                        <Link to="/my/orders" className="desktop-info">
                           <div className="desktop-infoSection">Orders</div>
                         </Link>
                         <Link to="/wishlist" className="desktop-info">
                           <div className="desktop-infoSection">Wishlist</div>
                         </Link>
                         <Link to="/cart" className="desktop-info">
-                          <div className="desktop-infoSection">Shopping Bag</div>
+                          <div className="desktop-infoSection">
+                            Shopping Bag
+                          </div>
                         </Link>
                       </>
                     ) : (
                       <>
-                        <a href="/login" onClick={goLogin} className="desktop-info">
+                        <Link
+                          to="/login"
+                          onClick={goLogin}
+                          className="desktop-info"
+                        >
+                          <div className="desktop-infoSection">Account</div>
+                        </Link>
+                        <Link
+                          to="/login"
+                          onClick={goLogin}
+                          className="desktop-info"
+                        >
                           <div className="desktop-infoSection">Orders</div>
-                        </a>
-                        <a href="/login" onClick={goLogin} className="desktop-info">
+                        </Link>
+                        <Link
+                          to="/login"
+                          onClick={goLogin}
+                          className="desktop-info"
+                        >
                           <div className="desktop-infoSection">Wishlist</div>
-                        </a>
-                        <a href="/login" onClick={goLogin} className="desktop-info">
-                          <div className="desktop-infoSection">Shopping Bag</div>
-                        </a>
+                        </Link>
+                        <Link
+                          to="/login"
+                          onClick={goLogin}
+                          className="desktop-info"
+                        >
+                          <div className="desktop-infoSection">
+                            Shopping Bag
+                          </div>
+                        </Link>
                       </>
                     )}
                   </div>
@@ -106,6 +149,7 @@ function Navbar({ isLoggedIn, handleLogout }) {
                     {isLoggedIn ? (
                       <div
                         className="desktop-infoSection logout"
+                        style={{ cursor: "pointer" }}
                         onClick={onLogout}
                       >
                         Logout
@@ -116,7 +160,6 @@ function Navbar({ isLoggedIn, handleLogout }) {
                       </Link>
                     )}
                   </div>
-
                 </div>
               </div>
             </div>
@@ -135,7 +178,13 @@ function Navbar({ isLoggedIn, handleLogout }) {
               className="desktop-shopBag"
               onClick={() => navigate(isLoggedIn ? "/cart" : "/login")}
             />
-
+            <div style={{ position: "relative" }}>
+              {isLoggedIn && cartCount > 0 && (
+                <span key={cartCount} className="bag-badge-desktop animated pulse">
+                  {cartCount}
+                </span>
+              )}
+            </div>
           </div>
         </nav>
       </div>

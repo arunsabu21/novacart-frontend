@@ -8,6 +8,7 @@ import SiteNav from "./components/SiteNavbar";
 import AuthBackArrow from "./components/AuthBackArrow";
 import MobileNav from "./components/MobileNav";
 import MobileNavSecondary from "./components/MobileNavSecondary";
+import BottomMobileNav from "./components/MobileBottomBar";
 import NotFound from "./pages/NotFound";
 
 import Login from "./pages/Login";
@@ -160,6 +161,10 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
       {/* =====================
           FOOTER
       ===================== */}
+      {!isAdminRoute && isMobile && path === "/" && (
+        <BottomMobileNav isLoggedIn={isLoggedIn} />
+      )}
+      
       {!isAdminRoute && !isFlowPage && !isAuthPage && <Footer />}
     </>
   );

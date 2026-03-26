@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useCart } from "../context/CartContext";
 import axios from "../api/axios";
 import EmptyCart from "../components/EmptyCart";
 import Loader from "../components/Loader";
@@ -17,6 +18,8 @@ export default function Cart() {
   });
   const [showFlash, setShowFlash] = useState(false);
 
+  const { fetchCart } = useCart();
+
   /* ---------- SCREEN DETECTION ---------- */
   useEffect(() => {
     const onResize = () => setIsMobile(window.innerWidth < 768);
@@ -26,10 +29,10 @@ export default function Cart() {
 
   /* ---------- FETCH CART ---------- */
   useEffect(() => {
-    fetchCart();
+    fetchCartData();
   }, []);
 
-  async function fetchCart() {
+  async function fetchCartData() {
     try {
       const token = localStorage.getItem("access");
       const res = await axios.get("/cart/", {
@@ -141,6 +144,7 @@ export default function Cart() {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCart((prev) => prev.filter((i) => i.id !== cartId));
+      fetchCart();
     } catch (err) {
       console.error("Remove failed", err);
     }
@@ -162,7 +166,7 @@ export default function Cart() {
       );
 
       setCart((prev) => prev.filter((i) => !cart_ids.includes(i.id)));
-
+      fetchCart();
       const count = cart_ids.length;
       setMessage({
         type: "success",

@@ -265,7 +265,7 @@ textarea {
 }
 
 .mobile-nav-logo {
-  height: 50px; 
+  height: 50px;
   width: auto;
   flex-shrink: 0;
 }
@@ -463,7 +463,7 @@ footer {
   top: -5px;
   left: 100px;
   width: 58px;
-  border-bottom: 4px solid #ee5f73;
+  border-bottom: 4px solid #20bd99;
 }
 
 /* DROPDOWN CONTENT */
@@ -539,8 +539,12 @@ footer {
   text-align: center;
   text-transform: uppercase;
   font-size: 14px;
-  color: #ff3f6c;
+  color: #20bd99;
   font-weight: 700;
+}
+
+.desktop-linkButton:hover {
+  border: 1px solid #20bd99;
 }
 
 .bottom-nav {
@@ -548,7 +552,7 @@ footer {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 60px;
+  height: 55px;
   background: #ffffff;
   display: flex;
   justify-content: space-around;
@@ -648,7 +652,7 @@ footer {
   position: relative;
   height: 100%;
   background: #fff;
-  /* overflow-y: scroll; */
+  overflow-y: scroll;
   width: 75%;
   box-shadow: none;
   color: #333;
@@ -678,6 +682,12 @@ footer {
   margin-bottom: 5px;
 }
 
+.clearfix:after,
+.clearfix:before {
+  content: " ";
+  display: table;
+}
+
 .navList-wrapper {
   font-size: 15px;
   text-decoration: none;
@@ -691,6 +701,14 @@ footer {
   font-size: 14px;
   border: none;
   padding: 14px 20px;
+}
+
+.level-1 {
+  font-weight: 700;
+}
+
+.pull-right {
+  float: right !important;
 }
 
 .side-drawer-container .side-drawer-close {
