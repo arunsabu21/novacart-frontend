@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { setTitle } from "../utils/setTitle";
 import axios from "../api/axios";
 
 import DesktopWishlist from "../components/DesktopWishlist";
@@ -18,6 +19,10 @@ export default function Wishlist() {
   const [message, setMessage] = useState(null);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setTitle("Wishlist");
+  });
 
   // ---------- responsive detect ----------
   useEffect(() => {
@@ -118,7 +123,6 @@ export default function Wishlist() {
   if (wishlist.length === 0)
     return (
       <>
-        <MobileNav count={0} />
 
         {/* mobile toast only */}
         {isMobile && message && (

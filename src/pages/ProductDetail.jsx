@@ -32,6 +32,17 @@ export default function ProductDetail() {
   const [isRepeatAdd, setIsRepeatAdd] = useState(false);
 
   const { fetchCart } = useCart();
+  const navigate = useNavigate();
+
+  const requireAuth = () => {
+    const token = localStorage.getItem("access");
+
+    if (!token) {
+      navigate("/login");
+      return false;
+    }
+    return true;
+  };
 
   /* ---------------- SCREEN DETECTION ---------------- */
   useEffect(() => {
@@ -61,6 +72,7 @@ export default function ProductDetail() {
       if (!product) return;
 
       const token = localStorage.getItem("access");
+      if (!token) return;
 
       try {
         const res = await axios.get("/cart/", {
@@ -84,13 +96,17 @@ export default function ProductDetail() {
 
       const token = localStorage.getItem("access");
 
+      if (!token) {
+        setWishlistLoading(false);
+      }
+
       try {
         const res = await axios.get("/products/wishlist/", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
         const exists = res.data.some(
-          (item) => Number(item.book?.id) === Number(product.id)
+          (item) => Number(item.book?.id) === Number(product.id),
         );
 
         setWishlisted(exists);
@@ -105,6 +121,7 @@ export default function ProductDetail() {
 
   /* ---------------- WISHLIST ACTION ---------------- */
   const handleWishlist = async () => {
+    if (!requireAuth()) return;
     if (wishlistActionLoading) return;
 
     setWishlistActionLoading(true);
@@ -115,7 +132,7 @@ export default function ProductDetail() {
         await axios.post(
           "/products/wishlist/",
           { book_id: product.id },
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: { Authorization: `Bearer ${token}` } },
         );
         setWishlisted(true);
 
@@ -134,7 +151,6 @@ export default function ProductDetail() {
           setShowToast(true);
         }
       }
-
     } catch (err) {
       console.error(err);
     } finally {
@@ -144,6 +160,7 @@ export default function ProductDetail() {
 
   /* ---------------- ADD TO BAG ---------------- */
   const handleAddToBag = async () => {
+    if (!requireAuth()) return;
     if (adding) return;
 
     setAdding(true);
@@ -153,7 +170,7 @@ export default function ProductDetail() {
       await axios.post(
         "/cart/add/",
         { book_id: product.id },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } },
       );
 
       fetchCart();
@@ -162,7 +179,7 @@ export default function ProductDetail() {
         setToastMessage("Product added to bag");
       } else {
         setToastMessage(
-          "You already have this product in your bag. We’ve increased the quantity by 1"
+          "You already have this product in your bag. We’ve increased the quantity by 1",
         );
       }
 

@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import secureIcon from "../assets/icons/secure.png";
+import NovaCartLogo from "../assets/icons/nc-logo.png";
 import "../styles/components/SiteNav.css";
 
 function SiteNav() {
@@ -20,9 +21,9 @@ function SiteNav() {
 
   return (
     <div className="header">
-      <div className="site-nav-container container">
-        <div className="flora-logo">
-          <h1 onClick={() => navigate("/")}>NovaCart</h1>
+      <div className="site-nav-container containerS">
+        <div className="flora-logo" onClick={() => navigate("/")}>
+          <img src={NovaCartLogo} alt="Logo" style={{height: "90px", width: "auto", display: "inline-block"}} />
         </div>
 
         <ol className="checkout-steps">

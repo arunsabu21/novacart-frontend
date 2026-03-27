@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { setTitle } from "../utils/setTitle";
 import axios from "../api/axios";
 import MobileCheckout from "../components/MobileCheckout";
 import DesktopCheckout from "../components/DesktopCheckout";
@@ -13,6 +14,10 @@ export default function CheckOut() {
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [checkoutLoading, setCheckoutLoading] = useState(true);
+
+  useEffect(() => {
+    setTitle("ADDRESS");
+  });
 
   /* ---------- RESPONSIVE ---------- */
   useEffect(() => {

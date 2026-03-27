@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../api/axios";
+import { setTitle } from "../utils/setTitle";
 import "../styles/desktop/App.css";
 import "../styles/desktop/main.css";
 import Sidebar from "../components/SidebarSidebar";
@@ -11,6 +12,10 @@ import editIcon from "../assets/icons/edit.png";
 
 function Profile({ setIsLoggedIn }) {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setTitle("My Dashboard")
+  })
 
   const handleLogout = () => {
     localStorage.removeItem("access");

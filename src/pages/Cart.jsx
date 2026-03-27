@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useCart } from "../context/CartContext";
+import { setTitle } from "../utils/setTitle";
 import axios from "../api/axios";
 import EmptyCart from "../components/EmptyCart";
 import Loader from "../components/Loader";
@@ -19,6 +20,10 @@ export default function Cart() {
   const [showFlash, setShowFlash] = useState(false);
 
   const { fetchCart } = useCart();
+
+  useEffect(() => {
+    setTitle("SHOPPING BAG");
+  });
 
   /* ---------- SCREEN DETECTION ---------- */
   useEffect(() => {
@@ -48,15 +53,15 @@ export default function Cart() {
 
   useEffect(() => {
     const token = localStorage.getItem("access");
-    if(!token) return;
+    if (!token) return;
 
     async function fetchAddress() {
       try {
         const res = await axios.get("/addresses/", {
-          headers: { Authorization: `Bearer ${token}`}
+          headers: { Authorization: `Bearer ${token}` },
         });
 
-        const defaultAddress = res.data.find(a => a.is_default);
+        const defaultAddress = res.data.find((a) => a.is_default);
         setAddress(defaultAddress || res.data[0] || null);
       } catch (err) {
         console.error("Failed to fetch address", err);
@@ -74,12 +79,12 @@ export default function Cart() {
     });
 
     const hideTimer = setTimeout(() => {
-      setShowFlash(false); 
+      setShowFlash(false);
     }, 3000);
 
     const cleanupTimer = setTimeout(() => {
       setMessage({ type: "", text: "" });
-    }, 4500); 
+    }, 4500);
 
     return () => {
       clearTimeout(hideTimer);
@@ -107,7 +112,7 @@ export default function Cart() {
       const res = await axios.patch(
         `/cart/update/${cartId}/`,
         { action },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } },
       );
 
       setCart((prev) =>
@@ -121,7 +126,7 @@ export default function Cart() {
             quantity: qty,
             total_price: qty * Number(i.product_price),
           };
-        })
+        }),
       );
     } catch (err) {
       const errorMsg =
@@ -162,7 +167,7 @@ export default function Cart() {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       setCart((prev) => prev.filter((i) => !cart_ids.includes(i.id)));
@@ -195,7 +200,7 @@ export default function Cart() {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       setCart((prev) => prev.filter((i) => !cart_ids.includes(i.id)));

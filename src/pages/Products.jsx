@@ -36,6 +36,16 @@ function Products() {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
 
+  const requireAuth = () => {
+    const token = localStorage.getItem("access");
+
+    if (!token) {
+      navigate("/login");
+      return false;
+    }
+    return true;
+  };
+
   // ---------------- CONVERSION FUNCTIONS ----------------
   const pixelToPrice = (px) => {
     if (!priceMaxLimit) return 0;
@@ -120,7 +130,6 @@ function Products() {
   // ---------------- FETCH PRODUCTS ----------------
   useEffect(() => {
     const fetchProducts = async () => {
-      
       if (isMobile) {
         setProductsLoading(true);
       } else {
@@ -154,7 +163,15 @@ function Products() {
     if (priceMaxLimit !== 0) {
       fetchProducts();
     }
-  }, [selectedCategory, selectedBrands, minPrice, maxPrice, priceMaxLimit, sortBy, isMobile]);
+  }, [
+    selectedCategory,
+    selectedBrands,
+    minPrice,
+    maxPrice,
+    priceMaxLimit,
+    sortBy,
+    isMobile,
+  ]);
 
   // ---------------- WISHLIST ----------------
   const loadWishlist = async () => {
@@ -178,11 +195,7 @@ function Products() {
     wishlist.some((w) => Number(w.book?.id) === Number(productId));
 
   const toggleWishlist = async (product) => {
-    if (!token) {
-      setMessage("Login required");
-      setTimeout(() => setMessage(""), 1500);
-      return;
-    }
+    if (!requireAuth()) return;
 
     if (!isMobile) {
       setActionLoading(true);

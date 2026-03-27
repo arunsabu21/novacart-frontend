@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { setTitle } from "../utils/setTitle";
 import axios from "../api/axios";
 import MobilePayment from "../components/MobilePayment";
 import DesktopPayment from "../components/DesktopPayment";
@@ -25,6 +26,10 @@ export default function Payment() {
 
   const [amount, setAmount] = useState(0);
   const [displayAmount, setDisplayAmount] = useState(0);
+
+  useEffect(() => {
+    setTitle("PAYMENT");
+  });
 
   /* ---------------- FLASH MESSAGE ---------------- */
   useEffect(() => {

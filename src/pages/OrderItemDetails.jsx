@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import useCancelItem from "../hooks/useOrderItemDetails";
+import { setTitle } from "../utils/setTitle";
 import Loader from "../components/Loader";
 import SideBar from "../components/SidebarSidebar";
 import "../styles/desktop/ItemDetails.css";
@@ -12,6 +13,10 @@ export default function MyItemDetails() {
   const itemId = searchParams.get("itemId");
   const { item, loading } = useCancelItem(orderId, itemId);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setTitle("My Orders");
+  });
 
   const formatDate = (date) =>
     new Date(date).toLocaleDateString("en-IN", {
@@ -31,7 +36,8 @@ export default function MyItemDetails() {
   const deliveryAddress = item?.address;
 
   const isCancelled = item?.status === "CANCELLED";
-  const isRefund = item?.status === "REFUND_REQUESTED" || item?.status === "REFUNDED";
+  const isRefund =
+    item?.status === "REFUND_REQUESTED" || item?.status === "REFUNDED";
   const isConfirmed = item?.status === "CONFIRMED";
 
   if (loading) return <Loader />;
@@ -104,7 +110,10 @@ export default function MyItemDetails() {
                     <div className="statusBlock-cardWrapper">
                       <div className="statusBlock-cardContainer">
                         <div className="statusBlock-cardIcon-container">
-                          <div className="statusBlock-cardIconBG" style={{backgroundColor: "#E6F9F2"}}>
+                          <div
+                            className="statusBlock-cardIconBG"
+                            style={{ backgroundColor: "#E6F9F2" }}
+                          >
                             <span
                               className="svgImages-svg svgImages-refund"
                               style={{ width: "24px", height: "24px" }}
@@ -112,7 +121,9 @@ export default function MyItemDetails() {
                           </div>
                         </div>
                         <div className="statusBlock-TextContainer">
-                          <div className="statusBlock-Text">Refund Initiated</div>
+                          <div className="statusBlock-Text">
+                            Refund Initiated
+                          </div>
                           <div className="statusBlock-TextSub">
                             {" "}
                             Amount will be credited soon
@@ -201,9 +212,7 @@ export default function MyItemDetails() {
                       className="itemPerIcon-button"
                       role="presentation"
                       onClick={() =>
-                        navigate(
-                          `/cancel?orderId=${orderId}&itemId=${itemId}`,
-                        )
+                        navigate(`/cancel?orderId=${orderId}&itemId=${itemId}`)
                       }
                       style={{
                         flex: "1 1 auto",
@@ -243,45 +252,46 @@ export default function MyItemDetails() {
                 )}
                 <div className="setWidth"></div>
                 {isConfirmed && (
-                <div className="perItem-deliveryInfo">
-                  <div className="infoPanel" style={{ paddingTop: "19px" }}>
-                    <div className="infoPanel-default">
-                      <span
-                        className="Text-Text"
-                        style={{
-                          marginRight: "8px",
-                          color: "rgb(40, 44, 63)",
-                          fontWeight: "700",
-                          fontSize: "18px",
-                        }}
-                      >
-                        Delivery Address
-                      </span>
-                    </div>
-                    <div className="infoPanel-default"></div>
-                    <div className="infoPanel-default">
-                      <div>
-                        <div className="Address-deliveryInfo">
-                          <div className="Address-nameNumber">
-                            <p className="text-classic">
-                              {deliveryAddress?.name}
-                            </p>
-                            <div className="Address-verticalDivider"></div>
-                            <p className="text-classic">
-                              {deliveryAddress?.mobile}
+                  <div className="perItem-deliveryInfo">
+                    <div className="infoPanel" style={{ paddingTop: "19px" }}>
+                      <div className="infoPanel-default">
+                        <span
+                          className="Text-Text"
+                          style={{
+                            marginRight: "8px",
+                            color: "rgb(40, 44, 63)",
+                            fontWeight: "700",
+                            fontSize: "18px",
+                          }}
+                        >
+                          Delivery Address
+                        </span>
+                      </div>
+                      <div className="infoPanel-default"></div>
+                      <div className="infoPanel-default">
+                        <div>
+                          <div className="Address-deliveryInfo">
+                            <div className="Address-nameNumber">
+                              <p className="text-classic">
+                                {deliveryAddress?.name}
+                              </p>
+                              <div className="Address-verticalDivider"></div>
+                              <p className="text-classic">
+                                {deliveryAddress?.mobile}
+                              </p>
+                            </div>
+                            <p className="Address-addressStyle text-classic">
+                              {deliveryAddress?.house_number},{" "}
+                              {deliveryAddress?.address},{" "}
+                              {deliveryAddress?.town},{" "}
+                              {deliveryAddress?.district} -{" "}
+                              {deliveryAddress?.pincode}
                             </p>
                           </div>
-                          <p className="Address-addressStyle text-classic">
-                            {deliveryAddress?.house_number},{" "}
-                            {deliveryAddress?.address}, {deliveryAddress?.town},{" "}
-                            {deliveryAddress?.district} -{" "}
-                            {deliveryAddress?.pincode}
-                          </p>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
                 )}
                 <div className="setWidth">
                   <div className="PriceDetails-price">

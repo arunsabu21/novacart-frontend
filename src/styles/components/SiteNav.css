@@ -18,7 +18,7 @@
   margin: auto;
 }
 
-.header .container {
+.header .containerS {
   line-height: 78px;
 }
 
@@ -26,6 +26,7 @@
   height: 40px;
   width: 40px;
   float: left;
+  cursor: pointer;
 }
 
 .header .checkout-steps {

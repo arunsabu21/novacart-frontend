@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import axios from "../api/axios";
+import { setTitle } from "../utils/setTitle";
 import SideBar from "../components/SidebarSidebar";
 import Loader from "../components/Loader";
 import "../styles/desktop/Orders.css";
@@ -134,6 +135,10 @@ export default function MyOrders() {
   const search = searchParams.get("search") || "";
   const page = parseInt(searchParams.get("page")) || 1;
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setTitle("My Orders");
+  });
 
   const start = totalOrders ? (page - 1) * 5 + 1 : 0;
   const end = totalOrders ? Math.min(page * 5, totalOrders) : 0;
@@ -268,8 +273,7 @@ export default function MyOrders() {
             <div className="orderPage-listBackground">
               {orders.flatMap((order) => {
                 return order.items?.map((item) => {
-                  const currentStatus =
-                    item.status || order.status;
+                  const currentStatus = item.status || order.status;
                   const statusConfig = ORDER_STATUS_CONFIG[currentStatus] || {};
 
                   return (

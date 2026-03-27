@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { setTitle } from "../utils/setTitle";
 import axios from "../api/axios";
 import Loader from "../components/Loader";
 import MobileOrderSuccess from "../components/MobileOrderSuccess";
@@ -12,6 +13,10 @@ export default function OrderSuccess() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    setTitle("ORDER CONFIRMED");
+  });
 
   useEffect(() => {
     if (!location.state?.fromPayment) {
