@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 function Sidebar({ username }) {
   return (
     <>
@@ -10,21 +10,21 @@ function Sidebar({ username }) {
 
       <div className="sidebar-sidebar">
         <div className="segment-segment">
-          <a href="" className="segment-link segment-activeLink">
+          <Link to="/my/dashboard" className="segment-link segment-activeLink">
             Overview
-          </a>
+          </Link>
         </div>
 
         <div className="segment-segment">
           <div className="segment-heading">ORDERS</div>
-          <a href="" className="segment-link">Orders & Returns</a>
+          <Link to="/my/orders" className="segment-link">Orders & Returns</Link>
         </div>
 
         <div className="segment-segment">
           <div className="segment-heading">ACCOUNT</div>
           <a href="" className="segment-link">Profile</a>
-          <a href="" className="segment-link">Shopping Bag</a>
-          <a href="" className="segment-link">Wishlist</a>
+          <Link to="/cart" className="segment-link">Shopping Bag</Link>
+          <Link to="/wishlist" className="segment-link">Wishlist</Link>
           <a href="" className="segment-link">Account Deletion</a>
         </div>
 

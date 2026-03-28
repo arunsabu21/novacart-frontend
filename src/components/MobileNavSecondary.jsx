@@ -1,18 +1,19 @@
 import MobileDrawer from "../components/MobileDrawer";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 export default function MobileSecondaryNav({ isLoggedIn, handleLogout }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   return (
     <div className="mobile-header">
       <div className="mobile-left">
         <a onClick={() => setDrawerOpen(true)} className="svgImages-hamBurger mobile-leftNavBar hamburger-hamburger"></a>
-        <a href="/" className="svgImages-novaCartLogo mobile-ncLogo"></a>
+        <Link to="/" className="svgImages-novaCartLogo mobile-ncLogo"></Link>
       </div>
 
       <div className="mobile-right">
         <a className="svgImages-mSearch mobileSearch"></a>
-        <a className="svgImages-profile mobile-user"></a>
-        <a className="svgImages-bag mobile-bag"></a>
+        <Link to="/my/dashboard" className="svgImages-profile mobile-user"></Link>
+        <Link to="/cart" className="svgImages-bag mobile-bag"></Link>
       </div>
       <MobileDrawer
         open={drawerOpen}

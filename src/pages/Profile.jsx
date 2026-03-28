@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "../api/axios";
 import { setTitle } from "../utils/setTitle";
 import "../styles/desktop/App.css";
@@ -89,7 +89,7 @@ function Profile({ setIsLoggedIn }) {
                 <tbody>
                   <tr>
                     <td>
-                      <a href="#" className="link-card">
+                      <Link to="/my/orders" className="link-card">
                         <div className="link-content">
                           <img src={orderIcon} alt="" className="link-icon" />
                           <div className="link-labels">
@@ -99,11 +99,11 @@ function Profile({ setIsLoggedIn }) {
                             </div>
                           </div>
                         </div>
-                      </a>
+                      </Link>
                     </td>
 
                     <td>
-                      <a href="#" className="link-card">
+                      <Link to="/wishlist" className="link-card">
                         <div className="link-content">
                           <img
                             src={wishlistIcon}
@@ -117,7 +117,7 @@ function Profile({ setIsLoggedIn }) {
                             </div>
                           </div>
                         </div>
-                      </a>
+                      </Link>
                     </td>
 
                     <td>
@@ -139,7 +139,7 @@ function Profile({ setIsLoggedIn }) {
 
               <div className="dashboard-mobileContainer">
                 <div className="dashboard-section">
-                  <a href="#" className="link-card">
+                  <Link to="/my/orders" className="link-card">
                     <div className="link-content">
                       <img src={orderIcon} alt="Orders" className="link-icon" />
                       <div className="link-labels">
@@ -149,9 +149,9 @@ function Profile({ setIsLoggedIn }) {
                         </div>
                       </div>
                     </div>
-                  </a>
+                  </Link>
 
-                  <a href="#" className="link-card">
+                  <Link to="/wishlist" className="link-card">
                     <div className="link-content">
                       <img
                         src={wishlistIcon}
@@ -165,7 +165,7 @@ function Profile({ setIsLoggedIn }) {
                         </div>
                       </div>
                     </div>
-                  </a>
+                  </Link>
                 </div>
 
                 <div className="dashboard-section">

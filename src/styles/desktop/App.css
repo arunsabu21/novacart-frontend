@@ -751,3 +751,11 @@ footer {
   display: flex;
   -webkit-box-flex: 1;
 }
+
+.text-container {
+  color: #686b77;
+  font-size: 14px;
+  padding: 0 5px;
+  overflow: hidden;
+  line-height: 16px;
+}

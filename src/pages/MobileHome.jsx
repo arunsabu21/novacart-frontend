@@ -18,7 +18,6 @@ import sponsorBanner02 from "../assets/images/sponsor-ban02.png";
 import sponsorBanner03 from "../assets/images/sponsor-ban03.png";
 import cardOffer from "../assets/images/card-offer.png";
 
-
 function MobileHome() {
   const location = useLocation();
 
@@ -65,11 +64,20 @@ function MobileHome() {
     <div style={{ paddingTop: "56px" }}>
       <div id="reactPage">
         {notify && (
-          <div className="login-messages">
-            <div className="login-alert info">{notify}</div>
+          <div
+            id="messageMainDiv"
+            className="messageMainContainer messageTopLevel messageShow"
+          >
+            <div className="messageContent messageInfo">
+              <div
+                className="messageText"
+                style={{ width: "100%", textAlign: "center" }}
+              >
+                {notify}
+              </div>
+            </div>
           </div>
         )}
-
 
         <div className="searchBarContainer">
           <div className="searchBar">
@@ -87,12 +95,13 @@ function MobileHome() {
                 <path d="M0 0h24v24H0z" opacity="0.05"></path>
               </g>
             </svg>
+            <div className="text-container">Search for products...</div>
           </div>
         </div>
         <div style={{ marginTop: "53px" }}>
           <main className="desktop-main-index">
             <div className="index-base">
-               <MobileCategorySlider categories={categories} />
+              <MobileCategorySlider categories={categories} />
               <div className="indexContainer">
                 <div className="container-base stretch">
                   <div>
@@ -103,10 +112,18 @@ function MobileHome() {
                             <div style={{ paddingBottom: "33.37%" }}>
                               <div className="container-container container-aspectContainer">
                                 <div className="row-base">
-                                  <div className="column-base" style={{ flex: "1 1 0%" }}>
+                                  <div
+                                    className="column-base"
+                                    style={{ flex: "1 1 0%" }}
+                                  >
                                     <a href="#">
                                       <div>
-                                        <img draggable="false" src={saleBanner} alt="" className="image-image image-hand" />
+                                        <img
+                                          draggable="false"
+                                          src={saleBanner}
+                                          alt=""
+                                          className="image-image image-hand"
+                                        />
                                       </div>
                                     </a>
                                   </div>
@@ -130,10 +147,18 @@ function MobileHome() {
                             <div style={{ paddingBottom: "13.37%" }}>
                               <div className="container-container container-aspectContainer">
                                 <div className="row-base">
-                                  <div className="column-base" style={{ flex: "1 1 0%" }}>
+                                  <div
+                                    className="column-base"
+                                    style={{ flex: "1 1 0%" }}
+                                  >
                                     <a href="#">
                                       <div>
-                                        <img draggable="false" src={couponBanner} alt="" className="image-image image-hand" />
+                                        <img
+                                          draggable="false"
+                                          src={couponBanner}
+                                          alt=""
+                                          className="image-image image-hand"
+                                        />
                                       </div>
                                     </a>
                                   </div>
@@ -148,18 +173,24 @@ function MobileHome() {
                 </div>
               </div>
               <div className="indexContainer">
-                <div className="container-base stretch" style={{paddingBottom: "0px", paddingTop: "2px"}}>
+                <div
+                  className="container-base stretch"
+                  style={{ paddingBottom: "0px", paddingTop: "2px" }}
+                >
                   <div>
                     <div className="container-container">
                       <div className="row-base">
-                        <div className="column-base" style={{flex: "1 1 0%"}}>
+                        <div className="column-base" style={{ flex: "1 1 0%" }}>
                           <div className="container-base stretch">
                             <div>
                               <div className="container-container">
                                 <div style={{ paddingBottom: "70.81%" }}>
                                   <div className="container-container container-aspectContainer">
                                     <div className="row-base">
-                                      <div className="column-base" style={{ flex: "1 1 0%" }}>
+                                      <div
+                                        className="column-base"
+                                        style={{ flex: "1 1 0%" }}
+                                      >
                                         <a href="#">
                                           <div>
                                             <MobileBanner />
@@ -179,21 +210,32 @@ function MobileHome() {
                 </div>
               </div>
               <div className="indexContainer">
-                <div className="container-base stretch" >
+                <div className="container-base stretch">
                   <div>
                     <div className="container-container">
                       <div className="row-base">
-                        <div className="column-base" style={{flex: "1 1 0%"}}>
+                        <div className="column-base" style={{ flex: "1 1 0%" }}>
                           <div className="container-base stretch">
                             <div>
                               <div className="container-container">
                                 <div>
                                   <div className="container-container container-aspectContainer">
                                     <div className="row-base">
-                                      <div className="column-base" style={{ flex: "1 1 0%" }}>
+                                      <div
+                                        className="column-base"
+                                        style={{ flex: "1 1 0%" }}
+                                      >
                                         <a href="#">
                                           <div>
-                                            <div style={{backgroundColor: "rgb(244, 150, 52)", display: "flex", justifyContent: "flex-start", padding: "20px 12px 12px 12px"}}></div>
+                                            <div
+                                              style={{
+                                                backgroundColor:
+                                                  "rgb(244, 150, 52)",
+                                                display: "flex",
+                                                justifyContent: "flex-start",
+                                                padding: "20px 12px 12px 12px",
+                                              }}
+                                            ></div>
                                           </div>
                                         </a>
                                       </div>
@@ -216,13 +258,20 @@ function MobileHome() {
                       <div className="row-base">
                         <div className="column-base" style={{ flex: "1 1 0%" }}>
                           <div className="container-base stretch">
-                            <div style={{paddingBottom: "30.37%"}}>
+                            <div style={{ paddingBottom: "30.37%" }}>
                               <div className="container-container container-aspectContainer">
                                 <div className="row-base">
-                                  <div className="column-base" style={{ flex: "1 1 0%" }}>
+                                  <div
+                                    className="column-base"
+                                    style={{ flex: "1 1 0%" }}
+                                  >
                                     <a href="#">
                                       <div>
-                                        <img src={sponsorBanner01} alt="sponsor" className="image-image image-hand" />
+                                        <img
+                                          src={sponsorBanner01}
+                                          alt="sponsor"
+                                          className="image-image image-hand"
+                                        />
                                       </div>
                                     </a>
                                   </div>
@@ -233,13 +282,20 @@ function MobileHome() {
                         </div>
                         <div className="column-base" style={{ flex: "1 1 0%" }}>
                           <div className="container-base stretch">
-                            <div style={{paddingBottom: "30.37%"}}>
+                            <div style={{ paddingBottom: "30.37%" }}>
                               <div className="container-container container-aspectContainer">
                                 <div className="row-base">
-                                  <div className="column-base" style={{ flex: "1 1 0%" }}>
+                                  <div
+                                    className="column-base"
+                                    style={{ flex: "1 1 0%" }}
+                                  >
                                     <a href="#">
                                       <div>
-                                        <img src={sponsorBanner02} alt="sponsor" className="image-image image-hand" />
+                                        <img
+                                          src={sponsorBanner02}
+                                          alt="sponsor"
+                                          className="image-image image-hand"
+                                        />
                                       </div>
                                     </a>
                                   </div>
@@ -250,13 +306,20 @@ function MobileHome() {
                         </div>
                         <div className="column-base" style={{ flex: "1 1 0%" }}>
                           <div className="container-base stretch">
-                            <div style={{paddingBottom: "30.37%"}}>
+                            <div style={{ paddingBottom: "30.37%" }}>
                               <div className="container-container container-aspectContainer">
                                 <div className="row-base">
-                                  <div className="column-base" style={{ flex: "1 1 0%" }}>
+                                  <div
+                                    className="column-base"
+                                    style={{ flex: "1 1 0%" }}
+                                  >
                                     <a href="#">
                                       <div>
-                                        <img src={sponsorBanner03} alt="sponsor" className="image-image image-hand"/>
+                                        <img
+                                          src={sponsorBanner03}
+                                          alt="sponsor"
+                                          className="image-image image-hand"
+                                        />
                                       </div>
                                     </a>
                                   </div>
@@ -275,17 +338,24 @@ function MobileHome() {
                   <div>
                     <div className="container-container">
                       <div className="row-base">
-                        <div className="column-base" style={{flex: "1 1 0%"}}>
+                        <div className="column-base" style={{ flex: "1 1 0%" }}>
                           <div className="container-base stretch">
                             <div>
                               <div className="container-container">
                                 <div style={{ paddingBottom: "9.81%" }}>
                                   <div className="container-container container-aspectContainer">
                                     <div className="row-base">
-                                      <div className="column-base" style={{ flex: "1 1 0%" }}>
+                                      <div
+                                        className="column-base"
+                                        style={{ flex: "1 1 0%" }}
+                                      >
                                         <a href="#">
                                           <div>
-                                            <img src={cardOffer} alt="Stripe" className="image-image image-hand" />
+                                            <img
+                                              src={cardOffer}
+                                              alt="Stripe"
+                                              className="image-image image-hand"
+                                            />
                                           </div>
                                         </a>
                                       </div>
@@ -311,10 +381,18 @@ function MobileHome() {
                             <div style={{ paddingBottom: "15.37%" }}>
                               <div className="container-container container-aspectContainer">
                                 <div className="row-base">
-                                  <div className="column-base" style={{ flex: "1 1 0%" }}>
+                                  <div
+                                    className="column-base"
+                                    style={{ flex: "1 1 0%" }}
+                                  >
                                     <a href="#">
                                       <div>
-                                        <img draggable="false" src={catTitle} alt="" className="image-image image-hand" />
+                                        <img
+                                          draggable="false"
+                                          src={catTitle}
+                                          alt=""
+                                          className="image-image image-hand"
+                                        />
                                       </div>
                                     </a>
                                   </div>
@@ -329,7 +407,10 @@ function MobileHome() {
                 </div>
               </div>
               <div className="indexContainer">
-                <div className="container-base stretch" style={{ paddingLeft: "3px", paddingRight: "3px" }}>
+                <div
+                  className="container-base stretch"
+                  style={{ paddingLeft: "3px", paddingRight: "3px" }}
+                >
                   <div>
                     <div className="container-container">
                       <div className="row-base">
@@ -338,8 +419,14 @@ function MobileHome() {
                             <div style={{ paddingBottom: "58.33%" }}>
                               <div className="container-container container-aspectContainer">
                                 <div className="row-base">
-                                  <div className="column-base" style={{ flex: "1 1 0%" }}>
-                                    <CategoryCardSlider categories={categories} imageKey="mobile_secondary_image"/>
+                                  <div
+                                    className="column-base"
+                                    style={{ flex: "1 1 0%" }}
+                                  >
+                                    <CategoryCardSlider
+                                      categories={categories}
+                                      imageKey="mobile_secondary_image"
+                                    />
                                   </div>
                                 </div>
                               </div>
@@ -361,10 +448,19 @@ function MobileHome() {
                             <div style={{ paddingBottom: "15.37%" }}>
                               <div className="container-container container-aspectContainer">
                                 <div className="row-base">
-                                  <div className="column-base" style={{ flex: "1 1 0%" }}>
+                                  <div
+                                    className="column-base"
+                                    style={{ flex: "1 1 0%" }}
+                                  >
                                     <a href="#">
                                       <div>
-                                        <img draggable="false" src={offerBanner} alt="" className="image-image image-hand" style={{verticalAlign: "top"}}/>
+                                        <img
+                                          draggable="false"
+                                          src={offerBanner}
+                                          alt=""
+                                          className="image-image image-hand"
+                                          style={{ verticalAlign: "top" }}
+                                        />
                                       </div>
                                     </a>
                                   </div>
@@ -378,7 +474,7 @@ function MobileHome() {
                   </div>
                 </div>
               </div>
-              <TwoRowSlider categories={categories} imageKey="mobile_image"/>
+              <TwoRowSlider categories={categories} imageKey="mobile_image" />
               <div className="indexContainer">
                 <div className="container-base stretch">
                   <div>
@@ -389,10 +485,19 @@ function MobileHome() {
                             <div style={{ paddingBottom: "22.37%" }}>
                               <div className="container-container container-aspectContainer">
                                 <div className="row-base">
-                                  <div className="column-base" style={{ flex: "1 1 0%" }}>
+                                  <div
+                                    className="column-base"
+                                    style={{ flex: "1 1 0%" }}
+                                  >
                                     <a href="#">
                                       <div>
-                                        <img draggable="false" src={exploreBanner} alt="" className="image-image image-hand" style={{verticalAlign: "top"}}/>
+                                        <img
+                                          draggable="false"
+                                          src={exploreBanner}
+                                          alt=""
+                                          className="image-image image-hand"
+                                          style={{ verticalAlign: "top" }}
+                                        />
                                       </div>
                                     </a>
                                   </div>

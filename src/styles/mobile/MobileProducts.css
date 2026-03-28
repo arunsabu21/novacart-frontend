@@ -291,6 +291,11 @@
   background-color: #ff5a5a;
 }
 
+.messageSuccess {
+  background-color: #20bd99;
+  color: #FFF;
+}
+
 .messageText {
   font-weight: 700;
   font-size: 13px;

@@ -133,7 +133,7 @@ function Signup() {
               id="messageMainDiv"
               className="messageMainContainer messageTopLevel messageShow"
             >
-              <div className="messageContent messageError">
+              <div className="messageContent messageSuccess">
                 <div
                   className="messageText"
                   style={{ width: "100%", textAlign: "center" }}
