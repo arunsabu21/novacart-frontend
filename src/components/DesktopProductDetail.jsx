@@ -36,8 +36,6 @@ export default function DesktopProductDetail({
 
         <div className="pdp-price-row">
           <span className="pdp-price">₹{product.price}</span>
-          <span className="pdp-mrp">₹799</span>
-          <span className="pdp-discount">(25% OFF)</span>
         </div>
 
         <p className="pdp-tax">inclusive of all taxes</p>
@@ -93,15 +91,6 @@ export default function DesktopProductDetail({
           <p>{product.description}</p>
         </div>
         <div className="divider"></div>
-        <div className="pdp-desc-main">
-          <h2>Author</h2>
-          <p>{product.author}</p>
-        </div>
-        <div className="divider"></div>
-        <div className="pdp-desc-main">
-          <h2>Published Year</h2>
-          <p>{product.published_year}</p>
-        </div>
       </section>
     </main>
   );

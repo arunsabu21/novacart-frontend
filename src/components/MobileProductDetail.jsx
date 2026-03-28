@@ -38,10 +38,6 @@ export default function MobileProductDetail({
         <div className="m-pdp-desc-box">
           <h3 className="m-pdp-desc-title">Product Details</h3>
           <p className="m-pdp-desc-text">{product.description}</p>
-          <h3 className="m-pdp-desc-title">Author</h3>
-          <p className="m-pdp-desc-text">{product.author}</p>
-          <h3 className="m-pdp-desc-title">Published</h3>
-          <p className="m-pdp-desc-text">{product.published_year}</p>
         </div>
 
         <div className="m-pdp-desc-box">
