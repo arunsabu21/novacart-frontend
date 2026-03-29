@@ -9,6 +9,7 @@ import AuthBackArrow from "./components/AuthBackArrow";
 import MobileNav from "./components/MobileNav";
 import MobileNavSecondary from "./components/MobileNavSecondary";
 import BottomMobileNav from "./components/MobileBottomBar";
+import AutoSuggest from "./pages/AutoSuggest";
 import NotFound from "./pages/NotFound";
 
 import Login from "./pages/Login";
@@ -144,6 +145,7 @@ function Layout({ isLoggedIn, setIsLoggedIn, handleLogout }) {
         <Route path="/cancel/success" element={<CancellationSuccess />} />
         <Route path="/my/item/details" element={<OrderItemDetails />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/autoSuggest" element={<AutoSuggest/>} />
 
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route

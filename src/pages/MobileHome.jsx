@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import MobileBottomBar from "../components/MobileBottomBar";
 import MobileCategorySlider from "../components/MobileCategorySlider";
@@ -26,6 +26,8 @@ function MobileHome() {
   const [loading, setLoading] = useState(true);
 
   const message = location.state?.message;
+
+  const navigate = useNavigate();
 
   // EFFECT 1: login message
   useEffect(() => {
@@ -80,7 +82,14 @@ function MobileHome() {
         )}
 
         <div className="searchBarContainer">
-          <div className="searchBar">
+          <div
+            className="searchBar"
+            onClick={() => {
+              if (window.innerWidth < 768) {
+                navigate("/autoSuggest?");
+              }
+            }}
+          >
             <svg
               width="24"
               height="24"
