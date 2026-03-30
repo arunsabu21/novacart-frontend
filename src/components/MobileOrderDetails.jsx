@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import "../styles/desktop/OrderSuccess.css";
 import ScooterImg from "../assets/images/fast-shipping.png";
 import orderBox from "../assets/images/delivery-status.png";
 
 export default function MobileOrderDetails({ order }) {
+  const navigate = useNavigate();
   if (!order) return null;
 
   const firstItem = order.items[0];
@@ -24,7 +26,7 @@ export default function MobileOrderDetails({ order }) {
                 {order.address?.state} - {order.address?.pincode}
               </p>
 
-              <button className="orderDetails-btn">ORDER DETAILS</button>
+              <button onClick={() => navigate("/my/orders")} className="orderDetails-btn">ORDER DETAILS</button>
             </div>
 
             {/* RIGHT */}
@@ -86,7 +88,7 @@ export default function MobileOrderDetails({ order }) {
               page.
             </div>
 
-            <button className="orderInfo-link">View</button>
+            <button onClick={() => navigate("/my/orders")} className="orderInfo-link">View</button>
           </div>
 
           <div className="orderInfo-right">

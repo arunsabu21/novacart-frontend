@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+
 import { useNavigate } from "react-router-dom";
 import SuccessIcon from "../assets/icons/check.png";
 import DeliveryImage from "../assets/images/fast-shipping.png";
@@ -80,10 +80,10 @@ export default function DesktopOrderSuccess({ order }) {
                   <div className="orders-pageLink">View</div>
                 </div>
                 <div className="ordersButton-baseContainer ordersButton-desktopBased">
-                  <button onClick={() => navigate("/products")} className="button-base-buttonConfirm button-secondary button-secondary-base">
+                  <button onClick={() => navigate("/")} className="button-base-buttonConfirm button-secondary button-secondary-base">
                     CONTINUE SHOPPING
                   </button>
-                  <button className="button-base-buttonConfirm button-secondary-base mainButton-width">
+                  <button onClick={()=> navigate("/my/orders")} className="button-base-buttonConfirm button-secondary-base mainButton-width">
                     VIEW ORDER
                   </button>
                 </div>
